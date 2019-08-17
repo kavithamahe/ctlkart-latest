@@ -9,3 +9,214 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
+
+/* === Font === */
+
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,600,700,800,900&display=swap');
+body {
+    font-family: 'Nunito', sans-serif;
+    background: #f6f9ff;
+}
+
+ion-badge#cart-badge {
+    background: #feb82b;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    margin-top: -10px;
+    position: absolute;
+    font-size: 12px;
+    padding: 6px 0px;
+    right: -2px;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.09);
+}
+
+ion-header {
+    padding: 0px 0px 0 0;
+    background: #fff;
+    &:after {
+        background-image: none !important;
+        height: 0;
+    }
+    ion-toolbar {
+        ion-buttons {
+            color: #a5bbc9 !important;
+            .button-native {
+                color: #a5bbc9 !important;
+            }
+            .fa-shopping-basket {
+                padding-right: 10px;
+            }
+        }
+        ion-title {
+            padding-left: 100px;
+            color: #000;
+            text-transform: uppercase;
+            font-size: 17px;
+            font-weight: 800;
+            span {
+                color: #ffb204;
+            }
+        }
+    }
+}
+
+app-productbycategory {
+    ion-slides {
+        background-color: #feb82b !important;
+        vertical-align: middle;
+        display: grid;
+        padding: 0;
+        color: #fff;
+    }
+    .sortFilter {
+        ion-item {
+            ion-label {
+                color: #536b79 !important !important;
+            }
+        }
+    }
+    .productListShows {
+        ion-grid {
+            ion-row {
+                ion-col {
+                    text-align: center;
+                    .getProducts {
+                        margin: 0px 0px 0;
+                        padding: 15px 10px 5px;
+                        background: #fff;
+                        box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.09);
+                        border-radius: 7px;
+                        img {
+                            width: 120px !important;
+                            height: 120px !important;
+                            margin: 0 auto;
+                        }
+                        ion-label {
+                            width: 100%;
+                            display: block;
+                            text-align: center;
+                            font-size: 16px;
+                            font-weight: 700;
+                            padding: 10px 0px 0px;
+                            color: #000;
+                        }
+                        p {
+                            padding: 8px;
+                            margin: 0;
+                            font-weight: 600;
+                            letter-spacing: 0.4px;
+                            color: #feb82b;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// View Detail Page
+app-viewsingleproduct {
+    .viewDetailsPage {
+        padding: 15px 10px;
+        ion-card {
+            box-shadow: none;
+            position: relative;
+            &:after {
+                position: absolute;
+                top: 10px;
+                left: 6%;
+                width: 300px;
+                height: 300px;
+                background: #feb82b;
+                border-radius: 50%;
+                z-index: 0;
+            }
+            .circlebg {
+                background: #f5f1e8;
+                padding: 20px;
+                img {
+                    width: 70%;
+                    height: auto;
+                    margin: 0 auto;
+                    z-index: 9;
+                }
+            }
+            ion-card-header {
+                ion-card-title {
+                    font-size: 19px;
+                    font-weight: 800;
+                    padding: 5px 0 5px;
+                    margin: 0;
+                }
+                ion-card-subtitle {
+                    color: #feb82b;
+                    font-size: 17px;
+                    letter-spacing: 0.5px;
+                }
+            }
+            .ion-focusable {
+                margin-bottom: 15px;
+                button {
+                    background: #607D8B;
+                    color: #fff;
+                    padding: 5px;
+                    font-size: 16px;
+                    margin: 5px 0;
+                    /* border: 3px solid #e0e0e0; */
+                    border-radius: 0 !important;
+                    box-shadow: none;
+                    outline: none;
+                }
+                span {
+                    background: #f2f2f2;
+                    padding: 5px 15px;
+                    color: #000;
+                    font-weight: 600;
+                }
+            }
+            ion-card-content {
+                font-size: 15px;
+                text-align: justify;
+            }
+        }
+    }
+    ion-toolbar {
+        ion-segment {
+            ion-segment-button {
+                &.ion-activatable {
+                    color: #fff !important;
+                    background: #000 !important;
+                    &.segment-button-checked {
+                        background: #feb82b !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Login
+app-checkout {
+    ion-content {
+        form {
+            ion-list {
+                ion-item {
+                    ion-label {
+                        font-size: 15px !important;
+                        color: #000 !important;
+                        padding-bottom: 20px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+ion-menu {
+    ion-header {
+        ion-toolbar {
+            background: #f2f2f2 !important;
+        }
+    }
+}

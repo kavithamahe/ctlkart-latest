@@ -4,26 +4,39 @@
 // styles are for the entire app and not just one component. Additionally, this 
 // file can hold Sass mixins, functions, and placeholder classes to be imported 
 // and used throughout the application.
-.otpinputitem{
+.otpinputitem {
     padding-top: 250px;
 }
-.otpinput{
+
+.otpinput {
     border: 2px solid #e6e8e7;
     border-radius: 25px;
     padding-left: 10px;
 }
-.headcolor{
+
+.headcolor {
     --background: #1a53ff;
-   }
-ion-title{
- padding-left: 100px;
 }
-.category{
-    background-color:#68829e !important;
+
+ion-title {
+    padding-left: 100px;
 }
-.main-Dashboard{
+
+.category {
+    background-color: #feb82b !important;
+    vertical-align: middle;
+    display: grid;
+    padding: 0;
+    color: #fff;
+    ion-slide {
+        height: 60px;
+    }
+}
+
+.main-Dashboard {
     --background: url('./../assets/img/image.jpg');
 }
+
 .ion-searchbar {
     background-color: #fff;
     margin: 10px;
@@ -35,7 +48,7 @@ ion-title{
         ion-searchbar {
             padding: 4px 0px 4px 4px;
             background: inherit;
-            border:none;
+            border: none;
             .searchbar-input {
                 border: none;
                 letter-spacing: 0.4px;
@@ -50,11 +63,11 @@ ion-title{
                 background-color: #4978a9 !important;
             }
         }
-        &.width-80{
+        &.width-80 {
             flex: 0 0 80%;
             max-width: 80%;
         }
-        &.width-20{
+        &.width-20 {
             flex: 0 0 20%;
             max-width: 20%;
         }

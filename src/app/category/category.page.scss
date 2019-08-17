@@ -1,0 +1,28 @@
+.categoryList {
+    .inner-scroll {
+        background: #f6f9ff;
+    }
+    ion-list {
+        background: #fff;
+        ion-item {
+            box-shadow: none;
+            ion-label {
+                text-transform: uppercase;
+                font-size: 14px;
+                font-weight: 600;
+                color: #627e90;
+                letter-spacing: 0.75px;
+            }
+        }
+    }
+}
+
+.item-native {
+    padding: 0;
+    margin: 0;
+}
+
+.item-inner {
+    border: none !important;
+    box-shadow: none;
+}
