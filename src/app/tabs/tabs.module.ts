@@ -2,17 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-import { ProductPipeModule } from '../pipes/productPipe.module';
 
 import { IonicModule } from '@ionic/angular';
 
-import { DashboardPage } from './dashboard.page';
-
+import { TabsPage } from './tabs.page';
+import { TabsPageRoutingModule } from './tabs-routing.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: DashboardPage
+    component: TabsPage
   }
 ];
 
@@ -21,9 +20,9 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    ProductPipeModule,
-    RouterModule.forChild(routes)
+    // RouterModule.forChild(routes),
+    TabsPageRoutingModule
   ],
-  declarations: [DashboardPage]
+  declarations: [TabsPage]
 })
-export class DashboardPageModule {}
+export class TabsPageModule {}

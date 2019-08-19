@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class AppComponent {
   token: any;
   showButton : any=false;
+  login_status: any=false;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -48,7 +49,12 @@ export class AppComponent {
     localStorage.removeItem('token');
     this.menu.close();
     this.router.navigate(['']);
+    this.login_status = true;
 
+}
+login(){
+  this.menu.close();
+  this.router.navigate(['checkout']);
 }
 changepassword(){
   this.router.navigate(['changepasword']);
