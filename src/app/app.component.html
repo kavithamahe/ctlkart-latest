@@ -1,5 +1,5 @@
 <ion-app>
-    <ion-menu side="start" menuId="first">
+    <ion-menu side="end" menuId="first">
         <ion-header>
             <ion-toolbar color="light">
                 <ion-title>Ctl<span>kart</span></ion-title>
@@ -20,7 +20,7 @@
 
     <ion-router-outlet main></ion-router-outlet>
 
-    <ion-tabs *ngIf = "href != '/'">
+    <ion-tabs *ngIf = "tabsbar">
 
         <ion-tab-bar slot="bottom">
         <ion-tab-button tab="dashboard">
@@ -41,7 +41,10 @@
          <ion-tab-button tab="profile" *ngIf ="token">
             <ion-icon name="send"></ion-icon>
             <ion-label>Profile</ion-label>
-             </ion-tab-button>
+        </ion-tab-button>
+        <ion-tab-button>
+                <ion-menu-button autoHide="false"></ion-menu-button>
+            </ion-tab-button>
          </ion-tab-bar>
         
         </ion-tabs>

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { endianness } from 'os';
 
 const routes: Routes = [
   
@@ -18,7 +19,21 @@ const routes: Routes = [
   { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
   { path: 'editprofile', loadChildren: './editprofile/editprofile.module#EditprofilePageModule' },
   { path: 'category', loadChildren: './category/category.module#CategoryPageModule' },
-  { path: 'tabs', loadChildren: './tabs/tabs.module#TabsPageModule' },  { path: 'onboard', loadChildren: './onboard/onboard.module#OnboardPageModule' }
+  { path: 'tabs', loadChildren: './tabs/tabs.module#TabsPageModule' },
+  { path: 'onboard', loadChildren: './onboard/onboard.module#OnboardPageModule' },
+
+  // ..................................tabs...........................
+  { path: 'dashboard/dashboard', loadChildren: './dashboard/dashboard.module#DashboardPageModule' },
+  { path: 'dashboard/category', loadChildren: './category/category.module#CategoryPageModule' },
+  { path: 'dashboard/viewcartproduct', loadChildren: './viewcartproduct/viewcartproduct.module#ViewcartproductPageModule' },
+  { path: 'dashboard/profile', loadChildren: './profile/profile.module#ProfilePageModule' },
+  { path: 'register/dashboard', loadChildren: './dashboard/dashboard.module#DashboardPageModule' },
+  { path: 'register/category', loadChildren: './category/category.module#CategoryPageModule' },
+  { path: 'register/viewcartproduct', loadChildren: './viewcartproduct/viewcartproduct.module#ViewcartproductPageModule' },
+  { path: 'register/profile', loadChildren: './profile/profile.module#ProfilePageModule' },
+  // ..................................tabs end.......................
+  { path: 'subcategorylist', loadChildren: './subcategorylist/subcategorylist.module#SubcategorylistPageModule' }
+
 
 ];
 
