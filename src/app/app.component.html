@@ -20,7 +20,7 @@
 
     <ion-router-outlet main></ion-router-outlet>
 
-    <ion-tabs>
+    <ion-tabs *ngIf = "href != '/'">
 
         <ion-tab-bar slot="bottom">
         <ion-tab-button tab="dashboard">
@@ -34,10 +34,11 @@
          </ion-tab-button>
         
          <ion-tab-button tab="viewcartproduct">
+        <ion-badge id="cart-badge" color="danger">{{cartcount}}</ion-badge>
         <ion-icon name="send"></ion-icon>
         <ion-label>Cart</ion-label>
          </ion-tab-button>
-         <ion-tab-button tab="profile">
+         <ion-tab-button tab="profile" *ngIf ="token">
             <ion-icon name="send"></ion-icon>
             <ion-label>Profile</ion-label>
              </ion-tab-button>

@@ -10,9 +10,12 @@ import { Router } from '@angular/router';
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
+  cartDetails: any;
   token: any;
   showButton : any=false;
   login_status: any=false;
+  cartcount: any;
+  public href: string = "";
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -23,6 +26,17 @@ export class AppComponent {
     public events: Events
   ) {
     this.token = localStorage.getItem('token');
+    this.href = this.router.url;
+    console.log(this.href);
+    if(this.href == "/" && !this.token){
+      this.router.navigate(['onboard']);
+    }
+      this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
+      if(this.cartDetails){
+        this.cartcount = this.cartDetails.length;
+        console.log(this.cartcount)
+      }
+    
     this.events.subscribe('loggedin', ()=>{
       this.showButton = true;  
       this.token = localStorage.getItem('token');
@@ -35,6 +49,13 @@ export class AppComponent {
   }
 
   initializeApp() {
+    this.events.subscribe('cart', ()=>{
+      this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
+      if(this.cartDetails){
+        this.cartcount = this.cartDetails.length;
+        console.log(this.cartcount)
+      }
+    })
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
@@ -47,6 +68,7 @@ export class AppComponent {
   logout() {
     this.events.publish('loggedout');
     localStorage.removeItem('token');
+    localStorage.removeItem('cart_items');
     this.menu.close();
     this.router.navigate(['']);
     this.login_status = true;
