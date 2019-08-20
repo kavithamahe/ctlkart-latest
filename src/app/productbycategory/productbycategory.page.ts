@@ -3,6 +3,7 @@ import { ProductsService } from '../products.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { Events } from '@ionic/angular';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-productbycategory',
@@ -25,7 +26,7 @@ export class ProductbycategoryPage implements OnInit {
     loop:true
   };
   getallsubcategory:any=[];
-  constructor(public events: Events,public productservice:ProductsService,public router: Router,private route: ActivatedRoute) { 
+  constructor(private location:Location,public events: Events,public productservice:ProductsService,public router: Router,private route: ActivatedRoute) { 
     this.subcategory_id = route.snapshot.paramMap.get('id');
     this.getproductbysubcategory(this.subcategory_id);
   }
@@ -105,5 +106,8 @@ export class ProductbycategoryPage implements OnInit {
   }
   viewcart(){
     this.router.navigate(['/viewcartproduct']);
+  }
+  back(){
+    this.location.back();
   }
 }

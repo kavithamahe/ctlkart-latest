@@ -81,7 +81,7 @@ export class CheckoutPage implements OnInit {
         localStorage.setItem("user_id", data['userid']);
         this.events.publish('loggedin');
         if(this.fromcart || this.singleid){
-          this.router.navigate(['proceedcheckout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
+          this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
         }
         else{
           this.router.navigate(['dashboard']);

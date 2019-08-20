@@ -31,7 +31,9 @@ const routes: Routes = [
   { path: 'register/viewcartproduct', loadChildren: './viewcartproduct/viewcartproduct.module#ViewcartproductPageModule' },
   { path: 'register/profile', loadChildren: './profile/profile.module#ProfilePageModule' },
   // ..................................tabs end.......................
-  { path: 'subcategorylist', loadChildren: './subcategorylist/subcategorylist.module#SubcategorylistPageModule' }
+  { path: 'subcategorylist', loadChildren: './subcategorylist/subcategorylist.module#SubcategorylistPageModule' },  { path: 'otpverification', loadChildren: './otpverification/otpverification.module#OtpverificationPageModule' },
+  { path: 'address', loadChildren: './address/address.module#AddressPageModule' }
+
 
 
 ];
