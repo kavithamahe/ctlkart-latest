@@ -3,6 +3,7 @@ import { environment } from '../../environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Events } from '@ionic/angular';
 import { ProductsService } from '../products.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-subcategorylist',
@@ -18,7 +19,7 @@ export class SubcategorylistPage implements OnInit {
   private imageUrl = environment.imageUrl;
   getallcategories:any=[];
   getallsubcategory:any=[];
-  constructor(private router: Router,public events: Events,public productservice:ProductsService,private route: ActivatedRoute) {
+  constructor(private location:Location,private router: Router,public events: Events,public productservice:ProductsService,private route: ActivatedRoute) {
     this.category_id = route.snapshot.paramMap.get('id');
     this.getsubCategory(this.category_id);
    }
@@ -57,5 +58,8 @@ export class SubcategorylistPage implements OnInit {
   }
   getsubcategory(id){
     this.router.navigate(['/productbycategory',{"id":id}],{skipLocationChange: true});
+  }
+  back(){
+    this.location.back();
   }
 }

@@ -3,6 +3,7 @@ import { ProductsService } from '../products.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { AlertController, Events } from '@ionic/angular';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-viewcartproduct',
@@ -26,7 +27,7 @@ export class ViewcartproductPage implements OnInit {
   data: any;
   item_qty :any=1;
 
-  constructor(public events: Events,public productservice:ProductsService,private route: ActivatedRoute,public router:Router,private alertCtrl: AlertController) { 
+  constructor(private location:Location,public events: Events,public productservice:ProductsService,private route: ActivatedRoute,public router:Router,private alertCtrl: AlertController) { 
     this.getproductList();
   }
   ionViewWillEnter(){
@@ -263,5 +264,8 @@ export class ViewcartproductPage implements OnInit {
   }
   viewcart(){
     this.router.navigate(['/viewcartproduct']);
+  }
+  back(){
+    this.location.back();
   }
 }
