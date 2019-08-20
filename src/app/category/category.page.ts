@@ -48,6 +48,10 @@ export class CategoryPage implements OnInit {
       this.productservice.presentToast(err.error.message);
    })
   }
+  back(){
+    this.router.navigate(['/dashboard']);
+    
+  }
   viewcart(){
     this.router.navigate(['/viewcartproduct']);
   }

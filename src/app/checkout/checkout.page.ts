@@ -5,6 +5,7 @@ import { ProductsService } from '../products.service';
 import { ToastController, AlertController } from '@ionic/angular';
 import { Events } from '@ionic/angular';
 import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-checkout',
@@ -24,7 +25,7 @@ export class CheckoutPage implements OnInit {
   numberverify:boolean = false;
   verify = { mobile: ''};
 
-  constructor(public firebaseAuthentication:FirebaseAuthentication,public events: Events,private route: ActivatedRoute,private alertCtrl: AlertController,private router: Router,public formBuilder: FormBuilder,public productservice:ProductsService,public toastController: ToastController) { 
+  constructor(public firebaseAuthentication:FirebaseAuthentication,private _location: Location ,public events: Events,private route: ActivatedRoute,private alertCtrl: AlertController,private router: Router,public formBuilder: FormBuilder,public productservice:ProductsService,public toastController: ToastController) { 
     this.singleid = route.snapshot.paramMap.get('id');
     this.quantity = route.snapshot.paramMap.get('quantity');
     this.fromcart = route.snapshot.paramMap.get('fromcart');
@@ -108,6 +109,9 @@ export class CheckoutPage implements OnInit {
         this.alert(error);
         console.error(error)
       });
+  }
+  back(){
+      this._location.back();
   }
   async alert(verificationId){
     const prompt = await this.alertCtrl.create({
