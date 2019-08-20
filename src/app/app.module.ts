@@ -38,7 +38,8 @@ export const firebaseConfig = {
      ProductPipeModule.forRoot(),
      IonicModule.forRoot(), 
      AngularFireModule.initializeApp(firebaseConfig),
-     AppRoutingModule
+     AppRoutingModule,
+     
     ],
   providers: [
     StatusBar,
