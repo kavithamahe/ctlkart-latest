@@ -9,9 +9,11 @@
             <ion-list>
                 <ion-item (click)="home()">Home</ion-item>
                 <ion-item (click)="shopbycategory()">Shop By Category</ion-item>
-                <ion-item (click)="getmyorders()" *ngIf="showButton || token">My Orders</ion-item>
-                <ion-item (click)="viewaccount()" *ngIf="showButton || token">My Account</ion-item>
-                <ion-item (click)="changepassword()" *ngIf="showButton || token">Change Password</ion-item>
+                <ion-item (click)="getmyorders()" *ngIf="showButton || token">Order History</ion-item>
+                <!-- <ion-item (click)="viewaccount()" *ngIf="showButton || token">My Account</ion-item> -->
+                <ion-item (click)="viewaccount()">Term & condtions</ion-item>
+                <ion-item (click)="viewaccount()">Help</ion-item>
+                <!-- <ion-item (click)="changepassword()" *ngIf="showButton || token">Change Password</ion-item> -->
                 <ion-item (click)="logout()" *ngIf="showButton || token">Logout</ion-item>
                 <ion-item (click)="login()" *ngIf="login_status || !token">Login</ion-item>
             </ion-list>
@@ -42,9 +44,13 @@
             <ion-icon name="send"></ion-icon>
             <ion-label>Profile</ion-label>
         </ion-tab-button>
+        <ion-tab-button tab="checkout" *ngIf ="!token">
+                <ion-icon name="send"></ion-icon>
+                <ion-label>Profile</ion-label>
+        </ion-tab-button>
         <ion-tab-button>
                 <ion-menu-button autoHide="false"></ion-menu-button>
-            </ion-tab-button>
+        </ion-tab-button>
          </ion-tab-bar>
         
         </ion-tabs>

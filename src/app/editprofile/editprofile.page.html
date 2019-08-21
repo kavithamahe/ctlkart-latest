@@ -1,21 +1,24 @@
 <ion-header no-border-bottom>
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-menu-button autoHide="false"></ion-menu-button>
+            <!-- <ion-menu-button autoHide="false"></ion-menu-button> -->
+            <ion-icon name="arrow-back" (click)="back()"></ion-icon>
         </ion-buttons>
         <ion-title>Ctl<span>kart</span></ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-    <ion-grid *ngIf="type == 'personnal'">
+    <ion-grid >
         <ion-row style="border: 2px solid #d1af7b;">
-            <ion-col size="9">
-                <ion-input value="{{name}}" *ngIf="param == 'name'" [(ngModel)]="profile.name"></ion-input>
-                <ion-input value="{{email}}" *ngIf="param == 'email'" [(ngModel)]="profile.email"></ion-input>
-                <ion-input value="{{mobile}}" *ngIf="param == 'mobile'" [(ngModel)]="profile.mobile"></ion-input>
+            <ion-col>
+                <ion-input value="{{name}}"  [(ngModel)]="profile.name"></ion-input>
+                <ion-input value="{{email}}"  [(ngModel)]="profile.email"></ion-input>
+                <ion-input value="{{mobile}}"  [(ngModel)]="profile.mobile"></ion-input>
             </ion-col>
-            <ion-col size="3">
+        </ion-row>
+        <ion-row>
+            <ion-col>
                 <button style="padding:15px;" (click)="editprofile()">
               <ion-ripple-effect></ion-ripple-effect>
               Submit

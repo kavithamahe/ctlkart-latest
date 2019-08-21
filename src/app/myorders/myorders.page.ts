@@ -3,6 +3,7 @@ import { ProductsService } from '../products.service';
 import { environment } from '../../environments/environment';
 import { Events } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-myorders',
@@ -15,7 +16,7 @@ export class MyordersPage implements OnInit {
   private imageUrl = environment.imageUrl;
   user_id: string;
   getallmyorderlists:any=[];
-  constructor(public productservice:ProductsService,public events: Events,private router: Router) { 
+  constructor(public location:Location,public productservice:ProductsService,public events: Events,private router: Router) { 
     this.events.subscribe('cart', ()=>{
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
       if(this.cartDetails){
@@ -56,5 +57,8 @@ export class MyordersPage implements OnInit {
   }
   viewcart(){
     this.router.navigate(['/viewcartproduct']);
+  }
+  back(){
+    this.location.back();
   }
 }

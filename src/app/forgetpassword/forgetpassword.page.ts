@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../products.service';
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class ForgetpasswordPage implements OnInit {
   singleid: any;
   forget = {email:''};
 
-  constructor(public productservice:ProductsService,public navctrl:NavController,private route: ActivatedRoute) {
+  constructor(public location:Location,public productservice:ProductsService,public alertController: AlertController,public navctrl:NavController,private route: ActivatedRoute) {
     this.singleid = route.snapshot.paramMap.get('id');
     this.quantity = route.snapshot.paramMap.get('quantity');
     this.fromcart = route.snapshot.paramMap.get('fromcart');
@@ -34,6 +35,8 @@ export class ForgetpasswordPage implements OnInit {
       this.productservice.forgetpassword(this.forget.email)
       .subscribe(password =>{ 
         this.productservice.loadingdismiss();
+        this.presentAlert(password.message);
+        this.forget.email = "";
         this.navctrl.navigateBack(['/checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
       },
       err =>{
@@ -42,5 +45,18 @@ export class ForgetpasswordPage implements OnInit {
      })
     }
  
+  }
+  async presentAlert(message) {
+    const alert = await this.alertController.create({
+      // header: 'Alert',
+      // subHeader: 'Subtitle',
+      message: message,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+  back(){
+    this.location.back();
   }
 }
