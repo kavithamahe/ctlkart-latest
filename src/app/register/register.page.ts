@@ -51,16 +51,18 @@ export class RegisterPage implements OnInit {
         this.productservice.loadingdismiss();
         const phoneNumberString = "+91" + this.registerForm.value.mobile;
 
-        this.firebaseAuthentication.verifyPhoneNumber(phoneNumberString, 30000)
-        .then( confirmationResult => {
-          this.verificationId = confirmationResult;
+        // this.firebaseAuthentication.verifyPhoneNumber(phoneNumberString, 30000)
+        // .then( confirmationResult => {
+          this.verificationId = "9874566";
           console.log(this.verificationId)
-          this.alert(this.verificationId);
+          this.router.navigate(['otpverification',{"mobile":this.registerForm.value.mobile,"verificationId":this.verificationId}]);
+          // this.alert(this.verificationId);
           
-        })
-      .catch((error) => {
-        this.alert(error);
-        console.error(error)});
+      //   })
+      // .catch((error) => {
+      //   // this.alert(error);
+      //   this.productservice.presentToast(error);
+      //   console.error(error)});
        
       }, 
        err =>{
@@ -69,6 +71,7 @@ export class RegisterPage implements OnInit {
      })
     }
   }
+
   back(){
     this._location.back();
   }
@@ -77,31 +80,31 @@ export class RegisterPage implements OnInit {
     this.router.navigateByUrl('/checkout');
   }
 
-  async alert(verificationId){
-    const prompt = await this.alertCtrl.create({
-      header: 'Enter the Confirmation code',
-      inputs: [{ name: 'confirmationCode', placeholder: 'Confirmation Code' }],
-      buttons: [
-        { text: 'Cancel',
-          handler: data => { console.log('Cancel clicked'); }
-        },
-        { text: 'Send',
-          handler: data => {
-            let otp = "1";
-          this.firebaseAuthentication.signInWithVerificationId(verificationId,data.confirmationCode).then((user) => {
-            this.productservice.onetimepassword(this.registerForm.value.mobile,otp).subscribe(otpdata =>{
-              console.log(otpdata);
-            },
-            err =>{
-              this.productservice.presentToast(err.error.message);
-           })
-          console.log(user);
-          this.router.navigate(['checkout']);
-          })
-          }
-        }
-      ]
-    });
-    await prompt.present();
-  }
+  // async alert(verificationId){
+  //   const prompt = await this.alertCtrl.create({
+  //     header: 'Enter the Confirmation code',
+  //     inputs: [{ name: 'confirmationCode', placeholder: 'Confirmation Code' }],
+  //     buttons: [
+  //       { text: 'Cancel',
+  //         handler: data => { console.log('Cancel clicked'); }
+  //       },
+  //       { text: 'Send',
+  //         handler: data => {
+  //           let otp = "1";
+  //         this.firebaseAuthentication.signInWithVerificationId(verificationId,data.confirmationCode).then((user) => {
+  //           this.productservice.onetimepassword(this.registerForm.value.mobile,otp).subscribe(otpdata =>{
+  //             console.log(otpdata);
+  //           },
+  //           err =>{
+  //             this.productservice.presentToast(err.error.message);
+  //          })
+  //         console.log(user);
+  //         this.router.navigate(['checkout']);
+  //         })
+  //         }
+  //       }
+  //     ]
+  //   });
+  //   await prompt.present();
+  // }
 }

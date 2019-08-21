@@ -16,6 +16,7 @@ export class AppComponent {
   login_status: any=false;
   cartcount: any;
   public href: string = "";
+  tabsbar :any = true;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -30,13 +31,17 @@ export class AppComponent {
     console.log(this.href);
     if(this.href == "/" && !this.token){
       this.router.navigate(['onboard']);
+      this.tabsbar = false;
+      this.events.subscribe('onboard', ()=>{
+        this.tabsbar = true;
+      })
     }
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
       if(this.cartDetails){
         this.cartcount = this.cartDetails.length;
         console.log(this.cartcount)
       }
-    
+      
     this.events.subscribe('loggedin', ()=>{
       this.showButton = true;  
       this.token = localStorage.getItem('token');
@@ -45,6 +50,7 @@ export class AppComponent {
       this.showButton = false;   
       this.token = localStorage.removeItem('token');
     })
+   
     this.initializeApp();
   }
 

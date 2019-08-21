@@ -1,23 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Events } from '@ionic/angular';
 import { environment } from '../../environments/environment';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Events } from '@ionic/angular';
 import { ProductsService } from '../products.service';
+import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-category',
-  templateUrl: './category.page.html',
-  styleUrls: ['./category.page.scss'],
+  selector: 'app-subcategorylist',
+  templateUrl: './subcategorylist.page.html',
+  styleUrls: ['./subcategorylist.page.scss'],
 })
-export class CategoryPage implements OnInit {
+export class SubcategorylistPage implements OnInit {
 
+  category_id: any;
   imgURl: any;
   cartcount: any;
   cartDetails: any;
   private imageUrl = environment.imageUrl;
   getallcategories:any=[];
-  constructor(private router: Router,public events: Events,public productservice:ProductsService) {
-    this.getCategory();
+  getallsubcategory:any=[];
+  constructor(private location:Location,private router: Router,public events: Events,public productservice:ProductsService,private route: ActivatedRoute) {
+    this.category_id = route.snapshot.paramMap.get('id');
+    this.getsubCategory(this.category_id);
    }
 
   ngOnInit() {
@@ -28,7 +32,8 @@ export class CategoryPage implements OnInit {
     this.imgURl = this.imageUrl;
   }
   ionViewWillEnter(){
-    this.getCategory();
+    this.category_id = this.route.snapshot.paramMap.get('id');
+    this.getsubCategory(this.category_id);
     this.events.subscribe('cart', ()=>{
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
       if(this.cartDetails){
@@ -36,11 +41,11 @@ export class CategoryPage implements OnInit {
       }
     })
   }
-  getCategory(){
+  getsubCategory(category_id){
     this.productservice.presentLoading();
-    this.productservice.getCategoryList()
-    .subscribe(category =>{ 
-      this.getallcategories = category.data;
+    this.productservice.getsubcategory(category_id)
+    .subscribe(product =>{ 
+      this.getallsubcategory = product.data;
       this.productservice.loadingdismiss();
     },
     err =>{
@@ -48,14 +53,13 @@ export class CategoryPage implements OnInit {
       this.productservice.presentToast(err.error.message);
    })
   }
-  back(){
-    this.router.navigate(['/dashboard']);
-    
-  }
   viewcart(){
     this.router.navigate(['/viewcartproduct']);
   }
   getsubcategory(id){
-      this.router.navigate(['/subcategorylist',{"id":id}],{skipLocationChange: true});
+    this.router.navigate(['/productbycategory',{"id":id}],{skipLocationChange: true});
+  }
+  back(){
+    this.location.back();
   }
 }

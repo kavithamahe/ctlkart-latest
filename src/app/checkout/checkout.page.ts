@@ -80,7 +80,13 @@ export class CheckoutPage implements OnInit {
         let token = localStorage.setItem("token", data['refreshToken']);
         localStorage.setItem("user_id", data['userid']);
         this.events.publish('loggedin');
-        this.router.navigate(['proceedcheckout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
+        if(this.fromcart || this.singleid){
+          this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
+        }
+        else{
+          this.router.navigate(['dashboard']);
+        }
+        
       },
       err =>{
         if(err.status == 401){

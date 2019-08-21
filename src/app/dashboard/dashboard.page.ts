@@ -43,13 +43,13 @@ export class DashboardPage implements OnInit  {
   }
 
   ngOnInit() {
-   this.router.events.subscribe((e: any) => {
-      // If it is a NavigationEnd event re-initalise the component
-      if (e instanceof NavigationEnd) {
-        this.getproductList();
-        console.log("DashboardContainerComponent.onNavigationEnd()");
-      }
-    });
+  //  this.router.events.subscribe((e: any) => {
+  //     // If it is a NavigationEnd event re-initalise the component
+  //     if (e instanceof NavigationEnd) {
+  //       this.getproductList();
+  //       console.log("DashboardContainerComponent.onNavigationEnd()");
+  //     }
+  //   });
   
     this.imgURl = this.imageUrl;
     this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
@@ -91,7 +91,7 @@ export class DashboardPage implements OnInit  {
     },
     err =>{
       this.productservice.loadingdismiss();
-      this.productservice.presentToast(err.error.message);
+      this.productservice.presentToast(err.error.message); 
    })
   }
   getsubsubcategory(){
@@ -105,7 +105,7 @@ export class DashboardPage implements OnInit  {
    })
   }
   filterbyCategory(id){
-    this.router.navigate(['/productbycategory',{"id":id}],{skipLocationChange: true});
+    this.router.navigate(['/subcategorylist',{"id":id}],{skipLocationChange: true});
   }
 
   doRefresh(event){

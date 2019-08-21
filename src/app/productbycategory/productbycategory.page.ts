@@ -3,6 +3,7 @@ import { ProductsService } from '../products.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { Events } from '@ionic/angular';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-productbycategory',
@@ -10,12 +11,12 @@ import { Events } from '@ionic/angular';
   styleUrls: ['./productbycategory.page.scss'],
 })
 export class ProductbycategoryPage implements OnInit {
+  subcategory_id: string;
   getsubcategorylocal: any;
   cartcount: any;
   cartDetails: any;
   private imageUrl = environment.imageUrl;
   imgURl: any;
-  category_id: any;
   getProductLists:any=[];
   sortby = { level: ''};
   sliderConfig = {
@@ -25,10 +26,9 @@ export class ProductbycategoryPage implements OnInit {
     loop:true
   };
   getallsubcategory:any=[];
-  constructor(public events: Events,public productservice:ProductsService,public router: Router,private route: ActivatedRoute) { 
-    this.category_id = route.snapshot.paramMap.get('id');
-    this.filterbyCategory(this.category_id,'','');
-    this.getsubcategories(this.category_id);
+  constructor(private location:Location,public events: Events,public productservice:ProductsService,public router: Router,private route: ActivatedRoute) { 
+    this.subcategory_id = route.snapshot.paramMap.get('id');
+    this.getproductbysubcategory(this.subcategory_id);
   }
 
   ngOnInit() {
@@ -45,15 +45,26 @@ export class ProductbycategoryPage implements OnInit {
         this.cartcount = this.cartDetails.length;
       }
     })
-    this.category_id = this.route.snapshot.paramMap.get('id');
-    this.filterbyCategory(this.category_id,'','');
-    this.getsubcategories(this.category_id);
+    this.subcategory_id = this.route.snapshot.paramMap.get('id');
+    this.getproductbysubcategory(this.subcategory_id);
   }
-  getsubcategories(category_id){
+  // getsubcategories(category_id){
+  //   this.productservice.presentLoading();
+  //   this.productservice.getsubcategory(category_id)
+  //   .subscribe(product =>{ 
+  //     this.getallsubcategory = product.data;
+  //     this.productservice.loadingdismiss();
+  //   },
+  //   err =>{
+  //     this.productservice.loadingdismiss();
+  //     this.productservice.presentToast(err.error.message);
+  //  })
+  // }
+  getproductbysubcategory(subcategory_id){
     this.productservice.presentLoading();
-    this.productservice.getsubcategory(category_id)
+    this.productservice.getproductlist("",subcategory_id,"","")
     .subscribe(product =>{ 
-      this.getallsubcategory = product.data;
+      this.getProductLists = product.data;
       this.productservice.loadingdismiss();
     },
     err =>{
@@ -63,7 +74,7 @@ export class ProductbycategoryPage implements OnInit {
   }
   filterbyCategory(id,getsubcategorylocal,val){
     this.productservice.presentLoading();
-    this.productservice.getproductlist(id,getsubcategorylocal,val,'')
+    this.productservice.getproductlist("",getsubcategorylocal,val,'')
     .subscribe(product =>{ 
       this.getProductLists = product.data;
       this.productservice.loadingdismiss();
@@ -73,27 +84,30 @@ export class ProductbycategoryPage implements OnInit {
       this.productservice.presentToast(err.error.message);
    })
   }
-  filterbySubategory(subcategory_id){
-    localStorage.setItem('key',subcategory_id);
-    this.productservice.presentLoading();
-    this.productservice.getproductlist(this.category_id,subcategory_id,'','')
-    .subscribe(product =>{ 
-      this.getProductLists = product.data;
-      this.productservice.loadingdismiss();
-    },
-    err =>{
-      this.productservice.loadingdismiss();
-      this.productservice.presentToast(err.error.message);
-   })
-  }
+  // filterbySubategory(subcategory_id){
+  //   localStorage.setItem('key',subcategory_id);
+  //   this.productservice.presentLoading();
+  //   this.productservice.getproductlist(this.category_id,subcategory_id,'','')
+  //   .subscribe(product =>{ 
+  //     this.getProductLists = product.data;
+  //     this.productservice.loadingdismiss();
+  //   },
+  //   err =>{
+  //     this.productservice.loadingdismiss();
+  //     this.productservice.presentToast(err.error.message);
+  //  })
+  // }
   viewsingleproduct(id){
     this.router.navigate(['/viewsingleproduct',{"id":id}]);
   }
   sorybyvalue(val){
     this.getsubcategorylocal = localStorage.getItem('key');
-    this.filterbyCategory(this.category_id,this.getsubcategorylocal,val);
+    this.filterbyCategory('',this.getsubcategorylocal,val);
   }
   viewcart(){
     this.router.navigate(['/viewcartproduct']);
+  }
+  back(){
+    this.location.back();
   }
 }

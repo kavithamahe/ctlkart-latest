@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>otpverification</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-item>
+        <ion-label position="floating">OTP</ion-label>
+        <ion-input [(ngModel)]="mobileotp.firebasemobileotp"></ion-input>
+      </ion-item>
+      <div class="ion-padding">
+          <ion-button expand="block" (click)="otpsubmit()" class="ion-no-margin">Submit</ion-button>
+        </div>
+</ion-content>

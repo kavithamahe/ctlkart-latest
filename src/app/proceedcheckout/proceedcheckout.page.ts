@@ -26,7 +26,7 @@ export class ProceedcheckoutPage implements OnInit {
   private imageUrl = environment.imageUrl;
   quantity: string;
   singleid: any;
-  checkoutForm: FormGroup;
+  
   submitAttempt: boolean = false;
   addaddress:boolean = false;
   getsingleProductList:any=[];
@@ -54,7 +54,6 @@ export class ProceedcheckoutPage implements OnInit {
     if(this.cartDetails){
       this.cartcount = this.cartDetails.length;
     }
-    this.initForm();
     this.user_id = localStorage.getItem("user_id");
   }
   ionViewWillEnter(){
@@ -77,26 +76,8 @@ export class ProceedcheckoutPage implements OnInit {
     this.user_id = localStorage.getItem("user_id");
     this.allgetAddress(this.user_id);
   }
-  initForm(){
-    this.checkoutForm = this.formBuilder.group({
-      first_name: ['', Validators.compose([Validators.required])],
-      last_name: ['', Validators.compose([Validators.required])],
-      email: ['', Validators.compose([Validators.required])],
-      mobilenumber: ['', Validators.compose([Validators.required])],
-      address: ['', Validators.compose([Validators.required])],
-      landmark: [''],
-      city: ['', Validators.compose([Validators.required])],
-      state: ['', Validators.compose([Validators.required])],
-      zipcode: ['', Validators.compose([Validators.required])]
-     
-       });
-  }
-  addAddress(){
-    this.addaddress = true;
-  }
-  cancel(){
-    this.addaddress = false;
-  }
+
+ 
   allgetAddress(user_id){
     this.productservice.presentLoading();
     this.productservice.getaddress(user_id)
@@ -140,22 +121,7 @@ export class ProceedcheckoutPage implements OnInit {
       this.totalprice = (this.price * this.item_qty);
     }
     }
-    submitaddress(){
-    let user_id = {"user_id":this.user_id};
-    let obj = Object.assign(this.checkoutForm.value,user_id);
-    this.productservice.presentLoading();
-      this.productservice.addaddress(obj)
-    .subscribe(product =>{ 
-      this.productservice.loadingdismiss();
-      this.addaddress = false;
-      this.allgetAddress(this.user_id);
-    },
-    err =>{
-      this.productservice.loadingdismiss();
-      this.productservice.presentToast(err.error.message);
-   })
   
-    }
     radioSelects(event,id) {
       this.customer_id = id;
     }
