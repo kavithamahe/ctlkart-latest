@@ -255,7 +255,7 @@ export class ViewcartproductPage implements OnInit {
     this.productLists = (JSON.parse(localStorage.getItem('cart_items')))
     console.log(this.productLists);
     if(this.token){
-      this.router.navigate(['proceedcheckout',{"fromcart":"1","productLists":this.productLists,"totalamount":this.totalamount}]);
+      this.router.navigate(['address',{"fromcart":"1","productLists":this.productLists,"totalamount":this.totalamount}]);
     }
     else{
       this.router.navigate(['checkout',{"fromcart":"1"}]);

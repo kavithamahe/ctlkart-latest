@@ -95,8 +95,13 @@ export class AddressPage implements OnInit {
      })
     }
     next(){
+      if(this.customer_id){
       this.router.navigate(['proceedcheckout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
+      }
+      else{
+        this.productservice.presentToast("Please Select the delivery address");
     }
+  }
     back(){
       this.location.back();
     }

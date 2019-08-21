@@ -131,7 +131,7 @@ export class ViewsingleproductPage implements OnInit {
     }
     else{
       if(this.token){
-        this.router.navigate(['proceedcheckout',{"id":id,"quantity":item_qty}]);
+        this.router.navigate(['address',{"id":id,"quantity":item_qty}]);
       }
       else{
     this.router.navigate(['checkout',{"id":id,"quantity":item_qty}]);
