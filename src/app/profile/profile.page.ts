@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../products.service';
-import { Events } from '@ionic/angular';
+import { Events, AlertController } from '@ionic/angular';
 import { Location } from '@angular/common';
 
 @Component({
@@ -17,10 +17,9 @@ export class ProfilePage implements OnInit {
   user_id: any;
   getprofile:any=[];
   getaddresslist:any=[];
-  constructor(private location:Location,public events: Events,private route: ActivatedRoute,private router: Router,public productservice:ProductsService) { 
+  constructor(private location:Location,public alertController: AlertController,public events: Events,private route: ActivatedRoute,private router: Router,public productservice:ProductsService) { 
     this.user_id = localStorage.getItem("user_id");
     this.getprofileDetail(this.user_id);
-    this.getAddress(this.user_id);
   }
 
   ngOnInit() {
@@ -28,7 +27,6 @@ export class ProfilePage implements OnInit {
   ionViewWillEnter(){
     this.user_id = localStorage.getItem("user_id");
     this.getprofileDetail(this.user_id);
-    this.getAddress(this.user_id);
   }
   getprofileDetail(user_id){
     this.productservice.presentLoading();
@@ -45,18 +43,7 @@ export class ProfilePage implements OnInit {
       this.productservice.presentToast(err.error.message);
    })
   }
-  getAddress(user_id){
-    this.productservice.presentLoading();
-    this.productservice.getaddress(user_id)
-    .subscribe(profile =>{ 
-      this.getaddresslist = profile.data;
-      this.productservice.loadingdismiss();
-    },
-    err =>{
-      this.productservice.loadingdismiss();
-      this.productservice.presentToast(err.error.message);
-   })
-  }
+ 
   logout() {
     this.events.publish('loggedout');
     localStorage.removeItem('token');
@@ -64,7 +51,30 @@ export class ProfilePage implements OnInit {
     this.router.navigate(['']);
 
 }
-deleteaccount(){
+async deleteaccount() {
+  const alert = await this.alertController.create({
+    header: '',
+    message: 'Are you sure want to remove from ctlkart!!!',
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: (blah) => {
+          console.log('Confirm Cancel: blah');
+        }
+      }, {
+        text: 'Okay',
+        handler: () => {
+          this.deleteaccountconfirm();
+        }
+      }
+    ]
+  });
+
+  await alert.present();
+}
+deleteaccountconfirm(){
   this.productservice.presentLoading();
   this.productservice.removeaccount(this.user_id)
   .subscribe(profile =>{ 
@@ -83,21 +93,13 @@ deleteaccount(){
   editProfile(){
     this.router.navigate(['editprofile']);
   }
-  editaddress(id){
-    this.router.navigate(['editprofile',{"type":"address","id":id}]);
+ 
+ 
+  changepassword(){
+    this.router.navigate(['changepasword']);
   }
-  removeaddress(id){
-    this.productservice.presentLoading();
-    this.productservice.removeaddress(id)
-    .subscribe(profile =>{ 
-      this.productservice.loadingdismiss();
-      this.productservice.presentToast(profile.message);
-      this.getAddress(this.user_id);
-    },
-    err =>{
-      this.productservice.loadingdismiss();
-      this.productservice.presentToast(err.error.message);
-   })
+  address(){
+    this.router.navigate(['getaddress']);
   }
   back(){
     this.location.back();

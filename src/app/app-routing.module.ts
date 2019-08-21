@@ -35,7 +35,8 @@ const routes: Routes = [
   // ..................................tabs end.......................
   { path: 'subcategorylist', loadChildren: './subcategorylist/subcategorylist.module#SubcategorylistPageModule' },
   { path: 'otpverification', loadChildren: './otpverification/otpverification.module#OtpverificationPageModule' },
-  { path: 'address', loadChildren: './address/address.module#AddressPageModule' }
+  { path: 'address', loadChildren: './address/address.module#AddressPageModule' },  { path: 'getaddress', loadChildren: './getaddress/getaddress.module#GetaddressPageModule' }
+
 
 
 

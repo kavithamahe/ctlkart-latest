@@ -4,7 +4,7 @@ import { HttpClient,HttpHeaders  } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ToastController,LoadingController } from '@ionic/angular';
+import { ToastController,LoadingController, AlertController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class ProductsService {
   headers: any;
   options: any;
   isLoading = false;
-  constructor(private http : HttpClient,public toastController: ToastController,public loadingController: LoadingController) {
+  constructor(private http : HttpClient,public toastController: ToastController,public alertController: AlertController,public loadingController: LoadingController) {
     this.token=localStorage.getItem("token");
     this.headers = new HttpHeaders();
     this.headers = this.headers.append('Content-Type', 'application/json');
@@ -167,5 +167,15 @@ export class ProductsService {
   async loadingdismiss() {
     this.isLoading = false;
     return await this.loadingController.dismiss().then(() => console.log('dismissed'));
+  }
+  async presentAlert(message) {
+    const alert = await this.alertController.create({
+      // header: 'Alert',
+      // subHeader: 'Subtitle',
+      message: message,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 }

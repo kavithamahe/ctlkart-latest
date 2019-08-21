@@ -22,73 +22,11 @@
                 <div class="listed-profiles" color="mistyrose">
                         <p>{{email}}</p>
                         <p>{{mobile}}</p>
-                        <p>Change Password</p>
-                        <p>Delivered Addresses</p>
+                        <p (click)="changepassword()">Change Password</p>
+                        <p (click)="address()">Delivered Addresses</p>
                         <p (click)="logout()">Logout</p>
                         <p (click)="deleteaccount()">Delete Account</p>
                 </div>
         </div>
-
-
-    <!-- <ion-grid>
-        <ion-row style="border-bottom: 1px solid #feb931;">
-            <ion-col size="9">
-                <p>{{name}}</p>
-            </ion-col>
-            <ion-col size="3">
-                <button style="padding:15px;" color="warning" shape="circle" (click)="editname()">
-              <ion-ripple-effect></ion-ripple-effect>
-              <i class="fa fa-pencil"></i>
-          </button>
-            </ion-col>
-        </ion-row>
-        <br>
-        <ion-row style="border-bottom: 1px solid #feb931;">
-            <ion-col size="9">
-                <p>{{email}}</p>
-            </ion-col>
-            <ion-col size="3">
-                <button style="padding:15px;" color="warning" shape="circle" (click)="editemail()">
-                <ion-ripple-effect></ion-ripple-effect>
-                <i class="fa fa-pencil"></i>
-            </button>
-            </ion-col>
-        </ion-row>
-        <br>
-        <ion-row style="border-bottom: 1px solid #feb931;">
-            <ion-col size="9">
-                <p>{{mobile}}</p>
-            </ion-col>
-            <ion-col size="3">
-                <button style="padding:15px;" color="warning" shape="circle" (click)="editmobile()">
-                  <ion-ripple-effect></ion-ripple-effect>
-                  <i class="fa fa-pencil"></i>
-              </button>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-    <ion-grid *ngFor="let address of getaddresslist">
-        <ion-row style="border-bottom: 1px solid #feb931;">
-            <ion-row>
-                <ion-col>
-                    <p>{{address.address}}, {{address.landmark}}, {{address.city}}, {{address.state}} - {{address.zipcode}}</p>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col size="6">
-                    <button style="padding:15px;" color="warning" shape="circle" (click)="editaddress(address.id)">
-              <ion-ripple-effect></ion-ripple-effect>
-              <i class="fa fa-pencil"></i>
-          </button>
-                </ion-col>
-                <ion-col size="6">
-                    <button style="padding:15px;" color="danger" shape="circle" (click)="removeaddress(address.id)">
-              <ion-ripple-effect></ion-ripple-effect>
-              <i class="fa fa-trash"></i>
-          </button>
-                </ion-col>
-            </ion-row>
-        </ion-row>
-    </ion-grid> -->
 
 </ion-content>

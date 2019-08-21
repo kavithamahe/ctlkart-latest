@@ -28,13 +28,7 @@ export class RegisterPage implements OnInit {
       firstname: ['', Validators.compose([Validators.required])],
       lastname: ['', Validators.compose([Validators.required])],
       email: ['', Validators.compose([Validators.required])],
-      // gender: ['', Validators.compose([Validators.required])],
       mobile: ['', Validators.compose([Validators.required])],
-      // addressline1: ['', Validators.compose([Validators.required])],
-      // addressline2: ['', Validators.compose([Validators.required])],
-      // city: ['', Validators.compose([Validators.required])],
-      // state: ['', Validators.compose([Validators.required])],
-      // zipcode: ['', Validators.compose([Validators.required])],
       password: ['', Validators.compose([Validators.required])],
      
        });
@@ -49,6 +43,7 @@ export class RegisterPage implements OnInit {
       this.submitAttempt = false;
       this.productservice.userregister(obj).subscribe(data =>{
         this.productservice.loadingdismiss();
+        this.registerForm.reset();
         const phoneNumberString = "+91" + this.registerForm.value.mobile;
 
         // this.firebaseAuthentication.verifyPhoneNumber(phoneNumberString, 30000)

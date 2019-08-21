@@ -13,7 +13,7 @@
     </ion-header>
 
 <ion-content>
-  
+  <div *ngIf = "type != 'address'">
     <ion-grid>
         <ion-row>
             <ion-col size="12">
@@ -23,7 +23,7 @@
                             <ion-label class="deliveryLabel">Delivery Address</ion-label>
                         </ion-list-header>
                         <ion-item *ngFor="let address of getalladdress">
-                            <ion-label style="white-space: normal !important;">{{address.first_name}},{{address.address}},{{address.city}},{{address.state}}</ion-label>
+                            <ion-label style="white-space: normal !important;">{{address.address}},{{address.city}},{{address.state}}</ion-label>
                             <ion-radio (ionSelect)="radioSelects($event,address.id)" slot="start" value="{{address.first_name}},{{address.address}},{{address.city}},{{address.state}}"></ion-radio>
                         </ion-item>
                     </ion-radio-group>
@@ -37,38 +37,9 @@
     <div class="ion-padding">
         <ion-button expand="block" (click)="next()" color="dark" class="ion-no-margin">Next</ion-button>
     </div>
+    </div>
     <form [formGroup]="checkoutForm" *ngIf="addaddress">
         <ion-list lines="full" class="ion-no-margin ion-no-padding">
-            <ion-item>
-                <ion-label position="stacked">First Name
-                    <ion-text color="danger">*</ion-text>
-                </ion-label>
-                <ion-input formControlName="first_name" required type="text"></ion-input>
-            </ion-item>
-            <p *ngIf="!checkoutForm.controls.first_name.valid && (checkoutForm.controls.first_name.dirty || submitAttempt)" class="err-reds shake">Please enter name.</p>
-
-            <ion-item>
-                <ion-label position="stacked">Last Name
-                    <ion-text color="danger">*</ion-text>
-                </ion-label>
-                <ion-input required type="text" formControlName="last_name"></ion-input>
-            </ion-item>
-            <p *ngIf="!checkoutForm.controls.last_name.valid && (checkoutForm.controls.last_name.dirty || submitAttempt)" class="err-reds shake">Please enter name.</p>
-            <ion-item>
-                <ion-label position="stacked">Email
-                    <ion-text color="danger">*</ion-text>
-                </ion-label>
-                <ion-input required type="email" formControlName="email"></ion-input>
-            </ion-item>
-            <p *ngIf="!checkoutForm.controls.email.valid && (checkoutForm.controls.email.dirty || submitAttempt)" class="err-reds shake">Please enter name.</p>
-
-            <ion-item>
-                <ion-label position="stacked">Mobile Number
-                    <ion-text color="danger">*</ion-text>
-                </ion-label>
-                <ion-input required type="number" formControlName="mobilenumber"></ion-input>
-            </ion-item>
-            <p *ngIf="!checkoutForm.controls.mobilenumber.valid && (checkoutForm.controls.mobilenumber.dirty || submitAttempt)" class="err-reds shake">Please enter name.</p>
 
             <ion-item>
                 <ion-label position="stacked">Address
@@ -106,7 +77,7 @@
     </form>
     <div class="ion-padding" *ngIf="addaddress">
         <ion-item>
-            <ion-button expand="block" (click)="cancel()" color="danger" class="ion-no-margin">Cancel</ion-button>
+            <ion-button *ngIf = "type != 'address'" expand="block" (click)="cancel()" color="danger" class="ion-no-margin">Cancel</ion-button>
             <ion-button expand="block" (click)="submitaddress()" color="warning" slot="end" class="ion-no-margin">Save And Deliver Here</ion-button>
         </ion-item>
     </div>

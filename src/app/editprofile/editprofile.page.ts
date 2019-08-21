@@ -10,6 +10,11 @@ import {Location} from '@angular/common';
   styleUrls: ['./editprofile.page.scss'],
 })
 export class EditprofilePage implements OnInit {
+  zipcode: string;
+  state: string;
+  city: string;
+  landmark: any;
+  address: any;
   id: any;
   param: string;
   mobile: any;
@@ -48,8 +53,13 @@ export class EditprofilePage implements OnInit {
   getsingleaddress(id){
     this.productservice.presentLoading();
     this.productservice.viewsingleaddress(id)
-    .subscribe(address =>{ 
-      this.getaddress = address.data;
+    .subscribe(getsinaddress =>{ 
+      this.getaddress = getsinaddress.data;
+      this.address = this.getaddress.address;
+      this.landmark = this.getaddress.landmark;
+      this.city = this.getaddress.city;
+      this.state = this.getaddress.state;
+      this.zipcode = this.getaddress.zipcode;
       this.productservice.loadingdismiss();
     },
     err =>{
@@ -105,8 +115,40 @@ export class EditprofilePage implements OnInit {
    })
   }
   editaddress(id){
+    if(this.addresss.address == ""){
+      this.address = this.address;
+    }
+    else{
+      this.address = this.addresss.address;
+    }
+    if(this.addresss.landmark == ""){
+      this.landmark = this.landmark;
+    }
+    else{
+      this.landmark = this.addresss.landmark;
+    }
+    if(this.addresss.city == ""){
+      this.city = this.city;
+    }
+    else{
+      this.city = this.addresss.city;
+    }
+    if(this.addresss.state == ""){
+      this.state = this.state;
+    }
+    else{
+      this.state = this.addresss.state;
+    }
+    if(this.addresss.zipcode == ""){
+      this.zipcode = this.zipcode;
+    }
+    else{
+      this.zipcode = this.addresss.zipcode;
+    }
     this.productservice.presentLoading();
-    this.productservice.editaddress(id,this.addresss)
+    let addressedit = {"address":this.address,"landmark":this.addresss.landmark,"city":this.addresss.city,
+    "state":this.addresss.state,"zipcode":this.addresss.zipcode}
+    this.productservice.editaddress(id,addressedit)
     .subscribe(editadd =>{ 
       this.productservice.loadingdismiss();
       this.productservice.presentToast(editadd.message);
