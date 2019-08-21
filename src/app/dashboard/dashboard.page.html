@@ -31,25 +31,21 @@
         </ion-slides>
     </div>
     <div>
-        <ion-grid>
-            <ion-row>
-                <ion-col size="6" *ngFor="let cat of getallcategories">
+            <ion-slides [options]="sliderConfig">
+                <ion-slide *ngFor="let cat of getallcategories">
                     <img (click)="filterbyCategory(cat.category_id)" [src]="imgURl + cat.category_image" />
                     <ion-label (click)="filterbyCategory(cat.category_id)">{{cat.category_name}}</ion-label>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-        <!-- <ion-grid>
-            <ion-row>
-                <ion-col size="6" *ngFor="let product of getProductLists">
-                    <img [src]="imgURl + product.product_image" (click)="viewsingleproduct(product.id)" />
-                    <ion-label (click)="viewsingleproduct(product.id)">{{product.product_name}}</ion-label>
-                    <p (click)="viewsingleproduct(product.id)"><i class="fa fa-inr"></i>{{product.price | number : '1.2-2'}}</p>
-                </ion-col>
-            </ion-row>
-        </ion-grid> -->
+                </ion-slide>
+            </ion-slides>
     </div>
-
+    <div>
+            <ion-slides [options]="sliderConfig">
+                    <ion-slide *ngFor="let product of getProductLists">
+                            <img [src]="imgURl + product.product_image" (click)="viewsingleproduct(product.id)" />
+                            <ion-label (click)="viewsingleproduct(product.id)">{{product.product_name}}</ion-label>
+                    </ion-slide>
+                </ion-slides>
+    </div>
 
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
