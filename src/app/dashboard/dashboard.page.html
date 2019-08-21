@@ -34,7 +34,7 @@
             <ion-slides [options]="sliderConfig">
                 <ion-slide *ngFor="let cat of getallcategories">
                     <img (click)="filterbyCategory(cat.category_id)" [src]="imgURl + cat.category_image" />
-                    <ion-label (click)="filterbyCategory(cat.category_id)">{{cat.category_name}}</ion-label>
+                    <p (click)="filterbyCategory(cat.category_id)">{{cat.category_name}}</p>
                 </ion-slide>
             </ion-slides>
     </div>
@@ -42,7 +42,7 @@
             <ion-slides [options]="sliderConfig">
                     <ion-slide *ngFor="let product of getProductLists">
                             <img [src]="imgURl + product.product_image" (click)="viewsingleproduct(product.id)" />
-                            <ion-label (click)="viewsingleproduct(product.id)">{{product.product_name}}</ion-label>
+                            <p (click)="viewsingleproduct(product.id)">{{product.product_name}}</p>
                     </ion-slide>
                 </ion-slides>
     </div>
