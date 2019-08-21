@@ -4,6 +4,7 @@ import { ProductsService } from '../products.service';
 import { Router } from '@angular/router';
 import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
 import { AlertController } from '@ionic/angular';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-register',
@@ -14,25 +15,26 @@ export class RegisterPage implements OnInit {
   registerForm: FormGroup;
   submitAttempt: boolean = false;
   verificationId: any;
-  constructor(public firebaseAuthentication:FirebaseAuthentication,private alertCtrl: AlertController,private router: Router,public formBuilder: FormBuilder,public productservice:ProductsService) { 
+  constructor(public firebaseAuthentication:FirebaseAuthentication,private _location: Location, private alertCtrl: AlertController,private router: Router,public formBuilder: FormBuilder,public productservice:ProductsService) { 
 
   }
 
   ngOnInit() {
     this.initForm();
   }
+
   initForm(){
     this.registerForm = this.formBuilder.group({
       firstname: ['', Validators.compose([Validators.required])],
       lastname: ['', Validators.compose([Validators.required])],
       email: ['', Validators.compose([Validators.required])],
-      gender: ['', Validators.compose([Validators.required])],
+      // gender: ['', Validators.compose([Validators.required])],
       mobile: ['', Validators.compose([Validators.required])],
-      addressline1: ['', Validators.compose([Validators.required])],
-      addressline2: ['', Validators.compose([Validators.required])],
-      city: ['', Validators.compose([Validators.required])],
-      state: ['', Validators.compose([Validators.required])],
-      zipcode: ['', Validators.compose([Validators.required])],
+      // addressline1: ['', Validators.compose([Validators.required])],
+      // addressline2: ['', Validators.compose([Validators.required])],
+      // city: ['', Validators.compose([Validators.required])],
+      // state: ['', Validators.compose([Validators.required])],
+      // zipcode: ['', Validators.compose([Validators.required])],
       password: ['', Validators.compose([Validators.required])],
      
        });
@@ -69,6 +71,15 @@ export class RegisterPage implements OnInit {
      })
     }
   }
+
+  back(){
+    this._location.back();
+  }
+
+  Login(){
+    this.router.navigateByUrl('/checkout');
+  }
+
   // async alert(verificationId){
   //   const prompt = await this.alertCtrl.create({
   //     header: 'Enter the Confirmation code',
