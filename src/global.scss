@@ -226,3 +226,40 @@ ion-menu {
     }
 }
 
+.button-native {
+    width: 22px !important;
+    margin: 0 !important;
+    padding: 0!important;
+}
+
+app-dashboard {
+    ion-header {
+        box-shadow: none;
+        ion-toolbar {
+            ion-title {
+                padding-left: 15px !important;
+                color: #000;
+                text-transform: capitalize;
+                font-size: 22px !important;
+                font-weight: 800;
+                padding: 10px 0px 0px 15px;
+            }
+            ion-searchbar {
+                background-color: #fff !important;
+                margin: 7px 10px 15px;
+                border-radius: 30px;
+                box-shadow: 3px 5px 20px rgba(0, 0, 0, 0.08);
+                height: 48px;
+                width: 95% !important;
+                .searchbar-input-container {
+                    input {
+                        box-shadow: none !important;
+                    }
+                    ion-icon {
+                        color: #feb82b;
+                    }
+                }
+            }
+        }
+    }
+}
