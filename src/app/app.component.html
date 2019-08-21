@@ -10,10 +10,8 @@
                 <ion-item (click)="home()">Home</ion-item>
                 <ion-item (click)="shopbycategory()">Shop By Category</ion-item>
                 <ion-item (click)="getmyorders()" *ngIf="showButton || token">Order History</ion-item>
-                <!-- <ion-item (click)="viewaccount()" *ngIf="showButton || token">My Account</ion-item> -->
                 <ion-item (click)="viewaccount()">Term & condtions</ion-item>
                 <ion-item (click)="viewaccount()">Help</ion-item>
-                <!-- <ion-item (click)="changepassword()" *ngIf="showButton || token">Change Password</ion-item> -->
                 <ion-item (click)="logout()" *ngIf="showButton || token">Logout</ion-item>
                 <ion-item (click)="login()" *ngIf="login_status || !token">Login</ion-item>
             </ion-list>
@@ -22,36 +20,37 @@
 
     <ion-router-outlet main></ion-router-outlet>
 
-    <ion-tabs *ngIf = "tabsbar">
+    <ion-tabs *ngIf="tabsbar">
 
         <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="dashboard">
-      <ion-icon name="flash"></ion-icon>
-       <ion-label>Home</ion-label>
-       </ion-tab-button>
-        
-         <ion-tab-button tab="category">
-       <ion-icon name="apps"></ion-icon>
-        <ion-label>Shop</ion-label>
-         </ion-tab-button>
-        
-         <ion-tab-button tab="viewcartproduct">
-        <ion-badge id="cart-badge" color="danger">{{cartcount}}</ion-badge>
-        <ion-icon name="send"></ion-icon>
-        <ion-label>Cart</ion-label>
-         </ion-tab-button>
-         <ion-tab-button tab="profile" *ngIf ="token">
-            <ion-icon name="send"></ion-icon>
-            <ion-label>Profile</ion-label>
-        </ion-tab-button>
-        <ion-tab-button tab="checkout" *ngIf ="!token">
-                <ion-icon name="send"></ion-icon>
-                <ion-label>Profile</ion-label>
-        </ion-tab-button>
-        <ion-tab-button>
+            <ion-tab-button tab="dashboard">
+                <ion-icon name="home"></ion-icon>
+                <p class="tab-list">Home</p>
+            </ion-tab-button>
+
+            <ion-tab-button tab="category">
+                <ion-icon name="cube"></ion-icon>
+                <p class="tab-list">Category</p>
+            </ion-tab-button>
+
+            <ion-tab-button tab="viewcartproduct">
+                <ion-badge id="cart-badge" color="danger">{{cartcount}}</ion-badge>
+                <ion-icon name="basket"></ion-icon>
+                <p class="tab-list">Cart</p>
+            </ion-tab-button>
+            <ion-tab-button tab="profile" *ngIf="token">
+                <ion-icon name="person"></ion-icon>
+                <p class="tab-list">Profile</p>
+            </ion-tab-button>
+            <ion-tab-button tab="checkout" *ngIf="!token">
+                <ion-icon name="person"></ion-icon>
+                <p class="tab-list">Profile</p>
+            </ion-tab-button>
+            <ion-tab-button>
                 <ion-menu-button autoHide="false"></ion-menu-button>
-        </ion-tab-button>
-         </ion-tab-bar>
-        
-        </ion-tabs>
+                <p class="tab-list">More</p>
+            </ion-tab-button>
+        </ion-tab-bar>
+
+    </ion-tabs>
 </ion-app>
