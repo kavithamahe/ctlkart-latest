@@ -4,6 +4,7 @@ import {Router, ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../products.service';
 import { environment } from '../../environments/environment';
 import { Events } from '@ionic/angular';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -34,7 +35,7 @@ export class ProceedcheckoutPage implements OnInit {
   getalladdress:any =[];
   address = { addvalue: ''};
 
-  constructor(public events: Events,public formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,public productservice:ProductsService) {
+  constructor(private location:Location,public events: Events,public formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,public productservice:ProductsService) {
     this.singleid = route.snapshot.paramMap.get('id');
     this.quantity = route.snapshot.paramMap.get('quantity');
     this.fromcart = route.snapshot.paramMap.get('fromcart');
@@ -168,5 +169,8 @@ export class ProceedcheckoutPage implements OnInit {
     }
     viewcart(){
       this.router.navigate(['/viewcartproduct']);
+    }
+    back(){
+      this.location.back();
     }
 }

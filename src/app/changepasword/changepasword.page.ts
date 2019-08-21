@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../products.service';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-changepasword',
@@ -9,7 +10,7 @@ import { ProductsService } from '../products.service';
 })
 export class ChangepaswordPage implements OnInit {
   password = {currentpassword:'',newpassword:'',confirmpassword:''};
-  constructor(private route: ActivatedRoute,private router: Router,public productservice:ProductsService) { }
+  constructor(private _location:Location,private route: ActivatedRoute,private router: Router,public productservice:ProductsService) { }
 
   ngOnInit() {
   }
@@ -26,4 +27,7 @@ export class ChangepaswordPage implements OnInit {
       this.productservice.presentToast(err.error.message);
    })
   }
+  back(){
+    this._location.back();
+}
 }

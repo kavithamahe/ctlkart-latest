@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Events } from '@ionic/angular';
 import { environment } from '../../environments/environment';
 import { ProductsService } from '../products.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-category',
@@ -16,7 +17,7 @@ export class CategoryPage implements OnInit {
   cartDetails: any;
   private imageUrl = environment.imageUrl;
   getallcategories:any=[];
-  constructor(private router: Router,public events: Events,public productservice:ProductsService) {
+  constructor(private location:Location,private router: Router,public events: Events,public productservice:ProductsService) {
     this.getCategory();
    }
 

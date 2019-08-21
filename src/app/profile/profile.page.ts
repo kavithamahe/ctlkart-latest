@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../products.service';
+import { Events } from '@ionic/angular';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +17,7 @@ export class ProfilePage implements OnInit {
   user_id: any;
   getprofile:any=[];
   getaddresslist:any=[];
-  constructor(private route: ActivatedRoute,private router: Router,public productservice:ProductsService) { 
+  constructor(private location:Location,public events: Events,private route: ActivatedRoute,private router: Router,public productservice:ProductsService) { 
     this.user_id = localStorage.getItem("user_id");
     this.getprofileDetail(this.user_id);
     this.getAddress(this.user_id);
@@ -55,14 +57,31 @@ export class ProfilePage implements OnInit {
       this.productservice.presentToast(err.error.message);
    })
   }
-  editname(){
-    this.router.navigate(['editprofile',{"param":"name","type":"personnal"}]);
-  }
-  editemail(){
-    this.router.navigate(['editprofile',{"param":"email","type":"personnal"}]);
-  }
-  editmobile(){
-    this.router.navigate(['editprofile',{"param":"mobile","type":"personnal"}]);
+  logout() {
+    this.events.publish('loggedout');
+    localStorage.removeItem('token');
+    localStorage.removeItem('cart_items');
+    this.router.navigate(['']);
+
+}
+deleteaccount(){
+  this.productservice.presentLoading();
+  this.productservice.removeaccount(this.user_id)
+  .subscribe(profile =>{ 
+    this.productservice.loadingdismiss();
+    this.productservice.presentToast(profile.message);
+    this.events.publish('loggedout');
+    localStorage.removeItem('token');
+    localStorage.removeItem('cart_items');
+    this.router.navigate(['']);
+  },
+  err =>{
+    this.productservice.loadingdismiss();
+    this.productservice.presentToast(err.error.message);
+ })
+}
+  editProfile(){
+    this.router.navigate(['editprofile']);
   }
   editaddress(id){
     this.router.navigate(['editprofile',{"type":"address","id":id}]);
@@ -79,5 +98,8 @@ export class ProfilePage implements OnInit {
       this.productservice.loadingdismiss();
       this.productservice.presentToast(err.error.message);
    })
+  }
+  back(){
+    this.location.back();
   }
 }

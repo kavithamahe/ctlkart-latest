@@ -72,6 +72,14 @@ export class ProductsService {
     const body= {"id":id};
     return this.http.post(this.apiUrl + 'removeaddress',body,{ headers:this.headers });
   }
+  removeaccount(id): Observable<any> {
+    this.token=localStorage.getItem("token");
+    this.headers = new HttpHeaders();
+    this.headers = this.headers.append('Content-Type', 'application/json');
+    this.headers= this.headers.append("Authorization", "Bearer " + this.token);
+    const body= {"id":id};
+    return this.http.post(this.apiUrl + 'deleteaccount',body,{ headers:this.headers });
+  }
   checkout(user_id,customer_id,product_id,amount,quantity): Observable<any> {
     const body= {"user_id":user_id,"customer_id":customer_id,"product_id":product_id,"payment_type":"offline",
   "amount":amount,"quantity":quantity};

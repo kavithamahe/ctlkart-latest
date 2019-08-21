@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../products.service';
+import {Location} from '@angular/common';
+
 
 @Component({
   selector: 'app-editprofile',
@@ -19,7 +21,7 @@ export class EditprofilePage implements OnInit {
   addresss= { address: '',landmark:'',city:'',state:'',zipcode:''};
   type:any;
   getaddress:any=[];
-  constructor(private route: ActivatedRoute,private router: Router,public productservice:ProductsService) { 
+  constructor(public location:Location,private route: ActivatedRoute,private router: Router,public productservice:ProductsService) { 
     this.user_id = localStorage.getItem("user_id");
     this.param = route.snapshot.paramMap.get('param');
     this.type = route.snapshot.paramMap.get('type');
@@ -115,5 +117,7 @@ export class EditprofilePage implements OnInit {
       this.productservice.presentToast(err.error.message);
    })
   }
-
+  back(){
+    this.location.back();
+  }
 }

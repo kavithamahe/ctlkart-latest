@@ -26,12 +26,15 @@ const routes: Routes = [
   { path: 'dashboard/category', loadChildren: './category/category.module#CategoryPageModule' },
   { path: 'dashboard/viewcartproduct', loadChildren: './viewcartproduct/viewcartproduct.module#ViewcartproductPageModule' },
   { path: 'dashboard/profile', loadChildren: './profile/profile.module#ProfilePageModule' },
+  { path: 'dashboard/checkout', loadChildren: './checkout/checkout.module#CheckoutPageModule' },
   { path: 'register/dashboard', loadChildren: './dashboard/dashboard.module#DashboardPageModule' },
   { path: 'register/category', loadChildren: './category/category.module#CategoryPageModule' },
   { path: 'register/viewcartproduct', loadChildren: './viewcartproduct/viewcartproduct.module#ViewcartproductPageModule' },
   { path: 'register/profile', loadChildren: './profile/profile.module#ProfilePageModule' },
+  { path: 'register/checkout', loadChildren: './checkout/checkout.module#CheckoutPageModule' },
   // ..................................tabs end.......................
-  { path: 'subcategorylist', loadChildren: './subcategorylist/subcategorylist.module#SubcategorylistPageModule' },  { path: 'otpverification', loadChildren: './otpverification/otpverification.module#OtpverificationPageModule' },
+  { path: 'subcategorylist', loadChildren: './subcategorylist/subcategorylist.module#SubcategorylistPageModule' },
+  { path: 'otpverification', loadChildren: './otpverification/otpverification.module#OtpverificationPageModule' },
   { path: 'address', loadChildren: './address/address.module#AddressPageModule' }
 
 
