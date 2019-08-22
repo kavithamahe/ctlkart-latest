@@ -1,28 +1,3 @@
-.registerBtn {
-    color: #666;
-    background: #fff;
-    width: 100%;
-    display: block;
-    padding: 5px 0;
-    text-align: center;
-    font-weight: 600;
-    margin: 20px 0 0 0;
-    font-size: 14px;
-    span {
-        color: #fca40f;
-        font-weight: 600;
-    }
-}
-
-.forgetPassword {
-    color: #000000;
-    padding: 10px 0 0;
-    display: block;
-    text-align: right;
-    font-weight: 500;
-    font-size: 14px;
-}
-
 ion-header {
     box-shadow: none;
     ion-buttons {
@@ -40,20 +15,9 @@ ion-header {
     letter-spacing: 0.5px;
 }
 
-.loginBtn {
-    display: block;
-    background: #fca411;
-    color: #fff;
-    padding: 13px 5px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    text-align: center;
-    border-radius: 5px;
-    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.19);
-}
-
 ion-content {
     form {
+        padding: 10px 15px;
         ion-list {
             .formList {
                 padding: 0px 0px 10px;
@@ -79,10 +43,31 @@ ion-content {
         }
     }
 }
-ion-buttons {
-    ion-icon {
-        color: #000;
-        font-size: 20px;
-        padding-left: 10px;
+
+.loginBtn {
+    display: block;
+    background: #fca411;
+    color: #fff;
+    padding: 13px 5px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.19);
+}
+
+.registerBtn {
+    color: #666;
+    background: #fff;
+    width: 100%;
+    display: block;
+    padding: 5px 0;
+    text-align: center;
+    font-weight: 600;
+    margin: 20px 0 0 0;
+    font-size: 14px;
+    span {
+        color: #fca40f;
+        font-weight: 600;
     }
 }

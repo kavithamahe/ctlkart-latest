@@ -26,6 +26,8 @@ export class ProductbycategoryPage implements OnInit {
     loop:true
   };
   getallsubcategory:any=[];
+  term = { searchText: ''};
+
   constructor(private location:Location,public events: Events,public productservice:ProductsService,public router: Router,private route: ActivatedRoute) { 
     this.subcategory_id = route.snapshot.paramMap.get('id');
     this.getproductbysubcategory(this.subcategory_id);
@@ -69,6 +71,15 @@ export class ProductbycategoryPage implements OnInit {
     },
     err =>{
       this.productservice.loadingdismiss();
+      this.productservice.presentToast(err.error.message);
+   })
+  }
+  getItems(searchItem) {
+    this.productservice.getproductlistsearch(this.term.searchText)
+    .subscribe(product =>{ 
+      this.getProductLists = product.data;
+    },
+    err =>{
       this.productservice.presentToast(err.error.message);
    })
   }

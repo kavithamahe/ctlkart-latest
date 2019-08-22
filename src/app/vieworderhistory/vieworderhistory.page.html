@@ -1,0 +1,33 @@
+<ion-header no-border-bottom>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <!-- <ion-menu-button autoHide="false"></ion-menu-button> -->
+          <ion-icon name="arrow-back" (click)="back()"></ion-icon>
+      </ion-buttons>
+      <ion-title>View Order Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>Order Date : {{getsingleorder.ordered_date | date: 'dd/MM/yyyy'}}</ion-item>
+    <ion-item>Order # : {{getsingleorder.order_id}}</ion-item>
+    <ion-item>Order Total : {{getsingleorder.amount  | number : '1.2-2'}}</ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Shipment Details</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-thumbnail slot="start">
+          <img [src]="imageUrl + getsingleorder.product_image">
+      </ion-thumbnail>
+      <ion-label>
+          <h3>{{getsingleorder.product_name}}</h3>
+          <p><i class="fa fa-inr"></i>{{getsingleorder.amount | number : '1.2-2'}}</p>
+          <p>Qty : {{getsingleorder.quantity}}</p>
+      </ion-label>
+      <ion-badge slot="end">delivered</ion-badge>
+  </ion-item>
+  </ion-list>
+</ion-content>

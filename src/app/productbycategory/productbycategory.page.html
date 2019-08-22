@@ -1,14 +1,17 @@
 <ion-header no-border-bottom>
-    <ion-toolbar>
+    <ion-toolbar color="grey">
         <ion-buttons slot="start">
             <!-- <ion-menu-button autoHide="false"></ion-menu-button> -->
             <ion-icon name="arrow-back" (click)="back()"></ion-icon>
         </ion-buttons>
-        <ion-title>Ctl<span>kart</span></ion-title>
-        <ion-buttons slot="end" (click)="viewcart()">
+        <ion-title>Products</ion-title>
+        <!-- <ion-buttons slot="end" (click)="viewcart()">
             <i class="fa fa-shopping-basket" aria-hidden="true"></i>
             <ion-badge id="cart-badge" color="danger">{{cartcount}}</ion-badge>
-        </ion-buttons>
+        </ion-buttons> -->
+    </ion-toolbar>
+    <ion-toolbar class="ion-searchbar">
+        <ion-searchbar [(ngModel)]="term.searchText" (keyup.enter)="getItems(term.searchText)"></ion-searchbar>
     </ion-toolbar>
     <ion-toolbar class="sortFilter">
         <ion-item>
@@ -22,13 +25,6 @@
 </ion-header>
 
 <ion-content>
-    <!-- <div>
-        <ion-slides [options]="sliderConfig" class="category">
-            <ion-slide *ngFor="let subcategory of getallsubcategory">
-                <p (click)="filterbySubategory(subcategory.id)">{{subcategory.subcategory_name}}</p>
-            </ion-slide>
-        </ion-slides>
-    </div> -->
     <div class="productListShows">
         <ion-grid>
             <ion-row>

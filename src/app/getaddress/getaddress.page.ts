@@ -86,7 +86,6 @@ export class GetaddressPage implements OnInit {
     this.router.navigate(['editprofile',{"type":"address","id":id}]);
   }
   addaddress(){
-    console.log("sdsd")
-    this.router.navigate(['address',{"type":"address"}]);
+    this.router.navigate(['addaddress',{"type":"address"}]);
   }
 }

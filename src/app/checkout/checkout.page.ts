@@ -27,6 +27,7 @@ export class CheckoutPage implements OnInit {
 
   constructor(public firebaseAuthentication:FirebaseAuthentication,private _location: Location ,public events: Events,private route: ActivatedRoute,private alertCtrl: AlertController,private router: Router,public formBuilder: FormBuilder,public productservice:ProductsService,public toastController: ToastController) { 
     this.singleid = route.snapshot.paramMap.get('id');
+    console.log(this.singleid)
     this.quantity = route.snapshot.paramMap.get('quantity');
     this.fromcart = route.snapshot.paramMap.get('fromcart');
     this.events.subscribe('cart', ()=>{

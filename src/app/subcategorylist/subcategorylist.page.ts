@@ -19,6 +19,7 @@ export class SubcategorylistPage implements OnInit {
   private imageUrl = environment.imageUrl;
   getallcategories:any=[];
   getallsubcategory:any=[];
+  term = { searchText: ''};
   constructor(private location:Location,private router: Router,public events: Events,public productservice:ProductsService,private route: ActivatedRoute) {
     this.category_id = route.snapshot.paramMap.get('id');
     this.getsubCategory(this.category_id);
@@ -61,5 +62,14 @@ export class SubcategorylistPage implements OnInit {
   }
   back(){
     this.location.back();
+  }
+  getItems(searchItem) {
+    this.productservice.getsubcategorylistsearch(this.term.searchText)
+    .subscribe(category =>{ 
+      this.getallsubcategory = category.data;
+    },
+    err =>{
+      this.productservice.presentToast(err.error.message);
+   })
   }
 }

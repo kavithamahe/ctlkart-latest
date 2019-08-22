@@ -263,3 +263,75 @@ app-dashboard {
         }
     }
 }
+app-productbycategory{
+    ion-header {
+        box-shadow: none;
+        ion-toolbar {
+            
+            ion-searchbar {
+                background-color: #fff !important;
+                margin: 7px 10px 15px;
+                border-radius: 30px;
+                box-shadow: 3px 5px 20px rgba(0, 0, 0, 0.08);
+                height: 48px;
+                width: 95% !important;
+                .searchbar-input-container {
+                    input {
+                        box-shadow: none !important;
+                    }
+                    ion-icon {
+                        color: #feb82b;
+                    }
+                }
+            }
+        }
+    }
+}
+app-category{
+    ion-header {
+        box-shadow: none;
+        ion-toolbar {
+            
+            ion-searchbar {
+                background-color: #fff !important;
+                margin: 7px 10px 15px;
+                border-radius: 30px;
+                box-shadow: 3px 5px 20px rgba(0, 0, 0, 0.08);
+                height: 48px;
+                width: 95% !important;
+                .searchbar-input-container {
+                    input {
+                        box-shadow: none !important;
+                    }
+                    ion-icon {
+                        color: #feb82b;
+                    }
+                }
+            }
+        }
+    }
+}
+app-subcategorylist{
+    ion-header {
+        box-shadow: none;
+        ion-toolbar {
+            
+            ion-searchbar {
+                background-color: #fff !important;
+                margin: 7px 10px 15px;
+                border-radius: 30px;
+                box-shadow: 3px 5px 20px rgba(0, 0, 0, 0.08);
+                height: 48px;
+                width: 95% !important;
+                .searchbar-input-container {
+                    input {
+                        box-shadow: none !important;
+                    }
+                    ion-icon {
+                        color: #feb82b;
+                    }
+                }
+            }
+        }
+    }
+}

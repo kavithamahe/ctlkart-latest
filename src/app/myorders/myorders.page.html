@@ -14,7 +14,7 @@
 
 <ion-content>
     <div class="productList" *ngFor="let order of getallmyorderlists | products:'ordered_date'">{{order.key}}
-        <ion-item *ngFor="let data of order.value">
+        <ion-item *ngFor="let data of order.value" (click)="viewsingleorder(data.id)">
             <ion-thumbnail slot="start">
                 <img [src]="imageUrl + data.product_image">
             </ion-thumbnail>
