@@ -5,38 +5,38 @@
             <ion-icon name="arrow-back" (click)="back()"></ion-icon>
         </ion-buttons>
         <ion-title>Address</ion-title>
-        <ion-buttons slot="end" (click)="viewcart()">
+        <!-- <ion-buttons slot="end" (click)="viewcart()">
             <i class="fa fa-shopping-basket" aria-hidden="true"></i>
             <ion-badge id="cart-badge" color="danger">{{cartcount}}</ion-badge>
-        </ion-buttons>
+        </ion-buttons> -->
     </ion-toolbar>
-    </ion-header>
+</ion-header>
 
 <ion-content>
-  <div *ngIf = "type != 'address'">
-    <ion-grid>
-        <ion-row>
-            <ion-col size="12">
-                <ion-list>
-                    <ion-radio-group>
-                        <ion-list-header>
-                            <ion-label class="deliveryLabel">Delivery Address</ion-label>
-                        </ion-list-header>
-                        <ion-item *ngFor="let address of getalladdress">
-                            <ion-label style="white-space: normal !important;">{{address.address}},{{address.city}},{{address.state}}</ion-label>
-                            <ion-radio (ionSelect)="radioSelects($event,address.id)" slot="start" value="{{address.first_name}},{{address.address}},{{address.city}},{{address.state}}"></ion-radio>
-                        </ion-item>
-                    </ion-radio-group>
-                </ion-list>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-    <div class="ion-padding">
-        <ion-button expand="block" (click)="addAddress()" color="dark" class="ion-no-margin">Add Address</ion-button>
-    </div>
-    <div class="ion-padding">
-        <ion-button expand="block" (click)="next()" color="dark" class="ion-no-margin">Next</ion-button>
-    </div>
+    <div *ngIf="type != 'address'">
+        <ion-grid>
+            <ion-row>
+                <ion-col size="12">
+                    <ion-list>
+                        <ion-radio-group>
+                            <ion-list-header>
+                                <ion-label class="deliveryLabel">Delivery Address</ion-label>
+                            </ion-list-header>
+                            <ion-item *ngFor="let address of getalladdress">
+                                <ion-label style="white-space: normal !important;">{{address.address}},{{address.city}},{{address.state}}</ion-label>
+                                <ion-radio (ionSelect)="radioSelects($event,address.id)" slot="start" value="{{address.first_name}},{{address.address}},{{address.city}},{{address.state}}"></ion-radio>
+                            </ion-item>
+                        </ion-radio-group>
+                    </ion-list>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <div class="ion-padding">
+            <ion-button expand="block" (click)="addAddress()" color="dark" class="ion-no-margin">Add Address</ion-button>
+        </div>
+        <div class="ion-padding">
+            <ion-button expand="block" (click)="next()" color="dark" class="ion-no-margin">Next</ion-button>
+        </div>
     </div>
     
 </ion-content>

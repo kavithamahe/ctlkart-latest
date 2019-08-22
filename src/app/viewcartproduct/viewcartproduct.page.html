@@ -1,40 +1,63 @@
 <ion-header no-border-bottom>
     <ion-toolbar>
         <ion-buttons slot="start">
-            <!-- <ion-menu-button autoHide="false"></ion-menu-button> -->
             <ion-icon name="arrow-back" (click)="back()"></ion-icon>
         </ion-buttons>
-        <ion-title>Ctl<span>kart</span></ion-title>
-        <ion-buttons slot="end" (click)="viewcart()">
-            <i class="fa fa-shopping-basket" aria-hidden="true"></i>
-            <ion-badge id="cart-badge" color="danger">{{cartcount}}</ion-badge>
-        </ion-buttons>
+        <ion-title>My Cart</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-item>
-        <ion-label>
-            <h3>Subtotal({{selectedlength}} items): <b><i class="fa fa-inr"></i> {{totalamount | number : '1.2-2'}}</b></h3>
-        </ion-label>
-    </ion-item>
-    <ion-item>
-        <ion-button class="cartBuyBtn" color="warning" expand="block" (click)="proceedtobuy()">Proceed To Buy</ion-button>
-    </ion-item>
     <div class="cartProduct" *ngFor="let single of getcartProductList">
-        <ion-item>
-            <ion-thumbnail slot="start">
-                <img [src]="imgURl + single.product_image">
-            </ion-thumbnail>
-            <ion-label>
-                <h3>{{single.product_name}}</h3>
-                <p color="warning"><i class="fa fa-inr"></i>{{single.price | number : '1.2-2'}}</p>
-            </ion-label>
-            <ion-item>
-                <button clear (click)="decrementQty(single.quantityperproduct,single.id)"><ion-icon name="remove-circle" ></ion-icon></button><span>{{single.quantityperproduct}}</span>
-                <button clear (click)="incrementQty(single.quantityperproduct,single.id)"><ion-icon name="add-circle" ></ion-icon></button>
-            </ion-item>
-            <ion-button color="danger" (click)="presentAlertConfirm(single.id)"><i class="fa fa-trash"></i></ion-button>
-        </ion-item>
+        <div class="mycartProduct">
+            <div class="productImage">
+                <ion-thumbnail slot="start">
+                    <img [src]="imgURl + single.product_image">
+                </ion-thumbnail>
+            </div>
+            <div class="productContent">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col size="8">
+                            <h3>{{single.product_name}}</h3>
+                        </ion-col>
+                        <ion-col size="4">
+                            <p color="warning"><i class="fa fa-inr"></i>{{single.price | number : '1.2-2'}}</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="8">
+                            <div class="quantity">
+                                <button clear (click)="decrementQty(single.quantityperproduct,single.id)"><ion-icon name="remove" ></ion-icon></button><span>{{single.quantityperproduct}}</span>
+                                <button clear (click)="incrementQty(single.quantityperproduct,single.id)"><ion-icon name="add" ></ion-icon></button>
+                            </div>
+                        </ion-col>
+                        <ion-col size="4">
+                            <span (click)="presentAlertConfirm(single.id)" class="closeBtn"><ion-icon name="close"></ion-icon></span>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
+        </div>
     </div>
+    <div class="subtoatalValue">
+        <ion-grid>
+            <ion-row>
+                <ion-col size="7">
+                    <ion-label>
+                        <h3>Subtotal </h3>
+                        <!-- <h3>Subtotal ({{selectedlength}} items): <b><i class="fa fa-inr"></i> {{totalamount | number : '1.2-2'}}</b></h3> -->
+                    </ion-label>
+                </ion-col>
+                <ion-col size="5">
+                    <p><i class="fa fa-inr"></i> {{totalamount | number : '1.2-2'}}</p>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+    <hr/>
+    <div style="padding: 10px;">
+        <ion-text class="loginBtn" (click)="proceedtobuy()">Proceed To Buy</ion-text>
+    </div>
+
 </ion-content>
