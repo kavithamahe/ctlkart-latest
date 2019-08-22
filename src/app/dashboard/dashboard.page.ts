@@ -17,6 +17,12 @@ export class DashboardPage implements OnInit  {
   getProductLists:any=[];
   getallcategories:any=[];
   sliderConfig = {
+    slidesPerView: 3,
+    spaceBetween: 6,
+    autoplay:true,
+    loop:true
+  };
+  sliderConfigProduct = {
     slidesPerView: 2,
     spaceBetween: 6,
     autoplay:true,

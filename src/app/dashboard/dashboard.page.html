@@ -10,12 +10,6 @@
 
 <ion-content>
     <div>
-        <!-- <ion-slides [options]="sliderConfig" class="category">
-            <ion-slide *ngFor="let category of getallcategories">
-                <p (click)="filterbyCategory(category.category_id)">{{category.category_name}}</p>
-            </ion-slide>
-        </ion-slides>
-        <br> -->
         <ion-slides initialSlide="0" pager="true" loop="true" [options]="sliderConfigimage">
             <ion-slide>
                 <img class="img" src="../../assets/img/banner-1.png" />
@@ -30,22 +24,48 @@
             </ion-slide>
         </ion-slides>
     </div>
-    <div>
-            <ion-slides [options]="sliderConfig">
-                <ion-slide *ngFor="let cat of getallcategories">
+    <div class="innerSlider ">
+        <ion-grid>
+            <ion-row class="dash-title">
+                <ion-col size="6">
+                    <h3>Category</h3>
+                </ion-col>
+                <ion-col size="6">
+                    <a href="Javascript:" [routerLink]="[('/category')]">See All</a>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <ion-slides [options]="sliderConfig">
+            <ion-slide *ngFor="let cat of getallcategories">
+                <div class="categorydash">
                     <img (click)="filterbyCategory(cat.category_id)" [src]="imgURl + cat.category_image" />
                     <ion-label (click)="filterbyCategory(cat.category_id)">{{cat.category_name}}</ion-label>
-                </ion-slide>
-            </ion-slides>
+                </div>
+            </ion-slide>
+        </ion-slides>
     </div>
-    <div>
-            <ion-slides [options]="sliderConfig">
-                    <ion-slide *ngFor="let product of getProductLists">
-                            <img [src]="imgURl + product.product_image" (click)="viewsingleproduct(product.id)" />
-                            <ion-label (click)="viewsingleproduct(product.id)">{{product.product_name}}</ion-label>
-                    </ion-slide>
-                </ion-slides>
+    <div class="innerSlider bgWhite">
+        <ion-grid>
+            <ion-row class="dash-title">
+                <ion-col size="6">
+                    <h3>Latest Products</h3>
+                </ion-col>
+                <ion-col size="6">
+                    <a href="Javascript:" [routerLink]="[('/category')]">See All</a>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <ion-slides [options]="sliderConfigProduct">
+            <ion-slide *ngFor="let product of getProductLists">
+                <div class="categorysliderdash">
+                    <img [src]="imgURl + product.product_image" (click)="viewsingleproduct(product.id)" />
+                    <ion-label (click)="viewsingleproduct(product.id)">{{product.product_name}}</ion-label>
+                    <ion-text>{{product.price | currency : "INR"}}</ion-text>
+                </div>
+            </ion-slide>
+        </ion-slides>
     </div>
+
 
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
