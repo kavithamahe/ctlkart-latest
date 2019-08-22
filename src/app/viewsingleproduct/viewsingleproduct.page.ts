@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../products.service';
 import { environment } from '../../environments/environment';
 import { ToastController, Events } from '@ionic/angular';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-viewsingleproduct',
@@ -22,7 +23,7 @@ export class ViewsingleproductPage implements OnInit {
   data: any;
   item_qty :any=1;
   gotocart:boolean=false;
-  constructor(public events: Events,public productservice:ProductsService,private route: ActivatedRoute,public router:Router,public toastController: ToastController) { 
+  constructor(public events: Events,private _location: Location, public productservice:ProductsService,private route: ActivatedRoute,public router:Router,public toastController: ToastController) { 
     this.singleid = route.snapshot.paramMap.get('id');
     this.getsingleproductlist(this.singleid);
     this.getproductList();
@@ -137,5 +138,10 @@ export class ViewsingleproductPage implements OnInit {
     this.router.navigate(['checkout',{"id":id,"quantity":item_qty}]);
       }
     }
+    }
+
+
+    back(){
+      this._location.back();
     }
 }

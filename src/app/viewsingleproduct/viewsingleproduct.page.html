@@ -1,18 +1,10 @@
-<ion-header no-border-bottom>
-    <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-menu-button autoHide="false"></ion-menu-button>
-        </ion-buttons>
-        <ion-title>Ctl<span>kart</span></ion-title>
-        <ion-buttons slot="end" (click)="viewcart()">
-            <i class="fa fa-shopping-basket" aria-hidden="true"></i>
-            <ion-badge id="cart-badge" color="danger">{{cartcount}}</ion-badge>
-        </ion-buttons>
-    </ion-toolbar>
-</ion-header>
-
 <ion-content class="viewDetailsPage">
     <ion-card *ngFor="let single of getsingleProductList">
+        <div class="backtoproduct">
+            <ion-buttons slot="start">
+                <ion-icon name="arrow-back" (click)="back()"></ion-icon>
+            </ion-buttons>
+        </div>
         <div class="circlebg">
             <img [src]="imgURl + single.product_image" />
         </div>
@@ -29,8 +21,8 @@
       </ion-select>
     </ion-item> -->
         <ion-item>
-            <button clear (click)="decrementQty()"><ion-icon name="remove-circle" ></ion-icon></button><span>{{item_qty}}</span>
-            <button clear (click)="incrementQty()"><ion-icon name="add-circle" ></ion-icon></button>
+            <button clear (click)="decrementQty()"><ion-icon name="remove" ></ion-icon></button><span>{{item_qty}}</span>
+            <button clear (click)="incrementQty()"><ion-icon name="add" ></ion-icon></button>
         </ion-item>
         <!-- <div style="padding:10px;">
     <ion-button color="warning" shape="round"  expand="block" (click)="buyNow(single.id,quantitycount.quantity)">Buy Now</ion-button>
