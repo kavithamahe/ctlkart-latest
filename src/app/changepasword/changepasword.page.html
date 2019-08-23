@@ -1,7 +1,6 @@
 <ion-header no-border-bottom>
     <ion-toolbar>
         <ion-buttons slot="start">
-            <!-- <ion-menu-button autoHide="false"></ion-menu-button> -->
             <ion-icon name="arrow-back" (click)="back()"></ion-icon>
         </ion-buttons>
         <ion-title>Changepassword</ion-title>
@@ -19,6 +18,9 @@
         <ion-item>
             <ion-input class="confirmpassword" type="text" placeholder="Confirm New Password" [(ngModel)]="password.confirmpassword"></ion-input>
         </ion-item>
-        <ion-button shape="round" color="warning" slot="right" style="float: right;" (click)="changePassword()">Submit</ion-button>
+
+    </div>
+    <div padding>
+        <ion-text class="loginBtn" color="cart" (click)="changePassword()">Submit</ion-text>
     </div>
 </ion-content>

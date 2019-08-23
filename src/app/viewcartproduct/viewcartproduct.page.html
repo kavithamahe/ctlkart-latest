@@ -8,8 +8,8 @@
 </ion-header>
 
 <ion-content>
-    <div class="cartProduct" *ngFor="let single of getcartProductList" *ngIf = "cartDetails">
-        <div class="mycartProduct">
+    <div class="cartProduct" *ngFor="let single of getcartProductList">
+        <div class="mycartProduct" *ngIf="cartDetails">
             <div class="productImage">
                 <ion-thumbnail slot="start">
                     <img [src]="imgURl + single.product_image">
@@ -40,7 +40,7 @@
             </div>
         </div>
     </div>
-    <div class="subtoatalValue" *ngIf = "cartDetails">
+    <div class="subtoatalValue" *ngIf="cartDetails">
         <ion-grid>
             <ion-row>
                 <ion-col size="7">
@@ -56,17 +56,19 @@
         </ion-grid>
     </div>
     <hr/>
-    <div style="padding: 10px;" *ngIf = "cartDetails">
+    <div style="padding: 10px;" *ngIf="cartDetails">
         <ion-text class="loginBtn" (click)="proceedtobuy()">Proceed To Buy</ion-text>
     </div>
 
-    <div class="profile-edit" *ngIf = "!cartDetails">
+    <div class="profile-edit" *ngIf="!cartDetails">
         <span class="profile-img">
                   <img src="assets/img/icon.png"/>
                 </span>
         <p class="name">There is no item(s) in the cart</p>
-        <p class="mail"><ion-text class="shopBtn" (click)="shopnow()">Shop Now</ion-text></p>
-        
+        <p class="mail">
+            <ion-text class="shopBtn" (click)="shopnow()">Shop Now</ion-text>
+        </p>
+
 
     </div>
 

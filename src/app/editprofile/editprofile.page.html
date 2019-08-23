@@ -4,34 +4,39 @@
             <!-- <ion-menu-button autoHide="false"></ion-menu-button> -->
             <ion-icon name="arrow-back" (click)="back()"></ion-icon>
         </ion-buttons>
-        <ion-title>Ctl<span>kart</span></ion-title>
+        <ion-title>Edit</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
     <ion-grid *ngIf="type != 'address'">
-        <ion-row style="border: 2px solid #d1af7b;">
-            <ion-col>
-                <ion-input value="{{name}}"  [(ngModel)]="profile.name"></ion-input>
-                <ion-input value="{{email}}"  [(ngModel)]="profile.email"></ion-input>
-                <ion-input value="{{mobile}}"  [(ngModel)]="profile.mobile"></ion-input>
-            </ion-col>
-        </ion-row>
         <ion-row>
-            <ion-col>
-                <button style="padding:15px;" (click)="editprofile()">
-              <ion-ripple-effect></ion-ripple-effect>
-              Submit
-          </button>
+            <ion-col class="edit-profile">
+                <ion-input value="{{name}}" [(ngModel)]="profile.name"></ion-input>
+                <ion-input value="{{email}}" [(ngModel)]="profile.email"></ion-input>
+                <ion-input value="{{mobile}}" [(ngModel)]="profile.mobile"></ion-input>
             </ion-col>
         </ion-row>
         <br>
+        <div style="padding:0px 10px;">
+            <ion-grid>
+                <ion-row>
+                    <ion-col size="6">
+                        <ion-text class="cancelBtn" color="cart" (click)="back()">Cancel</ion-text>
+                    </ion-col>
+                    <ion-col size="6">
+                        <ion-text class="loginBtn" color="cart" (click)="editprofile()">Save</ion-text>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+        <br>
     </ion-grid>
     <div *ngIf="type == 'address'">
-        <div style="border: 2px solid #d1af7b;">
+        <div>
             <ion-list lines="full" class="ion-no-margin ion-no-padding">
                 <ion-item>
-                    <ion-label position="stacked">Address
+                    <ion-label position="stacked">Flat No / Area / Street
                         <ion-text color="danger">*</ion-text>
                     </ion-label>
                     <ion-input value="{{getaddress.address}}" [(ngModel)]="addresss.address" type="text"></ion-input>
@@ -62,14 +67,19 @@
                 </ion-item>
 
             </ion-list>
-
-
-            <button style="padding:15px;" (click)="editaddress(getaddress.id)">
-      <ion-ripple-effect></ion-ripple-effect>
-      Submit
-  </button>
+            <br>
+            <div style="padding:0px 10px;">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col size="6">
+                            <ion-text class="cancelBtn" color="cart" (click)="back()">Cancel</ion-text>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-text class="loginBtn" color="cart" (click)="editaddress(getaddress.id)">Save</ion-text>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
         </div>
-        <br>
     </div>
-
 </ion-content>
