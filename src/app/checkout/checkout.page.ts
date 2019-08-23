@@ -27,6 +27,7 @@ export class CheckoutPage implements OnInit {
 
   constructor(public firebaseAuthentication:FirebaseAuthentication,private _location: Location ,public events: Events,private route: ActivatedRoute,private alertCtrl: AlertController,private router: Router,public formBuilder: FormBuilder,public productservice:ProductsService,public toastController: ToastController) { 
     this.singleid = route.snapshot.paramMap.get('id');
+    console.log(this.singleid)
     this.quantity = route.snapshot.paramMap.get('quantity');
     this.fromcart = route.snapshot.paramMap.get('fromcart');
     this.events.subscribe('cart', ()=>{
@@ -92,7 +93,19 @@ export class CheckoutPage implements OnInit {
       },
       err =>{
         if(err.status == 401){
-          this.numberverify = true;
+          // this.numberverify = true;
+          const phoneNumberString = "+91" + err.error.mobile;
+
+          this.firebaseAuthentication.verifyPhoneNumber(phoneNumberString, 30000)
+          .then( confirmationResult => {
+            this.verificationId = confirmationResult;
+            this.alert(this.verificationId);
+            
+          })
+        .catch((error) => {
+          this.alert(error);
+          console.error(error)
+        });
           this.presentToast(err.error.message);
         }
         else{
@@ -102,22 +115,22 @@ export class CheckoutPage implements OnInit {
             })
     }
   }
-  verifynumber(mobilenumber){
-      this.productservice.presentLoading();
-        this.productservice.loadingdismiss();
-        const phoneNumberString = "+91" + mobilenumber;
+  // verifynumber(mobilenumber){
+  //     this.productservice.presentLoading();
+  //       this.productservice.loadingdismiss();
+  //       const phoneNumberString = "+91" + mobilenumber;
 
-        this.firebaseAuthentication.verifyPhoneNumber(phoneNumberString, 30000)
-        .then( confirmationResult => {
-          this.verificationId = confirmationResult;
-          this.alert(this.verificationId);
+  //       this.firebaseAuthentication.verifyPhoneNumber(phoneNumberString, 30000)
+  //       .then( confirmationResult => {
+  //         this.verificationId = confirmationResult;
+  //         this.alert(this.verificationId);
           
-        })
-      .catch((error) => {
-        this.alert(error);
-        console.error(error)
-      });
-  }
+  //       })
+  //     .catch((error) => {
+  //       this.alert(error);
+  //       console.error(error)
+  //     });
+  // }
   back(){
       this._location.back();
   }

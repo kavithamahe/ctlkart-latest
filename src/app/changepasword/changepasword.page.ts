@@ -16,16 +16,23 @@ export class ChangepaswordPage implements OnInit {
   }
 
   changePassword(){
-    this.productservice.presentLoading();
-    this.productservice.changepassword(this.password)
-    .subscribe(password =>{ 
-      this.productservice.loadingdismiss();
-      this.router.navigate(['dashboard']);
-    },
-    err =>{
-      this.productservice.loadingdismiss();
-      this.productservice.presentToast(err.error.message);
-   })
+
+    if(this.password.currentpassword && this.password.newpassword && this.password.confirmpassword){
+      this.productservice.presentLoading();
+      this.productservice.changepassword(this.password)
+      .subscribe(password =>{ 
+        this.productservice.loadingdismiss();
+        this.router.navigate(['dashboard']);
+      },
+      err =>{
+        this.productservice.loadingdismiss();
+        this.productservice.presentToast(err.error.message);
+     })
+    }
+    else{
+      this.productservice.presentToast("Please Enter The Password");
+    }
+ 
   }
   back(){
     this._location.back();

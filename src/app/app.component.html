@@ -13,7 +13,7 @@
                 <ion-item (click)="viewaccount()">Term & condtions</ion-item>
                 <ion-item (click)="viewaccount()">Help</ion-item>
                 <ion-item (click)="logout()" *ngIf="showButton || token">Logout</ion-item>
-                <ion-item (click)="login()" *ngIf="login_status || !token">Login</ion-item>
+                <ion-item (click)="login()" *ngIf="!token">Login</ion-item>
             </ion-list>
         </ion-content>
     </ion-menu>

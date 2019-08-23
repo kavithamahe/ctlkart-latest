@@ -46,18 +46,18 @@ export class RegisterPage implements OnInit {
         this.registerForm.reset();
         const phoneNumberString = "+91" + this.registerForm.value.mobile;
 
-        // this.firebaseAuthentication.verifyPhoneNumber(phoneNumberString, 30000)
-        // .then( confirmationResult => {
-          this.verificationId = "9874566";
+        this.firebaseAuthentication.verifyPhoneNumber(phoneNumberString, 30000)
+        .then( confirmationResult => {
+          this.verificationId = confirmationResult.data;
           console.log(this.verificationId)
           this.router.navigate(['otpverification',{"mobile":this.registerForm.value.mobile,"verificationId":this.verificationId}]);
           // this.alert(this.verificationId);
           
-      //   })
-      // .catch((error) => {
-      //   // this.alert(error);
-      //   this.productservice.presentToast(error);
-      //   console.error(error)});
+        })
+      .catch((error) => {
+        // this.alert(error);
+        this.productservice.presentToast(error);
+        console.error(error)});
        
       }, 
        err =>{

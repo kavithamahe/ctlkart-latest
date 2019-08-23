@@ -33,16 +33,6 @@
             </div>
             <p *ngIf="!registerForm.controls.email.valid && (registerForm.controls.email.dirty || submitAttempt)" class="err-reds shake">Please enter name.</p>
 
-
-            <!-- <div class="formList">
-                <ion-label>Gender</ion-label>
-                <ion-select formControlName="gender">
-                    <ion-select-option value="male">Male</ion-select-option>
-                    <ion-select-option value="female">Female</ion-select-option>
-                </ion-select>
-            </div>
-            <p *ngIf="!registerForm.controls.gender.valid && (registerForm.controls.gender.dirty || submitAttempt)" class="err-reds shake">Please enter name.</p> -->
-
             <div class="formList">
                 <ion-label position="floating">Mobile Number
                     <ion-text color="danger">*</ion-text>
@@ -51,19 +41,7 @@
             </div>
             <p *ngIf="!registerForm.controls.mobile.valid && (registerForm.controls.mobile.dirty || submitAttempt)" class="err-reds shake">Please enter name.</p>
 
-            <!-- <div class="formList">
-                <ion-label position="floating">Address</ion-label>
-                <ion-input placeholder="Address Line 1" formControlName="addressline1"></ion-input>
-                <p *ngIf="!registerForm.controls.addressline1.valid && (registerForm.controls.addressline1.dirty || submitAttempt)" class="err-reds shake">Please enter name.</p>
-                <ion-input placeholder="Address Line 2" formControlName="addressline2"></ion-input>
-                <p *ngIf="!registerForm.controls.addressline2.valid && (registerForm.controls.addressline2.dirty || submitAttempt)" class="err-reds shake">Please enter name.</p>
-                <ion-input placeholder="City" formControlName="city"></ion-input>
-                <p *ngIf="!registerForm.controls.city.valid && (registerForm.controls.city.dirty || submitAttempt)" class="err-reds shake">Please enter name.</p>
-                <ion-input placeholder="State" formControlName="state"></ion-input>
-                <p *ngIf="!registerForm.controls.state.valid && (registerForm.controls.state.dirty || submitAttempt)" class="err-reds shake">Please enter name.</p>
-                <ion-input placeholder="Zip Code" formControlName="zipcode"></ion-input>
-                <p *ngIf="!registerForm.controls.zipcode.valid && (registerForm.controls.zipcode.dirty || submitAttempt)" class="err-reds shake">Please enter name.</p>
-            </div> -->
+          
 
             <div class="formList">
                 <ion-label position="floating">Password

@@ -121,29 +121,29 @@ export class DashboardPage implements OnInit  {
       event.target.complete();
     }, 2000);
   }
-  // getItems(searchItem) {
-  //   this.productservice.getproductlistsearch(this.term.searchText)
-  //   .subscribe(product =>{ 
-  //     this.getProductLists = product.data;
-  //   },
-  //   err =>{
-  //     this.productservice.presentToast(err.error.message);
-  //  })
-  // }
-  getItems(ev) {
-    // Reset items back to all of the items
-    this.getproductList();
-    console.log(this.getProductLists);
-    // set val to the value of the ev target
-    var val = ev.target.value;
-
-    // if the value is an empty string don't filter the items
-    if (val && val.trim() != '') {
-      this.getProductLists = this.getProductLists.filter((item) => {
-        return (item.toString().toLowerCase().indexOf(val.toLowerCase()) > -1);
-      })
-    }
+  getItems(searchItem) {
+    this.productservice.getproductlistsearch(this.term.searchText)
+    .subscribe(product =>{ 
+      this.getProductLists = product.data;
+    },
+    err =>{
+      this.productservice.presentToast(err.error.message);
+   })
   }
+  // getItems(ev) {
+  //   // Reset items back to all of the items
+  //   this.getproductList();
+  //   console.log(this.getProductLists);
+  //   // set val to the value of the ev target
+  //   var val = ev.target.value;
+
+  //   // if the value is an empty string don't filter the items
+  //   if (val && val.trim() != '') {
+  //     this.getProductLists = this.getProductLists.filter((item) => {
+  //       return (item.toString().toLowerCase().indexOf(val.toLowerCase()) > -1);
+  //     })
+  //   }
+  // }
   viewsingleproduct(id){
     this.router.navigate(['/viewsingleproduct',{"id":id}]);
   }

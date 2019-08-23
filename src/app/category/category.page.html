@@ -5,6 +5,9 @@
         </ion-buttons>
         <ion-title>Category</ion-title>
     </ion-toolbar>
+    <ion-toolbar class="ion-searchbar">
+        <ion-searchbar [(ngModel)]="term.searchText" (keyup.enter)="getItems(term.searchText)"></ion-searchbar>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content padding class="categoryList">

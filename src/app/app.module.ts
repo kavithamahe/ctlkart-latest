@@ -17,6 +17,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ProductPipeModule } from './pipes/productPipe.module';
 import { ProductfilterPipe } from './pipes/productfilter.pipe';
+import { custumePipeModule } from './pipes/custumepipe.module';
 
 export const firebaseConfig = {
   apikey:"AIzaSyDVF3cXrQr7t7Ab9eTJ0QTtOOUecZVIZvw",
@@ -36,6 +37,7 @@ export const firebaseConfig = {
      ReactiveFormsModule,
      HttpClientModule,
      ProductPipeModule.forRoot(),
+     custumePipeModule.forRoot(),
      IonicModule.forRoot(), 
      AngularFireModule.initializeApp(firebaseConfig),
      AppRoutingModule,

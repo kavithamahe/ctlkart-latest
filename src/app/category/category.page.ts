@@ -17,6 +17,7 @@ export class CategoryPage implements OnInit {
   cartDetails: any;
   private imageUrl = environment.imageUrl;
   getallcategories:any=[];
+  term = { searchText: ''};
   constructor(private location:Location,private router: Router,public events: Events,public productservice:ProductsService) {
     this.getCategory();
    }
@@ -58,5 +59,14 @@ export class CategoryPage implements OnInit {
   }
   getsubcategory(id){
       this.router.navigate(['/subcategorylist',{"id":id}],{skipLocationChange: true});
+  }
+  getItems(searchItem) {
+    this.productservice.getcategorylistsearch(this.term.searchText)
+    .subscribe(category =>{ 
+      this.getallcategories = category.data;
+    },
+    err =>{
+      this.productservice.presentToast(err.error.message);
+   })
   }
 }
