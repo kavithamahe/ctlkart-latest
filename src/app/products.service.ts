@@ -28,12 +28,20 @@ export class ProductsService {
     return this.http.post(this.apiUrl + 'getproductlist',body,this.headers);
   }
   getproductlistsearch(search): Observable<any> {
-    const body= {"quantity":2};
+    const body= {"search":search};
     return this.http.post(this.apiUrl + 'getproductlistsearch',body,this.headers);
   }
   getCategoryList(): Observable<any> {
     const body= { };
     return this.http.post(this.apiUrl + 'getcategory',body,this.headers);
+  }
+  getcategorylistsearch(search): Observable<any> {
+    const body= {"search":search};
+    return this.http.post(this.apiUrl + 'getcategorysearch',body,this.headers);
+  }
+  getsubcategorylistsearch(search): Observable<any> {
+    const body= {"search":search};
+    return this.http.post(this.apiUrl + 'getsubcategorysearch',body,this.headers);
   }
   getproductlistsingle(id): Observable<any> {
     const body= {"id":id};
@@ -131,6 +139,15 @@ export class ProductsService {
     
     const body= {"id":user_id,"username":name,"email":email,"mobile":mobile};
     return this.http.post(this.apiUrl + 'editprofile',body,{ headers:this.headers });
+  }
+  getsingleorderdetailsservice(id): Observable<any> { 
+    this.token=localStorage.getItem("token");
+    this.headers = new HttpHeaders();
+    this.headers = this.headers.append('Content-Type', 'application/json');
+    this.headers= this.headers.append("Authorization", "Bearer " + this.token);
+    
+    const body= {"id":id};
+    return this.http.post(this.apiUrl + 'viewsingleorder',body,{ headers:this.headers });
   }
   viewsingleaddress(id): Observable<any> { 
     this.token=localStorage.getItem("token");

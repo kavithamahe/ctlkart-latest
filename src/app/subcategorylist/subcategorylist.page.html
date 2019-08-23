@@ -14,7 +14,7 @@
 
 <ion-content padding class="categoryList">
     <ion-list *ngFor="let subcategory of getallsubcategory">
-        <div (click)="getsubcategory(subcategory.id)">
+        <div (click)="getsubcategory(subcategory.id,subcategory.subcategory_name)">
             <ion-avatar slot="start">
                 <img [src]="imgURl + subcategory.subcategory_image" />
             </ion-avatar>

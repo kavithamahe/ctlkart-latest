@@ -11,6 +11,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./productbycategory.page.scss'],
 })
 export class ProductbycategoryPage implements OnInit {
+  subcategory_name: string;
   subcategory_id: string;
   getsubcategorylocal: any;
   cartcount: any;
@@ -28,6 +29,13 @@ export class ProductbycategoryPage implements OnInit {
   getallsubcategory:any=[];
   constructor(private location:Location,public events: Events,public productservice:ProductsService,public router: Router,private route: ActivatedRoute) { 
     this.subcategory_id = route.snapshot.paramMap.get('id');
+    this.subcategory_name = route.snapshot.paramMap.get('subcategoryname');
+    if(this.subcategory_name){
+      this.subcategory_name = this.subcategory_name;
+    }
+    else{
+      this.subcategory_name = "Products";
+    }
     this.getproductbysubcategory(this.subcategory_id);
   }
 
@@ -46,6 +54,13 @@ export class ProductbycategoryPage implements OnInit {
       }
     })
     this.subcategory_id = this.route.snapshot.paramMap.get('id');
+    this.subcategory_name = this.route.snapshot.paramMap.get('subcategoryname');
+    if(this.subcategory_name){
+      this.subcategory_name = this.subcategory_name;
+    }
+    else{
+      this.subcategory_name = "Products";
+    }
     this.getproductbysubcategory(this.subcategory_id);
   }
   // getsubcategories(category_id){

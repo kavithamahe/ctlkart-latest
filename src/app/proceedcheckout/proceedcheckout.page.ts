@@ -3,7 +3,7 @@ import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 import {Router, ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../products.service';
 import { environment } from '../../environments/environment';
-import { Events } from '@ionic/angular';
+import { Events, AlertController } from '@ionic/angular';
 import { Location } from '@angular/common';
 
 
@@ -35,11 +35,12 @@ export class ProceedcheckoutPage implements OnInit {
   getalladdress:any =[];
   address = { addvalue: ''};
 
-  constructor(private location:Location,public events: Events,public formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,public productservice:ProductsService) {
+  constructor(private location:Location,public alertController: AlertController,public events: Events,public formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,public productservice:ProductsService) {
     this.singleid = route.snapshot.paramMap.get('id');
     this.quantity = route.snapshot.paramMap.get('quantity');
     this.fromcart = route.snapshot.paramMap.get('fromcart');
     this.totalpricecart = route.snapshot.paramMap.get('totalamount');
+    this.customer_id = route.snapshot.paramMap.get('customer_id');
     this.quantityperproduct = {"quantityperproduct":this.quantity};
     if(this.fromcart != "1"){
       this.getsingleproductlist(this.singleid);
@@ -69,6 +70,7 @@ export class ProceedcheckoutPage implements OnInit {
     this.fromcart = this.route.snapshot.paramMap.get('fromcart');
     this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
     this.totalpricecart = this.route.snapshot.paramMap.get('totalamount');
+    this.customer_id = this.route.snapshot.paramMap.get('customer_id');
     this.quantityperproduct = {"quantityperproduct":this.quantity};
     if(this.fromcart != "1"){
       this.getsingleproductlist(this.singleid);
@@ -123,14 +125,36 @@ export class ProceedcheckoutPage implements OnInit {
     }
     }
   
-    radioSelects(event,id) {
-      this.customer_id = id;
-    }
-    proceedtobuycart(){
+    async proceedtobuycart() {
       if(this.customer_id == "" || this.customer_id == undefined){
         this.productservice.presentToast("Please Select The Delivery Address");
       }
       else{
+      const alert = await this.alertController.create({
+        header: '',
+        message: 'Are you sure want to buy this product?',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              console.log('Confirm Cancel: blah');
+            }
+          }, {
+            text: 'Yes',
+            handler: () => {
+              this.proceedtobuycartconfirm();
+            }
+          }
+        ]
+      });
+
+  
+      await alert.present();
+    }
+    }
+    proceedtobuycartconfirm(){
         this.productservice.presentLoading();
         this.productservice.checkoutcart(this.user_id,this.customer_id,this.cartDetails,this.totalpricecart)
         .subscribe(product =>{ 
@@ -144,14 +168,40 @@ export class ProceedcheckoutPage implements OnInit {
           this.productservice.loadingdismiss();
           this.productservice.presentToast(err.error.message);
        })
-      }
+      
       
     }
-    proceedtobuy(product_id){
+    async proceedtobuy(product_id) {
       if(this.customer_id == "" || this.customer_id == undefined){
         this.productservice.presentToast("Please Select The Delivery Address");
       }
       else{
+      const alert = await this.alertController.create({
+        header: '',
+        message: 'Are you sure want to buy this product?',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              console.log('Confirm Cancel: blah');
+            }
+          }, {
+            text: 'Yes',
+            handler: () => {
+              this.proceedtobuyconfirm(product_id);
+            }
+          }
+        ]
+      });
+
+  
+      await alert.present();
+    }
+    }
+    proceedtobuyconfirm(product_id){
+     
         this.productservice.presentLoading();
         this.productservice.checkout(this.user_id,this.customer_id,product_id,this.totalprice,this.item_qty)
         .subscribe(product =>{ 
@@ -164,7 +214,7 @@ export class ProceedcheckoutPage implements OnInit {
           this.productservice.loadingdismiss();
           this.productservice.presentToast(err.error.message);
        })
-      }
+      
       
     }
     viewcart(){

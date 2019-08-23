@@ -38,47 +38,5 @@
             <ion-button expand="block" (click)="next()" color="dark" class="ion-no-margin">Next</ion-button>
         </div>
     </div>
-    <form [formGroup]="checkoutForm" *ngIf="addaddress">
-        <ion-list lines="full" class="ion-no-margin ion-no-padding">
-
-            <ion-item>
-                <ion-label position="stacked">Address
-                    <ion-text color="danger">*</ion-text>
-                </ion-label>
-                <ion-input formControlName="address"></ion-input>
-            </ion-item>
-            <p *ngIf="!checkoutForm.controls.address.valid && (checkoutForm.controls.address.dirty || submitAttempt)" class="err-reds shake">Please enter name.</p>
-            <ion-item>
-                <ion-label position="stacked">Landmark</ion-label>
-                <ion-input formControlName="landmark"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">City
-                    <ion-text color="danger">*</ion-text>
-                </ion-label>
-                <ion-input formControlName="city"></ion-input>
-            </ion-item>
-            <p *ngIf="!checkoutForm.controls.city.valid && (checkoutForm.controls.city.dirty || submitAttempt)" class="err-reds shake">Please enter name.</p>
-            <ion-item>
-                <ion-label position="stacked">State
-                    <ion-text color="danger">*</ion-text>
-                </ion-label>
-                <ion-input formControlName="state"></ion-input>
-            </ion-item>
-            <p *ngIf="!checkoutForm.controls.state.valid && (checkoutForm.controls.state.dirty || submitAttempt)" class="err-reds shake">Please enter name.</p>
-            <ion-item>
-                <ion-label position="stacked">Zipcode
-                    <ion-text color="danger">*</ion-text>
-                </ion-label>
-                <ion-input formControlName="zipcode"></ion-input>
-                <p *ngIf="!checkoutForm.controls.zipcode.valid && (checkoutForm.controls.zipcode.dirty || submitAttempt)" class="err-reds shake">Please enter name.</p>
-            </ion-item>
-        </ion-list>
-    </form>
-    <div class="ion-padding" *ngIf="addaddress">
-        <ion-item>
-            <ion-button *ngIf="type != 'address'" expand="block" (click)="cancel()" color="danger" class="ion-no-margin">Cancel</ion-button>
-            <ion-button expand="block" (click)="submitaddress()" color="warning" slot="end" class="ion-no-margin">Save And Deliver Here</ion-button>
-        </ion-item>
-    </div>
+    
 </ion-content>

@@ -13,7 +13,6 @@ export class AddressPage implements OnInit {
   type: string;
   customer_id: any;
   user_id: string;
-  addaddress:boolean = false;
   checkoutForm: FormGroup;
   getalladdress:any=[];
   quantity: string;
@@ -32,9 +31,7 @@ export class AddressPage implements OnInit {
     this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
     this.totalpricecart = this.route.snapshot.paramMap.get('totalamount');
     this.type = this.route.snapshot.paramMap.get('type');
-    if(this.type == 'address'){
-      this.addaddress = true;
-    }
+  
     this.initForm();
   }
 
@@ -49,22 +46,16 @@ export class AddressPage implements OnInit {
     this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
     this.totalpricecart = this.route.snapshot.paramMap.get('totalamount');
     this.type = this.route.snapshot.paramMap.get('type');
-    if(this.type == 'address'){
-      this.addaddress = true;
-    }
+   
   }
   ionViewWillEnter(){
     this.type = this.route.snapshot.paramMap.get('type');
-    if(this.type == 'address'){
-      this.addaddress = true;
-    }
+   
   }
   addAddress(){
-    this.addaddress = true;
+    this.router.navigate(['addaddress'])
   }
-  cancel(){
-    this.addaddress = false;
-  }
+ 
   initForm(){
     this.checkoutForm = this.formBuilder.group({
       address: ['', Validators.compose([Validators.required])],
@@ -78,29 +69,7 @@ export class AddressPage implements OnInit {
   radioSelects(event,id) {
     this.customer_id = id;
   }
-  submitaddress(){
-    let user_id = {"user_id":this.user_id};
-    let obj = Object.assign(this.checkoutForm.value,user_id);
-    if(!this.checkoutForm.valid){
-      this.submitAttempt = true;
-    }else{
-      this.submitAttempt = false;
-    this.productservice.presentLoading();
-      this.productservice.addaddress(obj)
-    .subscribe(product =>{ 
-      this.productservice.loadingdismiss();
-      this.addaddress = false;
-      this.allgetAddress(this.user_id);
-      if(this.type == 'address'){
-        this.router.navigate(['getaddress']);
-      }
-    },
-    err =>{
-      this.productservice.loadingdismiss();
-      this.productservice.presentToast(err.error.message);
-   })
-  }
-    }
+ 
     allgetAddress(user_id){
       this.productservice.presentLoading();
       this.productservice.getaddress(user_id)
@@ -115,7 +84,7 @@ export class AddressPage implements OnInit {
     }
     next(){
       if(this.customer_id){
-      this.router.navigate(['proceedcheckout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
+      this.router.navigate(['proceedcheckout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"customer_id":this.customer_id,"totalamount":this.totalpricecart}]);
       }
       else{
         this.productservice.presentToast("Please Select the delivery address");

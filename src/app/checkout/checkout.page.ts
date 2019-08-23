@@ -46,6 +46,7 @@ export class CheckoutPage implements OnInit {
 
   }
   ionViewWillEnter(){
+    this.singleid = this.route.snapshot.paramMap.get('id');
     this.events.subscribe('cart', ()=>{
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
       if(this.cartDetails){
@@ -54,6 +55,7 @@ export class CheckoutPage implements OnInit {
     })
   }
   ngOnInit() {
+    this.singleid = this.route.snapshot.paramMap.get('id');
     this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
     if(this.cartDetails){
       this.cartcount = this.cartDetails.length;

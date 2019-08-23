@@ -230,7 +230,7 @@ export class ViewcartproductPage implements OnInit {
   async presentAlertConfirm(id) {
     const alert = await this.alertCtrl.create({
       header: '',
-      message: 'Are you sure want to delete this from your cart!!!',
+      message: 'Are you sure want to delete this item from your cart?',
       buttons: [
         {
           text: 'Cancel',
@@ -267,5 +267,8 @@ export class ViewcartproductPage implements OnInit {
   }
   back(){
     this.location.back();
+  }
+  shopnow(){
+    this.router.navigate(['/productbycategory']);
   }
 }

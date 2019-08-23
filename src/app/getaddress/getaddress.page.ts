@@ -62,7 +62,7 @@ export class GetaddressPage implements OnInit {
   async presentAlertConfirm(id) {
     const alert = await this.alertController.create({
       header: '',
-      message: 'Are you sure want to remove this address!!!',
+      message: 'Are you sure want to remove this address?',
       buttons: [
         {
           text: 'Cancel',
@@ -86,7 +86,6 @@ export class GetaddressPage implements OnInit {
     this.router.navigate(['editprofile',{"type":"address","id":id}]);
   }
   addaddress(){
-    console.log("sdsd")
-    this.router.navigate(['address',{"type":"address"}]);
+    this.router.navigate(['addaddress',{"type":"address"}]);
   }
 }

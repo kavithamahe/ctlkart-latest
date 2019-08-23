@@ -55,6 +55,9 @@ export class MyordersPage implements OnInit {
       this.productservice.presentToast(err.error.message);
    })
   }
+  viewsingleorder(id){
+    this.router.navigate(['/vieworderhistory',{"id":id}]);
+  }
   viewcart(){
     this.router.navigate(['/viewcartproduct']);
   }

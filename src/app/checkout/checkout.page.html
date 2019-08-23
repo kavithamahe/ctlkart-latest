@@ -16,18 +16,18 @@
                     </ion-label>
                     <ion-input formControlName="email" required type="email"></ion-input>
                 </div>
-                <p *ngIf="!loginForm.controls.email.valid && (loginForm.controls.email.dirty || submitAttempt)" class="err-reds shake">Please enter name.</p>
+                <p *ngIf="!loginForm.controls.email.valid && (loginForm.controls.email.dirty || submitAttempt)" class="err-reds shake">Please enter email.</p>
                 <div class="formList">
                     <ion-label position="stacked">Password
                         <ion-text color="danger">*</ion-text>
                     </ion-label>
                     <ion-input required type="password" formControlName="password"></ion-input>
                 </div>
-                <p *ngIf="!loginForm.controls.password.valid && (loginForm.controls.password.dirty || submitAttempt)" class="err-reds shake">Please enter name.</p>
+                <p *ngIf="!loginForm.controls.password.valid && (loginForm.controls.password.dirty || submitAttempt)" class="err-reds shake">Please enter password.</p>
             </ion-list>
         </form>
         <div class="formList">
-            <ion-text shape="round" class="forgetPassword" expand="block" (click)="forgetpassword()">Forget Password?</ion-text>
+            <ion-text shape="round" class="forgetPassword" expand="block" (click)="forgetpassword()">Forgot Password?</ion-text>
         </div>
     </div>
     <div style="padding:10px;">
