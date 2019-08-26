@@ -95,8 +95,7 @@ export class CheckoutPage implements OnInit {
         if(err.status == 401){
           // this.numberverify = true;
           console.log(err.error);
-          console.log(err);
-          console.log(err.error.moblie);
+          console.log(err.error.mobile);
           if(err.error.mobile){
           const phoneNumberString = "+91" + err.error.mobile;
 console.log(phoneNumberString);
