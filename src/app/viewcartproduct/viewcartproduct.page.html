@@ -60,13 +60,13 @@
         <ion-text class="loginBtn" (click)="proceedtobuy()">Proceed To Buy</ion-text>
     </div>
 
-    <div class="profile-edit" *ngIf="!cartDetails">
-        <span class="profile-img">
-                  <img src="assets/img/icon.png"/>
-                </span>
-        <p class="name">There is no item(s) in the cart</p>
+    <div class="EmptyCart" *ngIf="!cartDetails">
+        <div class="profile-img">
+            <img src="assets/img/broken-image.png" />
+        </div>
+        <p class="name">Nothing here yet</p>
         <p class="mail">
-            <ion-text class="shopBtn" (click)="shopnow()">Shop Now</ion-text>
+            <ion-text class="shopBtn" (click)="shopnow()">Shop your products</ion-text>
         </p>
 
 
