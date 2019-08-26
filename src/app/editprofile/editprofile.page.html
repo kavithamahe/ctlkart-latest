@@ -4,72 +4,91 @@
             <!-- <ion-menu-button autoHide="false"></ion-menu-button> -->
             <ion-icon name="arrow-back" (click)="back()"></ion-icon>
         </ion-buttons>
-        <ion-title>Ctl<span>kart</span></ion-title>
+        <ion-title>Edit</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
+    
     <ion-grid *ngIf="type != 'address'">
-        <ion-row style="border: 2px solid #d1af7b;">
-            <ion-col>
-                <ion-input value="{{name}}"  [(ngModel)]="profile.name"></ion-input>
-                <ion-input value="{{email}}"  [(ngModel)]="profile.email"></ion-input>
-                <ion-input value="{{mobile}}"  [(ngModel)]="profile.mobile"></ion-input>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col>
-                <button style="padding:15px;" (click)="editprofile()">
-              <ion-ripple-effect></ion-ripple-effect>
-              Submit
-          </button>
-            </ion-col>
-        </ion-row>
+            <form [formGroup]="profileForm">
+                    <ion-row style="border: 2px solid #d1af7b;">
+                        <ion-col>
+                            <ion-input type = "text" formControlName="firstname"></ion-input>
+                            <!-- <p *ngIf="!profileForm.controls.firstname.valid && (profileForm.controls.firstname.dirty || submitAttempt)" class="err-reds shake">Please enter firstname.</p> -->
+                            <ion-input type = "text" formControlName="lastname"></ion-input>
+                            <!-- <p *ngIf="!profileForm.controls.lastname.valid && (profileForm.controls.lastname.dirty || submitAttempt)" class="err-reds shake">Please enter lastname.</p> -->
+                            <ion-input type = "email" formControlName="email"></ion-input>
+                            <!-- <p *ngIf="!profileForm.controls.email.valid && (profileForm.controls.email.dirty || submitAttempt)" class="err-reds shake">Please enter email.</p> -->
+                            <ion-input type = "number" formControlName="mobile"></ion-input>
+                            <!-- <p *ngIf="!profileForm.controls.mobile.valid && (profileForm.controls.mobile.dirty || submitAttempt)" class="err-reds shake">Please enter mobile number.</p> -->
+                        </ion-col>
+                    </ion-row>
+                    </form>
+        <br>
+        <div style="padding:0px 10px;">
+            <ion-grid>
+                <ion-row>
+                    <ion-col size="6">
+                        <ion-text class="cancelBtn" color="cart" (click)="back()">Cancel</ion-text>
+                    </ion-col>
+                    <ion-col size="6">
+                        <ion-text class="loginBtn" color="cart" (click)="editprofile()">Save</ion-text>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
         <br>
     </ion-grid>
     <div *ngIf="type == 'address'">
-        <div style="border: 2px solid #d1af7b;">
+        <div>
             <ion-list lines="full" class="ion-no-margin ion-no-padding">
+                <form [formGroup]="addressForm">
                 <ion-item>
-                    <ion-label position="stacked">Address
+                    <ion-label position="stacked">Flat No / Area / Street
                         <ion-text color="danger">*</ion-text>
                     </ion-label>
-                    <ion-input value="{{getaddress.address}}" [(ngModel)]="addresss.address" type="text"></ion-input>
+                    <ion-input formControlName="address" type="text"></ion-input>
                 </ion-item>
                 <ion-item>
                     <ion-label position="stacked">Landmark
                         <ion-text color="danger">*</ion-text>
                     </ion-label>
-                    <ion-input value="{{getaddress.landmark}}" [(ngModel)]="addresss.landmark" type="text"></ion-input>
+                    <ion-input formControlName="landmark" type="text"></ion-input>
                 </ion-item>
                 <ion-item>
                     <ion-label position="stacked">City
                         <ion-text color="danger">*</ion-text>
                     </ion-label>
-                    <ion-input value="{{getaddress.city}}" [(ngModel)]="addresss.city" type="text"></ion-input>
+                    <ion-input formControlName="city" type="text"></ion-input>
                 </ion-item>
                 <ion-item>
                     <ion-label position="stacked">State
                         <ion-text color="danger">*</ion-text>
                     </ion-label>
-                    <ion-input value="{{getaddress.state}}" [(ngModel)]="addresss.state" type="text"></ion-input>
+                    <ion-input formControlName="state" type="text"></ion-input>
                 </ion-item>
                 <ion-item>
                     <ion-label position="stacked">Zipcode
                         <ion-text color="danger">*</ion-text>
                     </ion-label>
-                    <ion-input value="{{getaddress.zipcode}}" [(ngModel)]="addresss.zipcode" type="text"></ion-input>
+                    <ion-input formControlName="zipcode" type="text"></ion-input>
                 </ion-item>
-
+                </form>
             </ion-list>
-
-
-            <button style="padding:15px;" (click)="editaddress(getaddress.id)">
-      <ion-ripple-effect></ion-ripple-effect>
-      Submit
-  </button>
+            <br>
+            <div style="padding:0px 10px;">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col size="6">
+                            <ion-text class="cancelBtn" color="cart" (click)="back()">Cancel</ion-text>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-text class="loginBtn" color="cart" (click)="editaddress(getaddress.id)">Save</ion-text>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
         </div>
-        <br>
     </div>
-
 </ion-content>

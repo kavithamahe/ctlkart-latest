@@ -11,6 +11,7 @@ import { Location } from '@angular/common';
 })
 export class ProfilePage implements OnInit {
 
+  lastname: any;
   mobile: any;
   email: any;
   name: any;
@@ -35,6 +36,7 @@ export class ProfilePage implements OnInit {
       this.productservice.loadingdismiss();
       this.getprofile = profile.data;
       this.name = this.getprofile[0].firstname;
+      this.lastname = this.getprofile[0].lastname;
       this.email = this.getprofile[0].email;
       this.mobile = this.getprofile[0].mobile;
     },
@@ -102,6 +104,6 @@ deleteaccountconfirm(){
     this.router.navigate(['getaddress']);
   }
   back(){
-    this.location.back();
+    this.router.navigate(['dashboard']);
   }
 }

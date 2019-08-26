@@ -28,7 +28,6 @@ export class AppComponent {
   ) {
     this.token = localStorage.getItem('token');
     this.href = this.router.url;
-    console.log(this.href);
     if(this.href == "/" && !this.token){
       this.router.navigate(['onboard']);
       this.tabsbar = false;
@@ -39,7 +38,6 @@ export class AppComponent {
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
       if(this.cartDetails){
         this.cartcount = this.cartDetails.length;
-        console.log(this.cartcount)
       }
       
     this.events.subscribe('loggedin', ()=>{

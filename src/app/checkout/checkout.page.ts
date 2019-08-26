@@ -47,6 +47,7 @@ export class CheckoutPage implements OnInit {
 
   }
   ionViewWillEnter(){
+    this.singleid = this.route.snapshot.paramMap.get('id');
     this.events.subscribe('cart', ()=>{
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
       if(this.cartDetails){
@@ -55,6 +56,7 @@ export class CheckoutPage implements OnInit {
     })
   }
   ngOnInit() {
+    this.singleid = this.route.snapshot.paramMap.get('id');
     this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
     if(this.cartDetails){
       this.cartcount = this.cartDetails.length;
@@ -63,13 +65,13 @@ export class CheckoutPage implements OnInit {
   }
   initForm(){
     this.loginForm = this.formBuilder.group({
-      email: ['', Validators.compose([Validators.required])],
+      email: ['',Validators.compose([Validators.pattern(/^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i),Validators.required])],
       password: ['', Validators.compose([Validators.required])]
       });
   }
   
   register(){
-    this.router.navigate(['register']);
+    this.router.navigate(['register',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
   }
   login(){
     if(!this.loginForm.valid){
@@ -92,8 +94,12 @@ export class CheckoutPage implements OnInit {
       err =>{
         if(err.status == 401){
           // this.numberverify = true;
+          console.log(err.error);
+          console.log(err);
+          console.log(err.error.moblie);
+          if(err.error.mobile){
           const phoneNumberString = "+91" + err.error.mobile;
-
+console.log(phoneNumberString);
           this.firebaseAuthentication.verifyPhoneNumber(phoneNumberString, 30000)
           .then( confirmationResult => {
             this.verificationId = confirmationResult;
@@ -104,8 +110,11 @@ export class CheckoutPage implements OnInit {
           this.alert(error);
           console.error(error)
         });
+        this.presentToast(err.error.message);
+      }
           this.presentToast(err.error.message);
-        }
+      }
+        
         else{
           this.presentToast(err.error.message);
         }
@@ -151,9 +160,19 @@ export class CheckoutPage implements OnInit {
             err =>{
               this.productservice.presentToast(err.error.message);
            })
-          console.log(user);
-          this.router.navigate(['checkout']);
-          })
+          // this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
+          this.events.publish('loggedin');
+        if(this.fromcart || this.singleid){
+          this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
+        }
+        else{
+          this.router.navigate(['dashboard']);
+        }  
+        })
+          .catch((error) => {
+            // this.alert(error);
+            this.productservice.presentToast(error);
+            console.error(error)});
           }
         }
       ]

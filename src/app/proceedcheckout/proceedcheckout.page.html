@@ -13,6 +13,25 @@
 </ion-header>
 
 <ion-content>
+<div>
+        <ion-grid>
+                <ion-row>
+                    <ion-col size="12">
+                        <ion-list>
+                                <ion-list-header>
+                                    <ion-label class="deliveryLabel">Delivery Address</ion-label>
+                                    <ion-text (click)="changeaddress()" class="addAddress">change</ion-text>
+                                </ion-list-header>
+                                <ion-item>
+                                    <ion-label style="white-space: normal !important;"><span>{{getaddress.address}},</span><span>{{getaddress.city}},</span><span>{{getaddress.state}} - {{getaddress.zipcode}}</span></ion-label>
+                                </ion-item>
+                        </ion-list>
+                    </ion-col>
+                
+                </ion-row>
+            </ion-grid>
+ 
+</div>
 
  <div *ngFor="let single of getsingleProductList">
         <ion-list-header>
@@ -32,25 +51,126 @@
             <button clear (click)="incrementQty()"><ion-icon name="add-circle" ></ion-icon></button>
         </ion-item>
 
-        <ion-list>
-            <ion-item>
-                <ion-label style="white-space: normal !important;">Cash on delivery</ion-label>
-                <ion-radio slot="start" value="biff" checked></ion-radio>
-            </ion-item>
-        </ion-list>
-        <div class="ion-padding">
-            <ion-button expand="block" (click)="proceedtobuy(single.id)" color="warning" shape="round" class="ion-no-margin">Proceed to buy</ion-button>
+    <div class="subtoatalValue" *ngIf="fromcart != '1'">
+            <ion-grid>
+                <ion-row>
+                    <ion-col size="7">
+                        <ion-label>
+                            <h3>Subtotal </h3>
+                        </ion-label>
+                    </ion-col>
+                    <ion-col size="5">
+                        <p><i class="fa fa-inr"></i> {{totalprice | number : '1.2-2'}}</p>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                        <ion-col size="7">
+                            <ion-label>
+                                <h3>Delivery </h3>
+                            </ion-label>
+                        </ion-col>
+                        <ion-col size="5">
+                            <p>Free</p>
+                        </ion-col>
+                 </ion-row>
+                <ion-row>
+                     <ion-col size="7">
+                                <ion-label>
+                                    <h3>Total </h3>
+                                </ion-label>
+                            </ion-col>
+                            <ion-col size="5">
+                                <p><i class="fa fa-inr"></i> {{totalprice | number : '1.2-2'}}</p>
+                            </ion-col>
+                  </ion-row>
+            </ion-grid>
         </div>
-    </div>
-    <div *ngIf="fromcart == '1'">
-        <ion-list>
-            <ion-item>
-                <ion-label style="white-space: normal !important;">Cash on delivery</ion-label>
-                <ion-radio slot="start" value="biff" checked></ion-radio>
-            </ion-item>
-        </ion-list>
-        <div class="ion-padding">
-            <ion-button expand="block" (click)="proceedtobuycart()" color="warning" shape="round" class="ion-no-margin">Proceed to buy</ion-button>
         </div>
-    </div>
+
+    <!-- ------------------------------------cart---------------------------------- -->
+        <div *ngIf="fromcart == '1'">
+                <ion-grid>
+                        <ion-row>
+                            <ion-col size="12">
+                                <ion-list>
+                                        <ion-list-header>
+                                            <ion-label class="deliveryLabel">Order Item Details</ion-label>
+                                        </ion-list-header>
+                                        <div class="cartProduct" *ngFor="let single of cartDetails; let i = index;">
+                                                <ion-label style="white-space: normal !important;">order #{{i + 1}}</ion-label>
+                                                <div class="mycartProduct">
+                                                    <div class="productImage">
+                                                        <ion-thumbnail slot="start">
+                                                            <img [src]="imageUrl + single.product_image">
+                                                        </ion-thumbnail>
+                                                    </div>
+                                                    <div class="productContent">
+                                                        <ion-grid>
+                                                            <ion-row>
+                                                                <ion-col size="6">
+                                                                    <h3>{{single.product_name}}</h3>
+                                                                </ion-col>
+                                                                <ion-col size="6">
+                                                                    <p color="warning"><i class="fa fa-inr"></i>{{single.price | number : '1.2-2'}}</p>
+                                                                </ion-col>
+                                                            </ion-row>
+                                                        </ion-grid>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                </ion-list>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+         
+        </div>
+    <div class="subtoatalValue" *ngIf="fromcart == '1'">
+            <ion-grid>
+                <ion-row>
+                    <ion-col size="7">
+                        <ion-label>
+                            <h3>Subtotal </h3>
+                        </ion-label>
+                    </ion-col>
+                    <ion-col size="5">
+                        <p><i class="fa fa-inr"></i> {{totalamount | number : '1.2-2'}}</p>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                        <ion-col size="7">
+                            <ion-label>
+                                <h3>Delivery </h3>
+                            </ion-label>
+                        </ion-col>
+                        <ion-col size="5">
+                            <p>Free</p>
+                        </ion-col>
+                 </ion-row>
+                <ion-row>
+                     <ion-col size="7">
+                                <ion-label>
+                                    <h3>Total </h3>
+                                </ion-label>
+                            </ion-col>
+                            <ion-col size="5">
+                                <p><i class="fa fa-inr"></i> {{totalamount | number : '1.2-2'}}</p>
+                            </ion-col>
+                  </ion-row>
+            </ion-grid>
+        </div>
+        <!-- ---------------------------cart end----------------------- -->
+        <div>
+                <ion-list-header>
+                            <ion-label>Payment Type</ion-label>
+                </ion-list-header>
+                <ion-list>
+                    <ion-item>
+                        <ion-label style="white-space: normal !important;">Cash on delivery</ion-label>
+                        <ion-radio slot="start" value="biff" checked></ion-radio>
+                    </ion-item>
+                </ion-list>
+                <div class="ion-padding">
+                    <ion-button expand="block" (click)="proceedtobuycart()" color="warning" shape="round" class="ion-no-margin">Proceed</ion-button>
+                </div>
+        </div>
 </ion-content>

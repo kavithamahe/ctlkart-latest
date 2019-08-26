@@ -4,7 +4,7 @@
             <!-- <ion-menu-button autoHide="false"></ion-menu-button> -->
             <ion-icon name="arrow-back" (click)="back()"></ion-icon>
         </ion-buttons>
-        <ion-title>Delivered Addresses</ion-title>
+        <ion-title>Manage Address</ion-title>
         <!-- <ion-buttons slot="end" (click)="viewcart()">
             <i class="fa fa-shopping-basket" aria-hidden="true"></i>
             <ion-badge id="cart-badge" color="danger">{{cartcount}}</ion-badge>
@@ -14,31 +14,29 @@
 
 <ion-content padding>
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button (click)="addaddress()">
-          <ion-icon name="add"></ion-icon>
+        <ion-fab-button color="warning" (click)="addaddress()">
+            <ion-icon name="add"></ion-icon>
         </ion-fab-button>
-      </ion-fab>
+    </ion-fab>
     <ion-grid *ngFor="let address of getaddresslist">
-        <ion-row style="border-bottom: 1px solid #feb931;">
-            <ion-row>
-                <ion-col>
-                    <p>{{address.address}}, {{address.landmark}}, {{address.city}}, {{address.state}} - {{address.zipcode}}</p>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col size="6">
-                    <button style="padding:15px;" color="warning" shape="circle" (click)="editaddress(address.id)">
-              <ion-ripple-effect></ion-ripple-effect>
-              <i class="fa fa-pencil"></i>
-          </button>
-                </ion-col>
-                <ion-col size="6">
-                    <button style="padding:15px;" color="danger" shape="circle" (click)="presentAlertConfirm(address.id)">
-              <ion-ripple-effect></ion-ripple-effect>
-              <i class="fa fa-trash"></i>
-          </button>
-                </ion-col>
-            </ion-row>
+        <ion-row>
+            <ion-col>
+                <div class="addressColumn">
+                    <ul>
+                        <li>
+                            <ion-text class="editBtn" (click)="presentAlertConfirm(address.id)"><i class="fa fa-trash"></i></ion-text>
+                        </li>
+                        <li>
+                            <ion-text class="editBtn" (click)="editaddress(address.id)"><i class="fa fa-pencil"></i></ion-text>
+                        </li>
+                    </ul>
+
+                    <p>{{address.address}}</p>
+                    <p>{{address.landmark}}</p>
+                    <p>{{address.city}}</p>
+                    <p>{{address.state}} - {{address.zipcode}}</p>
+                </div>
+            </ion-col>
         </ion-row>
     </ion-grid>
 </ion-content>

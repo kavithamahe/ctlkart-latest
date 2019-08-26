@@ -38,6 +38,6 @@ export class VieworderhistoryPage implements OnInit {
    })
   }
   back(){
-    this.location.back();
+    this.router.navigateByUrl('/myorders');
   }
 }

@@ -25,7 +25,7 @@
 <ion-toolbar>
     <ion-segment *ngFor="let single of getsingleProductList">
         <ion-segment-button *ngIf="!gotocart" value="all" (click)="addproductTocart(single.id,item_qty,single.price)">
-            Add Cart
+            Add TO Cart
         </ion-segment-button>
         <ion-segment-button *ngIf="gotocart" value="all" (click)="gotocartpage()">
             Go To Cart

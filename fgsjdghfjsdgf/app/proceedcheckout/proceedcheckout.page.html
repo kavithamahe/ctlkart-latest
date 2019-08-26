@@ -1,0 +1,56 @@
+<ion-header no-border-bottom>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <!-- <ion-menu-button autoHide="false"></ion-menu-button> -->
+            <ion-icon name="arrow-back" (click)="back()"></ion-icon>
+        </ion-buttons>
+        <ion-title>Ctl<span>kart</span></ion-title>
+        <ion-buttons slot="end" (click)="viewcart()">
+            <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+            <ion-badge id="cart-badge" color="danger">{{cartcount}}</ion-badge>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+ <div *ngFor="let single of getsingleProductList">
+        <ion-list-header>
+            <ion-label>Order Summary Details</ion-label>
+        </ion-list-header>
+        <ion-item>
+            <ion-thumbnail slot="start">
+                <img [src]="imageUrl + single.product_image">
+            </ion-thumbnail>
+            <ion-label>
+                <h3>{{single.product_name}}</h3>
+                <p><i class="fa fa-inr"></i>{{totalprice | number : '1.2-2'}}</p>
+            </ion-label>
+        </ion-item>
+        <ion-item>
+            <button clear (click)="decrementQty()"><ion-icon name="remove-circle" ></ion-icon></button>{{item_qty}}
+            <button clear (click)="incrementQty()"><ion-icon name="add-circle" ></ion-icon></button>
+        </ion-item>
+
+        <ion-list>
+            <ion-item>
+                <ion-label style="white-space: normal !important;">Cash on delivery</ion-label>
+                <ion-radio slot="start" value="biff" checked></ion-radio>
+            </ion-item>
+        </ion-list>
+        <div class="ion-padding">
+            <ion-button expand="block" (click)="proceedtobuy(single.id)" color="warning" shape="round" class="ion-no-margin">Proceed to buy</ion-button>
+        </div>
+    </div>
+    <div *ngIf="fromcart == '1'">
+        <ion-list>
+            <ion-item>
+                <ion-label style="white-space: normal !important;">Cash on delivery</ion-label>
+                <ion-radio slot="start" value="biff" checked></ion-radio>
+            </ion-item>
+        </ion-list>
+        <div class="ion-padding">
+            <ion-button expand="block" (click)="proceedtobuycart()" color="warning" shape="round" class="ion-no-margin">Proceed to buy</ion-button>
+        </div>
+    </div>
+</ion-content>

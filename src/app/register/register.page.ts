@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ProductsService } from '../products.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
-import { AlertController } from '@ionic/angular';
+import { AlertController, Events } from '@ionic/angular';
 import {Location} from '@angular/common';
 
 @Component({
@@ -12,11 +12,17 @@ import {Location} from '@angular/common';
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit {
+  quantity: string;
+  fromcart: string;
+  singleid: string;
   registerForm: FormGroup;
   submitAttempt: boolean = false;
   verificationId: any;
-  constructor(public firebaseAuthentication:FirebaseAuthentication,private _location: Location, private alertCtrl: AlertController,private router: Router,public formBuilder: FormBuilder,public productservice:ProductsService) { 
-
+  constructor(public firebaseAuthentication:FirebaseAuthentication,private route: ActivatedRoute,public events: Events,private _location: Location, private alertCtrl: AlertController,private router: Router,public formBuilder: FormBuilder,public productservice:ProductsService) { 
+    this.singleid = route.snapshot.paramMap.get('id');
+    console.log(this.singleid)
+    this.quantity = route.snapshot.paramMap.get('quantity');
+    this.fromcart = route.snapshot.paramMap.get('fromcart');
   }
 
   ngOnInit() {
@@ -27,8 +33,8 @@ export class RegisterPage implements OnInit {
     this.registerForm = this.formBuilder.group({
       firstname: ['', Validators.compose([Validators.required])],
       lastname: ['', Validators.compose([Validators.required])],
-      email: ['', Validators.compose([Validators.required])],
-      mobile: ['', Validators.compose([Validators.required])],
+      email: ['', Validators.compose([Validators.pattern(/^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i),Validators.required])],
+      mobile: ['', Validators.compose([Validators.minLength(10),Validators.maxLength(10), Validators.required])],
       password: ['', Validators.compose([Validators.required])],
      
        });
@@ -43,20 +49,19 @@ export class RegisterPage implements OnInit {
       this.submitAttempt = false;
       this.productservice.userregister(obj).subscribe(data =>{
         this.productservice.loadingdismiss();
-        this.registerForm.reset();
         const phoneNumberString = "+91" + this.registerForm.value.mobile;
-
-        this.firebaseAuthentication.verifyPhoneNumber(phoneNumberString, 30000)
+        this.productservice.presentToast(data.message);
+;        this.firebaseAuthentication.verifyPhoneNumber(phoneNumberString, 30000)
         .then( confirmationResult => {
-          this.verificationId = confirmationResult.data;
-          console.log(this.verificationId)
+          this.verificationId = confirmationResult;
           this.router.navigate(['otpverification',{"mobile":this.registerForm.value.mobile,"verificationId":this.verificationId}]);
-          // this.alert(this.verificationId);
+          this.registerForm.reset();
           
         })
       .catch((error) => {
         // this.alert(error);
         this.productservice.presentToast(error);
+        this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
         console.error(error)});
        
       }, 
@@ -68,11 +73,13 @@ export class RegisterPage implements OnInit {
   }
 
   back(){
-    this._location.back();
+    this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
+
   }
 
   Login(){
-    this.router.navigateByUrl('/checkout');
+    this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
+
   }
 
   // async alert(verificationId){

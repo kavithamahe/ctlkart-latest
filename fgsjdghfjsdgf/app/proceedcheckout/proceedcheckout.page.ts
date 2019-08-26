@@ -1,0 +1,226 @@
+import { Component, OnInit } from '@angular/core';
+import {Validators, FormBuilder, FormGroup } from '@angular/forms';
+import {Router, ActivatedRoute } from '@angular/router';
+import { ProductsService } from '../products.service';
+import { environment } from '../../environments/environment';
+import { Events, AlertController } from '@ionic/angular';
+import { Location } from '@angular/common';
+
+
+@Component({
+  selector: 'app-proceedcheckout',
+  templateUrl: './proceedcheckout.page.html',
+  styleUrls: ['./proceedcheckout.page.scss'],
+})
+export class ProceedcheckoutPage implements OnInit {
+  totalpricecart: string;
+  productListsfromcart: string;
+  cartcount: any;
+  cartDetails: any;
+  fromcart: string;
+  customer_id: any;
+  user_id: string;
+  price: any;
+  totalprice: any;
+  obj: any;
+  quantityperproduct: { "quantityperproduct": any; };
+  private imageUrl = environment.imageUrl;
+  quantity: string;
+  singleid: any;
+  
+  submitAttempt: boolean = false;
+  addaddress:boolean = false;
+  getsingleProductList:any=[];
+  item_qty:any="1";
+  getalladdress:any =[];
+  address = { addvalue: ''};
+
+  constructor(private location:Location,public alertController: AlertController,public events: Events,public formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,public productservice:ProductsService) {
+    this.singleid = route.snapshot.paramMap.get('id');
+    this.quantity = route.snapshot.paramMap.get('quantity');
+    this.fromcart = route.snapshot.paramMap.get('fromcart');
+    this.totalpricecart = route.snapshot.paramMap.get('totalamount');
+    this.customer_id = route.snapshot.paramMap.get('customer_id');
+    this.quantityperproduct = {"quantityperproduct":this.quantity};
+    if(this.fromcart != "1"){
+      this.getsingleproductlist(this.singleid);
+    }
+    this.item_qty=+(this.quantity);
+    this.user_id = localStorage.getItem("user_id");
+    this.allgetAddress(this.user_id);
+
+   }
+ 
+  ngOnInit() {
+    this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
+    if(this.cartDetails){
+      this.cartcount = this.cartDetails.length;
+    }
+    this.user_id = localStorage.getItem("user_id");
+  }
+  ionViewWillEnter(){
+    this.events.subscribe('cart', ()=>{
+      this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
+      if(this.cartDetails){
+        this.cartcount = this.cartDetails.length;
+      }
+    })
+    this.singleid = this.route.snapshot.paramMap.get('id');
+    this.quantity = this.route.snapshot.paramMap.get('quantity');
+    this.fromcart = this.route.snapshot.paramMap.get('fromcart');
+    this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
+    this.totalpricecart = this.route.snapshot.paramMap.get('totalamount');
+    this.customer_id = this.route.snapshot.paramMap.get('customer_id');
+    this.quantityperproduct = {"quantityperproduct":this.quantity};
+    if(this.fromcart != "1"){
+      this.getsingleproductlist(this.singleid);
+    }
+    this.item_qty=+(this.quantity);
+    this.user_id = localStorage.getItem("user_id");
+    this.allgetAddress(this.user_id);
+  }
+
+ 
+  allgetAddress(user_id){
+    this.productservice.presentLoading();
+    this.productservice.getaddress(user_id)
+    .subscribe(product =>{ 
+      this.getalladdress = product.data;
+      this.productservice.loadingdismiss();
+    },
+    err =>{
+      this.productservice.loadingdismiss();
+      this.productservice.presentToast(err.error.message);
+   })
+  }
+  getsingleproductlist(id){
+    this.productservice.presentLoading();
+    this.productservice.getproductlistsingle(id)
+    .subscribe(product =>{ 
+      this.productservice.loadingdismiss();
+      this.getsingleProductList = product.data;
+      this.price = product.data[0].price;
+      this.obj = Object.assign(product.data[0], this.quantityperproduct);
+      this.totalprice = (product.data[0].price * this.item_qty);
+    },
+    err =>{
+      this.productservice.loadingdismiss();
+      this.productservice.presentToast(err.error.message);
+   })
+  }
+  incrementQty(){
+    this.item_qty += 1;
+    this.totalprice = (this.price * this.item_qty);
+    }
+    
+   
+    decrementQty(){
+    if(this.item_qty-1 < 1){
+      this.item_qty = 1;
+      this.totalprice = (this.price * this.item_qty);
+    }
+    else{
+      this.item_qty -= 1;
+      this.totalprice = (this.price * this.item_qty);
+    }
+    }
+  
+    async proceedtobuycart() {
+      if(this.customer_id == "" || this.customer_id == undefined){
+        this.productservice.presentToast("Please Select The Delivery Address");
+      }
+      else{
+      const alert = await this.alertController.create({
+        header: '',
+        message: 'Are you sure want to buy this product?',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              console.log('Confirm Cancel: blah');
+            }
+          }, {
+            text: 'Yes',
+            handler: () => {
+              this.proceedtobuycartconfirm();
+            }
+          }
+        ]
+      });
+
+  
+      await alert.present();
+    }
+    }
+    proceedtobuycartconfirm(){
+        this.productservice.presentLoading();
+        this.productservice.checkoutcart(this.user_id,this.customer_id,this.cartDetails,this.totalpricecart)
+        .subscribe(product =>{ 
+          this.productservice.loadingdismiss();
+          this.productservice.presentToast(product.message);
+          this.router.navigate(['dashboard']);
+          localStorage.removeItem('cart_items');
+          this.events.publish('cart');
+        },
+        err =>{
+          this.productservice.loadingdismiss();
+          this.productservice.presentToast(err.error.message);
+       })
+      
+      
+    }
+    async proceedtobuy(product_id) {
+      if(this.customer_id == "" || this.customer_id == undefined){
+        this.productservice.presentToast("Please Select The Delivery Address");
+      }
+      else{
+      const alert = await this.alertController.create({
+        header: '',
+        message: 'Are you sure want to buy this product?',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              console.log('Confirm Cancel: blah');
+            }
+          }, {
+            text: 'Yes',
+            handler: () => {
+              this.proceedtobuyconfirm(product_id);
+            }
+          }
+        ]
+      });
+
+  
+      await alert.present();
+    }
+    }
+    proceedtobuyconfirm(product_id){
+     
+        this.productservice.presentLoading();
+        this.productservice.checkout(this.user_id,this.customer_id,product_id,this.totalprice,this.item_qty)
+        .subscribe(product =>{ 
+          this.productservice.loadingdismiss();
+          this.productservice.presentToast(product.message);
+          this.router.navigate(['dashboard']);
+         
+        },
+        err =>{
+          this.productservice.loadingdismiss();
+          this.productservice.presentToast(err.error.message);
+       })
+      
+      
+    }
+    viewcart(){
+      this.router.navigate(['/viewcartproduct']);
+    }
+    back(){
+      this.location.back();
+    }
+}

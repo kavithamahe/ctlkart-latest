@@ -31,6 +31,7 @@ export class OtpverificationPage implements OnInit {
     this.data = this.mobileotp.firebasemobileotp;
     let otp = "1";
     this.firebaseAuthentication.signInWithVerificationId(this.verificationId,this.data).then((user) => {
+      console.log(user);
       this.productservice.onetimepassword(this.mobilenumber,otp).subscribe(otpdata =>{
         console.log(otpdata);
       },
@@ -40,8 +41,12 @@ export class OtpverificationPage implements OnInit {
     console.log(user);
     this.router.navigate(['checkout']);
     })
+    .catch((error) => {
+      // this.alert(error);
+      this.productservice.presentToast("Your OTP is invallid");
+      console.error(error)});
   }
   back(){
-    this.location.back();
+    this.router.navigateByUrl('/checkout');
   }
 }
