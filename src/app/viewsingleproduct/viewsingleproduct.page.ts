@@ -142,6 +142,6 @@ export class ViewsingleproductPage implements OnInit {
 
 
     back(){
-      this._location.back();
+      this.router.navigate(['dashboard']);
     }
 }

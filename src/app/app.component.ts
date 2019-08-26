@@ -34,7 +34,14 @@ export class AppComponent {
       this.events.subscribe('onboard', ()=>{
         this.tabsbar = true;
       })
+    
     }
+    // this.events.subscribe('onboardreg', ()=>{
+    //   console.log("reg")
+    //   this.router.navigate(['register']);
+    //   console.log(this.href)
+    //   this.tabsbar = false;
+    // })
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
       if(this.cartDetails){
         this.cartcount = this.cartDetails.length;

@@ -39,19 +39,6 @@
             </ion-grid>
         </div>
         <br>
-        <div style="padding:0px 10px;">
-            <ion-grid>
-                <ion-row>
-                    <ion-col size="6">
-                        <ion-text class="cancelBtn" color="cart" (click)="back()">Cancel</ion-text>
-                    </ion-col>
-                    <ion-col size="6">
-                        <ion-text class="loginBtn" color="cart" (click)="editprofile()">Save</ion-text>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </div>
-        <br>
     </ion-grid>
     <div *ngIf="type == 'address'">
         <div>
@@ -90,7 +77,7 @@
                 </form>
             </ion-list>
             <br>
-            <div style="padding:0px 10px;">
+            <div *ngIf="type == 'address'" style="padding:0px 10px;">
                 <ion-grid>
                     <ion-row>
                         <ion-col size="6">

@@ -12,6 +12,7 @@ import {Location} from '@angular/common';
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit {
+  onboard: any;
   quantity: string;
   fromcart: string;
   singleid: string;
@@ -23,6 +24,7 @@ export class RegisterPage implements OnInit {
     console.log(this.singleid)
     this.quantity = route.snapshot.paramMap.get('quantity');
     this.fromcart = route.snapshot.paramMap.get('fromcart');
+    this.onboard = route.snapshot.paramMap.get('onboard');
   }
 
   ngOnInit() {
@@ -73,12 +75,17 @@ export class RegisterPage implements OnInit {
   }
 
   back(){
-    this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
+    if(this.onboard == "1"){
+      this.router.navigate(['onboard']);
+    }
+    else{
+      this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
+    }
 
   }
 
   Login(){
-    this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
+    this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"onboard":this.onboard}]);
 
   }
 

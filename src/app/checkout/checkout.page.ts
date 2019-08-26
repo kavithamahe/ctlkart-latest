@@ -24,12 +24,14 @@ export class CheckoutPage implements OnInit {
   singleid:any;
   numberverify:boolean = false;
   verify = { mobile: ''};
+  onboard:any;
 
   constructor(public firebaseAuthentication:FirebaseAuthentication,private _location: Location ,public events: Events,private route: ActivatedRoute,private alertCtrl: AlertController,private router: Router,public formBuilder: FormBuilder,public productservice:ProductsService,public toastController: ToastController) { 
     this.singleid = route.snapshot.paramMap.get('id');
     console.log(this.singleid)
     this.quantity = route.snapshot.paramMap.get('quantity');
     this.fromcart = route.snapshot.paramMap.get('fromcart');
+    this.onboard = route.snapshot.paramMap.get('onboard');
     this.events.subscribe('cart', ()=>{
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
       if(this.cartDetails){
@@ -72,6 +74,7 @@ export class CheckoutPage implements OnInit {
   
   register(){
     this.router.navigate(['register',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
+    // this.events.publish('onboardreg');
   }
   login(){
     if(!this.loginForm.valid){
@@ -134,7 +137,13 @@ export class CheckoutPage implements OnInit {
   //     });
   // }
   back(){
-      this._location.back();
+    if(this.onboard == "1"){
+      this.router.navigate(['register',{"onboard":this.onboard}]);
+    }
+    else{
+      this.router.navigate(['dashboard']);
+    }
+    
   }
   async alert(verificationId){
     const prompt = await this.alertCtrl.create({

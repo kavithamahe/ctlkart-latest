@@ -18,7 +18,7 @@ export class OnboardPage implements OnInit {
     this.events.publish('onboard');
   }
   signup(){
-    this.router.navigate(['register']);
-    this.events.publish('onboard');
+    this.router.navigate(['register',{"onboard":"1"}]);
+    // this.events.publish('onboard');
   }
 }

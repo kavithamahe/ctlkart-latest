@@ -91,6 +91,12 @@ export class AddressPage implements OnInit {
     }
   }
     back(){
-      this.location.back();
+      console.log(this.fromcart)
+      if(this.fromcart == "1"){
+        this.router.navigate(['viewcartproduct']);
+      }
+      else{
+        this.router.navigate(['viewsingleproduct',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"customer_id":this.customer_id,"totalamount":this.totalpricecart}]);
+      }
     }
 }
