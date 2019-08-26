@@ -47,6 +47,10 @@ export class AppComponent {
     this.events.subscribe('loggedout', ()=>{
       this.showButton = false;   
       this.token = localStorage.removeItem('token');
+      this.cartDetails = localStorage.removeItem('cart_items');
+      if(this.cartDetails){
+        this.cartcount = this.cartDetails.length;
+      }
     })
    
     this.initializeApp();

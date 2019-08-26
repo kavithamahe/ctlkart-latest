@@ -93,12 +93,8 @@ export class CheckoutPage implements OnInit {
       },
       err =>{
         if(err.status == 401){
-          // this.numberverify = true;
-          console.log(err.error);
-          console.log(err.error.mobile);
           if(err.error.mobile){
           const phoneNumberString = "+91" + err.error.mobile;
-console.log(phoneNumberString);
           this.firebaseAuthentication.verifyPhoneNumber(phoneNumberString, 30000)
           .then( confirmationResult => {
             this.verificationId = confirmationResult;
@@ -153,7 +149,6 @@ console.log(phoneNumberString);
             let otp = "1";
           this.firebaseAuthentication.signInWithVerificationId(verificationId,data.confirmationCode).then((user) => {
             this.productservice.onetimepassword(this.verify.mobile,otp).subscribe(otpdata =>{
-              console.log(otpdata);
               this.numberverify = false;
             },
             err =>{

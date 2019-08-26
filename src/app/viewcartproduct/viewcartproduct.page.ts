@@ -270,7 +270,4 @@ export class ViewcartproductPage implements OnInit {
   shopnow(){
     this.router.navigate(['/productbycategory']);
   }
-  shopnow(){
-    this.router.navigate(['/productbycategory']);
-  }
 }
