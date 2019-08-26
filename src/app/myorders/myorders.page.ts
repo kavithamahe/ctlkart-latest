@@ -62,6 +62,6 @@ export class MyordersPage implements OnInit {
     this.router.navigate(['/viewcartproduct']);
   }
   back(){
-    this.router.navigateByUrl('/dashboard');
+    this.router.navigate(['']);
   }
 }

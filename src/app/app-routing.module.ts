@@ -2,53 +2,61 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  
-  { path: '', redirectTo: 'tabs', pathMatch: 'full' },
-  { path: 'home', loadChildren: './home/home.module#HomePageModule' },
-  { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardPageModule' },
-  { path: 'viewsingleproduct', loadChildren: './viewsingleproduct/viewsingleproduct.module#ViewsingleproductPageModule' },
-  { path: 'viewcartproduct', loadChildren: './viewcartproduct/viewcartproduct.module#ViewcartproductPageModule' },
-  { path: 'productbycategory', loadChildren: './productbycategory/productbycategory.module#ProductbycategoryPageModule' },
-  { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
-  { path: 'checkout', loadChildren: './checkout/checkout.module#CheckoutPageModule' },
-  { path: 'proceedcheckout', loadChildren: './proceedcheckout/proceedcheckout.module#ProceedcheckoutPageModule' },
-  { path: 'changepasword', loadChildren: './changepasword/changepasword.module#ChangepaswordPageModule' },
-  { path: 'myorders', loadChildren: './myorders/myorders.module#MyordersPageModule' },
-  { path: 'forgetpassword', loadChildren: './forgetpassword/forgetpassword.module#ForgetpasswordPageModule' },
-  { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
-  { path: 'editprofile', loadChildren: './editprofile/editprofile.module#EditprofilePageModule' },
-  { path: 'category', loadChildren: './category/category.module#CategoryPageModule' },
-  { path: 'tabs', loadChildren: './tabs/tabs.module#TabsPageModule' },
-  { path: 'onboard', loadChildren: './onboard/onboard.module#OnboardPageModule' },
-
-  // ..................................tabs...........................
-  { path: 'dashboard/dashboard', loadChildren: './dashboard/dashboard.module#DashboardPageModule' },
-  { path: 'dashboard/category', loadChildren: './category/category.module#CategoryPageModule' },
-  { path: 'dashboard/viewcartproduct', loadChildren: './viewcartproduct/viewcartproduct.module#ViewcartproductPageModule' },
-  { path: 'dashboard/profile', loadChildren: './profile/profile.module#ProfilePageModule' },
-  { path: 'dashboard/checkout', loadChildren: './checkout/checkout.module#CheckoutPageModule' },
-  { path: 'register/dashboard', loadChildren: './dashboard/dashboard.module#DashboardPageModule' },
-  { path: 'register/category', loadChildren: './category/category.module#CategoryPageModule' },
-  { path: 'register/viewcartproduct', loadChildren: './viewcartproduct/viewcartproduct.module#ViewcartproductPageModule' },
-  { path: 'register/profile', loadChildren: './profile/profile.module#ProfilePageModule' },
-  { path: 'register/checkout', loadChildren: './checkout/checkout.module#CheckoutPageModule' },
-  // ..................................tabs end.......................
-  { path: 'subcategorylist', loadChildren: './subcategorylist/subcategorylist.module#SubcategorylistPageModule' },
-  { path: 'otpverification', loadChildren: './otpverification/otpverification.module#OtpverificationPageModule' },
-  { path: 'address', loadChildren: './address/address.module#AddressPageModule' },
-  { path: 'getaddress', loadChildren: './getaddress/getaddress.module#GetaddressPageModule' },
-  { path: 'vieworderhistory', loadChildren: './vieworderhistory/vieworderhistory.module#VieworderhistoryPageModule' },
-  { path: 'addaddress', loadChildren: './addaddress/addaddress.module#AddaddressPageModule' }
-
-
-
-
+  {
+    path: '',
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./register/register.module').then(m => m.RegisterPageModule)
+  },
+  { path: 'checkout', 
+  loadChildren: () => import('./checkout/checkout.module').then(m => m.CheckoutPageModule)
+  },
+  { path: 'onboard', 
+  loadChildren: () => import('./onboard/onboard.module').then(m => m.OnboardPageModule)
+  },
+  { path: 'viewsingleproduct', 
+  loadChildren: () => import('./viewsingleproduct/viewsingleproduct.module').then(m => m.ViewsingleproductPageModule)
+  },
+  { path: 'productbycategory', 
+  loadChildren: () => import('./productbycategory/productbycategory.module').then(m => m.ProductbycategoryPageModule)
+  },
+  { path: 'proceedcheckout', 
+  loadChildren: () => import('./proceedcheckout/proceedcheckout.module').then(m => m.ProceedcheckoutPageModule)
+  },
+  { path: 'changepasword', 
+  loadChildren: () => import('./changepasword/changepasword.module').then(m => m.ChangepaswordPageModule)
+  },
+  { path: 'myorders', 
+  loadChildren: () => import('./myorders/myorders.module').then(m => m.MyordersPageModule)
+  },
+  { path: 'editprofile', 
+  loadChildren: () => import('./editprofile/editprofile.module').then(m => m.EditprofilePageModule)
+  },
+  { path: 'subcategorylist', 
+  loadChildren: () => import('./subcategorylist/subcategorylist.module').then(m => m.SubcategorylistPageModule)
+  },
+  { path: 'otpverification', 
+  loadChildren: () => import('./otpverification/otpverification.module').then(m => m.OtpverificationPageModule)
+  },
+  { path: 'address', 
+  loadChildren: () => import('./address/address.module').then(m => m.AddressPageModule)
+  },
+  { path: 'vieworderhistory', 
+  loadChildren: () => import('./vieworderhistory/vieworderhistory.module').then(m => m.VieworderhistoryPageModule)
+  },
+  { path: 'addaddress', 
+  loadChildren: () => import('./addaddress/addaddress.module').then(m => m.AddaddressPageModule)
+  },
+  { path: 'getaddress', 
+  loadChildren: () => import('./getaddress/getaddress.module').then(m => m.GetaddressPageModule)
+  },
 ];
-
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules,onSameUrlNavigation: 'reload'})
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

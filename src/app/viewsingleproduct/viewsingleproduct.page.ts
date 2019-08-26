@@ -117,7 +117,7 @@ export class ViewsingleproductPage implements OnInit {
   }
   }
   gotocartpage(){
-    this.router.navigate(['/viewcartproduct']);
+    this.router.navigate(['tabs/viewcartproduct']);
   }
   async presentToast(datamessage) {
     const toast = await this.toastController.create({
@@ -142,6 +142,6 @@ export class ViewsingleproductPage implements OnInit {
 
 
     back(){
-      this.router.navigate(['dashboard']);
+      this.router.navigate(['']);
     }
 }

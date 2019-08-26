@@ -22,7 +22,7 @@ export class ChangepaswordPage implements OnInit {
       this.productservice.changepassword(this.password)
       .subscribe(password =>{ 
         this.productservice.loadingdismiss();
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['']);
       },
       err =>{
         this.productservice.loadingdismiss();

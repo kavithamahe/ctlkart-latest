@@ -74,7 +74,6 @@ export class CheckoutPage implements OnInit {
   
   register(){
     this.router.navigate(['register',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
-    // this.events.publish('onboardreg');
   }
   login(){
     if(!this.loginForm.valid){
@@ -90,7 +89,7 @@ export class CheckoutPage implements OnInit {
           this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
         }
         else{
-          this.router.navigate(['dashboard']);
+          this.router.navigate(['']);
         }
         
       },
@@ -141,7 +140,7 @@ export class CheckoutPage implements OnInit {
       this.router.navigate(['register',{"onboard":this.onboard}]);
     }
     else{
-      this.router.navigate(['dashboard']);
+      this.router.navigate(['']);
     }
     
   }
@@ -169,7 +168,7 @@ export class CheckoutPage implements OnInit {
           this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
         }
         else{
-          this.router.navigate(['dashboard']);
+          this.router.navigate(['']);
         }  
         })
           .catch((error) => {

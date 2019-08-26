@@ -113,7 +113,9 @@ export class DashboardPage implements OnInit  {
   filterbyCategory(id){
     this.router.navigate(['/subcategorylist',{"id":id}],{skipLocationChange: true});
   }
-
+  seecategory(){
+    this.router.navigate(['tabs/category']);
+  }
   doRefresh(event){
     this.getproductList();
     setTimeout(() => {

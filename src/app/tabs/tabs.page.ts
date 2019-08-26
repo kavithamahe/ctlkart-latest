@@ -1,15 +1,57 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Events } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tabs',
-  templateUrl: './tabs.page.html',
-  styleUrls: ['./tabs.page.scss'],
+  templateUrl: 'tabs.page.html',
+  styleUrls: ['tabs.page.scss']
 })
-export class TabsPage implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
+export class TabsPage {
+  cartcount: any;
+  token:any;
+  cartDetails: any;
+  constructor(private router: Router,
+    public events: Events) {
+    this.token = localStorage.getItem('token');
+    this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
+    if(this.cartDetails){
+      this.cartcount = this.cartDetails.length;
+    }
+    
+  this.events.subscribe('loggedin', ()=>{
+    this.token = localStorage.getItem('token');
+  })
+  this.events.subscribe('loggedout', ()=>{
+    this.token = localStorage.removeItem('token');
+  })
+  this.events.subscribe('cart', ()=>{
+    this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
+    if(this.cartDetails){
+      this.cartcount = this.cartDetails.length;
+      console.log(this.cartcount)
+    }
+  })
   }
-
+  ionViewWillEnter(){
+    this.token = localStorage.getItem('token');
+    this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
+    if(this.cartDetails){
+      this.cartcount = this.cartDetails.length;
+    }
+    
+  this.events.subscribe('loggedin', ()=>{
+    this.token = localStorage.getItem('token');
+  })
+  this.events.subscribe('loggedout', ()=>{
+    this.token = localStorage.removeItem('token');
+  })
+  this.events.subscribe('cart', ()=>{
+    this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
+    if(this.cartDetails){
+      this.cartcount = this.cartDetails.length;
+      console.log(this.cartcount)
+    }
+  })
+  }
 }

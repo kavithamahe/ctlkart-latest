@@ -104,6 +104,6 @@ deleteaccountconfirm(){
     this.router.navigate(['getaddress']);
   }
   back(){
-    this.router.navigate(['dashboard']);
+    this.router.navigate(['']);
   }
 }

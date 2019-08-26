@@ -14,7 +14,7 @@ export class OnboardPage implements OnInit {
   ngOnInit() {
   }
   gettingstarted(){
-    this.router.navigate(['dashboard']);
+    this.router.navigate(['']);
     this.events.publish('onboard');
   }
   signup(){

@@ -30,18 +30,8 @@ export class AppComponent {
     this.href = this.router.url;
     if(this.href == "/" && !this.token){
       this.router.navigate(['onboard']);
-      this.tabsbar = false;
-      this.events.subscribe('onboard', ()=>{
-        this.tabsbar = true;
-      })
-    
+     
     }
-    // this.events.subscribe('onboardreg', ()=>{
-    //   console.log("reg")
-    //   this.router.navigate(['register']);
-    //   console.log(this.href)
-    //   this.tabsbar = false;
-    // })
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
       if(this.cartDetails){
         this.cartcount = this.cartDetails.length;
@@ -110,7 +100,7 @@ viewaccount(){
   this.menu.close();
 }
 shopbycategory(){
-  this.router.navigate(['category']);
+  this.router.navigate(['tabs/category']);
   this.menu.close();
 }
 

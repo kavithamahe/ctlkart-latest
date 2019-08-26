@@ -265,7 +265,7 @@ export class ViewcartproductPage implements OnInit {
     this.router.navigate(['/viewcartproduct']);
   }
   back(){
-    this.router.navigateByUrl('/dashboard');
+    this.router.navigate(['']);
   }
   shopnow(){
     this.router.navigate(['/productbycategory']);
