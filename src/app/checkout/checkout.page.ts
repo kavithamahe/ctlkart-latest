@@ -65,13 +65,13 @@ export class CheckoutPage implements OnInit {
   }
   initForm(){
     this.loginForm = this.formBuilder.group({
-      email: ['', Validators.compose([Validators.required])],
+      email: ['',Validators.compose([Validators.pattern(/^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i),Validators.required])],
       password: ['', Validators.compose([Validators.required])]
       });
   }
   
   register(){
-    this.router.navigate(['register']);
+    this.router.navigate(['register',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
   }
   login(){
     if(!this.loginForm.valid){
@@ -93,9 +93,8 @@ export class CheckoutPage implements OnInit {
       },
       err =>{
         if(err.status == 401){
-          // this.numberverify = true;
+          if(err.error.mobile){
           const phoneNumberString = "+91" + err.error.mobile;
-
           this.firebaseAuthentication.verifyPhoneNumber(phoneNumberString, 30000)
           .then( confirmationResult => {
             this.verificationId = confirmationResult;
@@ -106,8 +105,11 @@ export class CheckoutPage implements OnInit {
           this.alert(error);
           console.error(error)
         });
+        this.presentToast(err.error.message);
+      }
           this.presentToast(err.error.message);
-        }
+      }
+        
         else{
           this.presentToast(err.error.message);
         }
@@ -147,15 +149,24 @@ export class CheckoutPage implements OnInit {
             let otp = "1";
           this.firebaseAuthentication.signInWithVerificationId(verificationId,data.confirmationCode).then((user) => {
             this.productservice.onetimepassword(this.verify.mobile,otp).subscribe(otpdata =>{
-              console.log(otpdata);
               this.numberverify = false;
             },
             err =>{
               this.productservice.presentToast(err.error.message);
            })
-          console.log(user);
-          this.router.navigate(['checkout']);
-          })
+          // this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
+          this.events.publish('loggedin');
+        if(this.fromcart || this.singleid){
+          this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
+        }
+        else{
+          this.router.navigate(['dashboard']);
+        }  
+        })
+          .catch((error) => {
+            // this.alert(error);
+            this.productservice.presentToast(error);
+            console.error(error)});
           }
         }
       ]

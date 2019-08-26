@@ -253,7 +253,6 @@ export class ViewcartproductPage implements OnInit {
  
   proceedtobuy(){
     this.productLists = (JSON.parse(localStorage.getItem('cart_items')))
-    console.log(this.productLists);
     if(this.token){
       this.router.navigate(['address',{"fromcart":"1","productLists":this.productLists,"totalamount":this.totalamount}]);
     }
@@ -266,7 +265,7 @@ export class ViewcartproductPage implements OnInit {
     this.router.navigate(['/viewcartproduct']);
   }
   back(){
-    this.location.back();
+    this.router.navigateByUrl('/dashboard');
   }
   shopnow(){
     this.router.navigate(['/productbycategory']);

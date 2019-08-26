@@ -16,7 +16,7 @@
                 </ion-label>
                 <ion-input formControlName="firstname" required type="text"></ion-input>
             </div>
-            <p *ngIf="!registerForm.controls.firstname.valid && (registerForm.controls.firstname.dirty || submitAttempt)" class="err-reds shake">Please enter name.</p>
+            <p *ngIf="!registerForm.controls.firstname.valid && (registerForm.controls.firstname.dirty || submitAttempt)" class="err-reds shake">Please enter firstname.</p>
 
             <div class="formList">
                 <ion-label position="floating">Last Name
@@ -24,14 +24,14 @@
                 </ion-label>
                 <ion-input required type="text" formControlName="lastname"></ion-input>
             </div>
-            <p *ngIf="!registerForm.controls.lastname.valid && (registerForm.controls.lastname.dirty || submitAttempt)" class="err-reds shake">Please enter name.</p>
+            <p *ngIf="!registerForm.controls.lastname.valid && (registerForm.controls.lastname.dirty || submitAttempt)" class="err-reds shake">Please enter lastname.</p>
             <div class="formList">
                 <ion-label position="floating">Email
                     <ion-text color="danger">*</ion-text>
                 </ion-label>
                 <ion-input required type="email" formControlName="email"></ion-input>
             </div>
-            <p *ngIf="!registerForm.controls.email.valid && (registerForm.controls.email.dirty || submitAttempt)" class="err-reds shake">Please enter name.</p>
+            <p *ngIf="!registerForm.controls.email.valid && (registerForm.controls.email.dirty || submitAttempt)" class="err-reds shake">Please enter email.</p>
 
             <div class="formList">
                 <ion-label position="floating">Mobile Number
@@ -39,7 +39,7 @@
                 </ion-label>
                 <ion-input required type="number" formControlName="mobile"></ion-input>
             </div>
-            <p *ngIf="!registerForm.controls.mobile.valid && (registerForm.controls.mobile.dirty || submitAttempt)" class="err-reds shake">Please enter name.</p>
+            <p *ngIf="!registerForm.controls.mobile.valid && (registerForm.controls.mobile.dirty || submitAttempt)" class="err-reds shake">Please enter mobile number.</p>
 
           
 
@@ -49,7 +49,7 @@
                 </ion-label>
                 <ion-input required type="password" formControlName="password"></ion-input>
             </div>
-            <p *ngIf="!registerForm.controls.password.valid && (registerForm.controls.password.dirty || submitAttempt)" class="err-reds shake">Please enter name.</p>
+            <p *ngIf="!registerForm.controls.password.valid && (registerForm.controls.password.dirty || submitAttempt)" class="err-reds shake">Please enter password.</p>
 
         </ion-list>
     </form>

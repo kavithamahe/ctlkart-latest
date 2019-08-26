@@ -13,6 +13,8 @@ import { Location } from '@angular/common';
   styleUrls: ['./proceedcheckout.page.scss'],
 })
 export class ProceedcheckoutPage implements OnInit {
+  totalamount: number;
+  selectedlength: any;
   totalpricecart: string;
   productListsfromcart: string;
   cartcount: any;
@@ -34,6 +36,7 @@ export class ProceedcheckoutPage implements OnInit {
   item_qty:any="1";
   getalladdress:any =[];
   address = { addvalue: ''};
+  getaddress:any=[];
 
   constructor(private location:Location,public alertController: AlertController,public events: Events,public formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,public productservice:ProductsService) {
     this.singleid = route.snapshot.paramMap.get('id');
@@ -42,6 +45,7 @@ export class ProceedcheckoutPage implements OnInit {
     this.totalpricecart = route.snapshot.paramMap.get('totalamount');
     this.customer_id = route.snapshot.paramMap.get('customer_id');
     this.quantityperproduct = {"quantityperproduct":this.quantity};
+    this.getsingleaddress(this.customer_id);
     if(this.fromcart != "1"){
       this.getsingleproductlist(this.singleid);
     }
@@ -65,6 +69,17 @@ export class ProceedcheckoutPage implements OnInit {
         this.cartcount = this.cartDetails.length;
       }
     })
+    if(this.cartDetails){
+      this.selectedlength = this.cartDetails.length;
+      let total = 0;
+      for (var i = 0; i < this.cartDetails.length; i++) {
+          if (this.cartDetails[i].totalproductprice) {
+              total += (this.cartDetails[i].price * this.cartDetails[i].quantityperproduct);
+              this.totalamount = total;
+          }
+      }
+      return total;
+    }
     this.singleid = this.route.snapshot.paramMap.get('id');
     this.quantity = this.route.snapshot.paramMap.get('quantity');
     this.fromcart = this.route.snapshot.paramMap.get('fromcart');
@@ -72,6 +87,7 @@ export class ProceedcheckoutPage implements OnInit {
     this.totalpricecart = this.route.snapshot.paramMap.get('totalamount');
     this.customer_id = this.route.snapshot.paramMap.get('customer_id');
     this.quantityperproduct = {"quantityperproduct":this.quantity};
+    this.getsingleaddress(this.customer_id);
     if(this.fromcart != "1"){
       this.getsingleproductlist(this.singleid);
     }
@@ -79,8 +95,27 @@ export class ProceedcheckoutPage implements OnInit {
     this.user_id = localStorage.getItem("user_id");
     this.allgetAddress(this.user_id);
   }
-
- 
+  getsingleaddress(id){
+    this.productservice.presentLoading();
+    this.productservice.viewsingleaddress(id)
+    .subscribe(getsinaddress =>{ 
+      this.getaddress = getsinaddress.data;
+      this.productservice.loadingdismiss();
+    },
+    err =>{
+      this.productservice.loadingdismiss();
+      this.productservice.presentToast(err.error.message);
+   })
+  }
+  changeaddress(){
+    if(this.fromcart == "1"){
+    this.router.navigate(['address',{"fromcart":"1","productLists":this.cartDetails,"totalamount":this.totalamount}]);
+    }
+    else{
+      this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity}]);
+    }
+  
+  }
   allgetAddress(user_id){
     this.productservice.presentLoading();
     this.productservice.getaddress(user_id)

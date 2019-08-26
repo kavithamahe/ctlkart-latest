@@ -47,11 +47,34 @@
                 <ion-label position="floating">Zipcode
                     <ion-text color="danger">*</ion-text>
                 </ion-label>
-                <ion-input required type="text" formControlName="zipcode"></ion-input>
+                <ion-input required type="number" formControlName="zipcode"></ion-input>
             </div>
             <p *ngIf="!checkoutForm.controls.zipcode.valid && (checkoutForm.controls.zipcode.dirty || submitAttempt)" class="err-reds shake">Please enter zipcode.</p>
 
+       
         </ion-list>
+        <ion-list>
+                    
+                    <ion-label>Address Type
+                          <ion-text color="danger">*</ion-text>
+                       </ion-label>
+                          <ion-list>
+                                <ion-radio-group>
+                              <ion-item>
+                                <ion-label>Home</ion-label>
+                                <ion-radio slot="start" value="home" checked formControlName="address_type"></ion-radio>
+                              </ion-item>
+                          
+                              <ion-item>
+                                <ion-label>Work</ion-label>
+                                <ion-radio slot="start" value="work" formControlName="address_type"></ion-radio>
+                              </ion-item>
+                              </ion-radio-group>
+                        </ion-list>
+                    <!-- <ion-input required type="text" formControlName="address_type"></ion-input> -->
+                <p *ngIf="!checkoutForm.controls.address_type.valid && (checkoutForm.controls.address_type.dirty || submitAttempt)" class="err-reds shake">Please select address type.</p>
+    
+              </ion-list>
     </form>
     <div style="padding:10px;">
         <ion-text class="loginBtn" color="cart" (click)="submitaddress()">Save And Deliver Here</ion-text>

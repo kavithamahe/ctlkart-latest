@@ -1,0 +1,22 @@
+<ion-header no-border-bottom>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-icon name="arrow-back" (click)="back()"></ion-icon>
+        </ion-buttons>
+        <ion-title>Category</ion-title>
+    </ion-toolbar>
+    <ion-toolbar class="ion-searchbar">
+        <ion-searchbar [(ngModel)]="term.searchText" (keyup.enter)="getItems(term.searchText)"></ion-searchbar>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding class="categoryList">
+    <ion-list *ngFor="let category of getallcategories">
+        <div (click)="getsubcategory(category.category_id)">
+            <ion-avatar slot="start">
+                <img [src]="imgURl + category.category_image" />
+            </ion-avatar>
+            <ion-label>{{category.category_name}}</ion-label>
+        </div>
+    </ion-list>
+</ion-content>

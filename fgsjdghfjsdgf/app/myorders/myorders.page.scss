@@ -1,0 +1,26 @@
+.productList {
+    ion-item {
+        ion-label {
+            h3 {
+                font-size: 16px;
+                font-weight: 700;
+                padding: 10px 0px 0px;
+                color: #000;
+            }
+            p {
+                padding: 1px;
+                margin: 0;
+                font-weight: 600;
+                letter-spacing: 0.4px;
+                color: #feb82b;
+            }
+        }
+    }
+}
+ion-buttons {
+    ion-icon {
+        color: #000;
+        font-size: 20px;
+        padding-left: 10px;
+    }
+}

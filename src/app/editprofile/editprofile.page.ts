@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../products.service';
 import {Location} from '@angular/common';
+import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -10,6 +11,7 @@ import {Location} from '@angular/common';
   styleUrls: ['./editprofile.page.scss'],
 })
 export class EditprofilePage implements OnInit {
+  lastname: any;
   zipcode: string;
   state: string;
   city: string;
@@ -22,11 +24,13 @@ export class EditprofilePage implements OnInit {
   name: any;
   user_id: any;
   getprofile:any=[];
-  profile= { name: '',email:'',mobile:''};
   addresss= { address: '',landmark:'',city:'',state:'',zipcode:''};
   type:any;
   getaddress:any=[];
-  constructor(public location:Location,private route: ActivatedRoute,private router: Router,public productservice:ProductsService) { 
+  profileForm: FormGroup;
+  addressForm:FormGroup;
+  submitAttempt: boolean = false;
+  constructor(public location:Location,private route: ActivatedRoute,public formBuilder: FormBuilder,private router: Router,public productservice:ProductsService) { 
     this.user_id = localStorage.getItem("user_id");
     this.param = route.snapshot.paramMap.get('param');
     this.type = route.snapshot.paramMap.get('type');
@@ -38,7 +42,26 @@ export class EditprofilePage implements OnInit {
   }
 
   ngOnInit() {
-    
+    this.initForm();
+    this.initaddressForm();
+  }
+  initForm(){
+    this.profileForm = this.formBuilder.group({
+      firstname: ['', Validators.compose([Validators.required])],
+      lastname: ['', Validators.compose([Validators.required])],
+      email: ['', Validators.compose([Validators.pattern(/^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i),Validators.required])],
+      mobile: ['', Validators.compose([Validators.minLength(10),Validators.maxLength(10), Validators.required])],
+     
+       });
+  }
+  initaddressForm(){
+    this.addressForm = this.formBuilder.group({
+      address: ['', Validators.compose([Validators.required])],
+      landmark: ['', Validators.compose([Validators.required])],
+      city: ['', Validators.compose([Validators.required])],
+      state: ['', Validators.compose([Validators.required])],
+      zipcode: ['', Validators.compose([Validators.required])],
+       });
   }
   ionViewWillEnter(){
     this.user_id = localStorage.getItem("user_id");
@@ -55,11 +78,11 @@ export class EditprofilePage implements OnInit {
     this.productservice.viewsingleaddress(id)
     .subscribe(getsinaddress =>{ 
       this.getaddress = getsinaddress.data;
-      this.address = this.getaddress.address;
-      this.landmark = this.getaddress.landmark;
-      this.city = this.getaddress.city;
-      this.state = this.getaddress.state;
-      this.zipcode = this.getaddress.zipcode;
+      this.addressForm.controls['address'].setValue(this.getaddress.address);
+      this.addressForm.controls['landmark'].setValue(this.getaddress.landmark);
+      this.addressForm.controls['city'].setValue(this.getaddress.city);
+      this.addressForm.controls['state'].setValue(this.getaddress.state);
+      this.addressForm.controls['zipcode'].setValue(this.getaddress.zipcode);
       this.productservice.loadingdismiss();
     },
     err =>{
@@ -73,8 +96,10 @@ export class EditprofilePage implements OnInit {
     .subscribe(profile =>{ 
       this.getprofile = profile.data;
       this.name = this.getprofile[0].firstname;
-      this.email = this.getprofile[0].email;
-      this.mobile = this.getprofile[0].mobile;
+      this.profileForm.controls['firstname'].setValue(this.name);
+      this.profileForm.controls['lastname'].setValue(this.getprofile[0].lastname);
+      this.profileForm.controls['email'].setValue(this.getprofile[0].email);
+      this.profileForm.controls['mobile'].setValue(this.getprofile[0].mobile);
       this.productservice.loadingdismiss();
 
     },
@@ -84,26 +109,12 @@ export class EditprofilePage implements OnInit {
    })
   }
   editprofile(){
-    if(this.profile.name == ""){
-      this.name = this.name;
-    }
-    else{
-      this.name = this.profile.name;
-    }
-    if(this.profile.email == ""){
-      this.email = this.email;
-    }
-    else{
-      this.email = this.profile.email;
-    }
-    if(this.profile.mobile == ""){
-      this.mobile = this.mobile;
-    }
-    else{
-      this.mobile = this.profile.mobile;
-    }
+    if(!this.profileForm.valid){
+      this.submitAttempt = true;
+      this.productservice.presentToast("Please Enter All The Details");
+    }else{
     this.productservice.presentLoading();
-    this.productservice.editprofile(this.user_id,this.name,this.email,this.mobile)
+    this.productservice.editprofile(this.user_id,this.profileForm.value)
     .subscribe(profile =>{ 
       this.productservice.loadingdismiss();
       this.productservice.presentToast(profile.message);
@@ -114,40 +125,16 @@ export class EditprofilePage implements OnInit {
       this.productservice.presentToast(err.error.message);
    })
   }
+  }
   editaddress(id){
-    if(this.addresss.address == ""){
-      this.address = this.address;
-    }
-    else{
-      this.address = this.addresss.address;
-    }
-    if(this.addresss.landmark == ""){
-      this.landmark = this.landmark;
-    }
-    else{
-      this.landmark = this.addresss.landmark;
-    }
-    if(this.addresss.city == ""){
-      this.city = this.city;
-    }
-    else{
-      this.city = this.addresss.city;
-    }
-    if(this.addresss.state == ""){
-      this.state = this.state;
-    }
-    else{
-      this.state = this.addresss.state;
-    }
-    if(this.addresss.zipcode == ""){
-      this.zipcode = this.zipcode;
-    }
-    else{
-      this.zipcode = this.addresss.zipcode;
-    }
+    if(!this.addressForm.valid){
+      this.submitAttempt = true;
+      this.productservice.presentToast("Please Enter All The Details");
+    }else{
     this.productservice.presentLoading();
-    let addressedit = {"address":this.address,"landmark":this.addresss.landmark,"city":this.addresss.city,
-    "state":this.addresss.state,"zipcode":this.addresss.zipcode}
+    let addressedit = {"address":this.addressForm.value.address,"landmark":this.addressForm.value.landmark,
+    "city":this.addressForm.value.city,
+    "state":this.addressForm.value.state,"zipcode":this.addressForm.value.zipcode}
     this.productservice.editaddress(id,addressedit)
     .subscribe(editadd =>{ 
       this.productservice.loadingdismiss();
@@ -158,6 +145,7 @@ export class EditprofilePage implements OnInit {
       this.productservice.loadingdismiss();
       this.productservice.presentToast(err.error.message);
    })
+  }
   }
   back(){
     this.location.back();

@@ -1,0 +1,29 @@
+ion-card {
+    box-shadow: none;
+    position: relative;
+    padding: 0 0 0 0;
+    margin: 0;
+}
+
+ion-header {
+    box-shadow: none;
+    ion-buttons {
+        ion-icon {
+            color: #000;
+            font-size: 20px;
+            padding-left: 10px;
+        }
+    }
+}
+
+.backtoproduct {
+    background: #f5f1e8;
+    padding: 10px 10px 0;
+    ion-buttons {
+        ion-icon {
+            color: #000;
+            font-size: 20px;
+            padding-left: 10px;
+        }
+    }
+}

@@ -34,11 +34,13 @@ export class AddaddressPage implements OnInit {
       landmark: [''],
       city: ['', Validators.compose([Validators.required])],
       state: ['', Validators.compose([Validators.required])],
-      zipcode: ['', Validators.compose([Validators.required])]
+      zipcode: ['', Validators.compose([Validators.required])],
+      address_type: ['', Validators.compose([Validators.required])]
      
        });
   }
   submitaddress(){
+    console.log(this.checkoutForm.value.address_type)
     let user_id = {"user_id":this.user_id};
     let obj = Object.assign(this.checkoutForm.value,user_id);
     if(!this.checkoutForm.valid){
