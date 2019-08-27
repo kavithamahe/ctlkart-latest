@@ -37,3 +37,51 @@ ion-buttons {
         margin-bottom: 6px;
     }
 }
+
+.editAddress {
+    ion-list {
+        form {
+            ion-label {
+                color: #000;
+                font-weight: 600;
+                width: 100%;
+                padding-bottom: 15px;
+                display: block;
+            }
+            ion-item {
+                ion-label {
+                    color: #333;
+                    font-weight: 400;
+                    font-size: 17px;
+                    width: 100%;
+                    padding-bottom: 10px;
+                    ion-text {
+                        color: #ff0000;
+                    }
+                }
+                ion-input {
+                    color: #000;
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+
+ion-radio-group {
+    ion-item {
+        ion-label {
+            color: #333;
+            font-weight: 400;
+            font-size: 14px !important;
+            width: 100%;
+            padding-bottom: 10px;
+        }
+        ion-radio {
+            margin: -8px 18px 0 0px;
+            width: 18px;
+            height: 18px;
+            padding: 0;
+        }
+    }
+}
