@@ -14,7 +14,7 @@ import { IonRouterOutlet } from '@ionic/angular';
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
-  @ViewChild(IonRouterOutlet,{static: true}) routerOutlet: IonRouterOutlet;
+  @ViewChild(IonRouterOutlet) routerOutlet: IonRouterOutlet;
   cartDetails: any;
   token: any;
   showButton : any=false;
