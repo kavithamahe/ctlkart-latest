@@ -50,6 +50,9 @@ export class AddressPage implements OnInit {
   }
   ionViewWillEnter(){
     this.type = this.route.snapshot.paramMap.get('type');
+    this.singleid = this.route.snapshot.paramMap.get('id');
+    this.quantity = this.route.snapshot.paramMap.get('quantity');
+    this.fromcart = this.route.snapshot.paramMap.get('fromcart');
    
   }
   addAddress(){
@@ -90,8 +93,13 @@ export class AddressPage implements OnInit {
         this.productservice.presentToast("Please Select the delivery address");
     }
   }
+  editaddress(id){
+    this.router.navigate(['editprofile',{"type":"address","id":id,"fromaddress":"1",
+    "ids":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart}]);
+  }
     back(){
       console.log(this.fromcart)
+
       if(this.fromcart == "1"){
         this.router.navigate(['tabs/viewcartproduct']);
       }

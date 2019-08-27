@@ -11,6 +11,12 @@ import {Validators, FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./editprofile.page.scss'],
 })
 export class EditprofilePage implements OnInit {
+  singleid: string;
+  quantity: string;
+  totalpricecart: string;
+  fromcart: string;
+  fromaddress: string;
+  address_type: any;
   lastname: any;
   zipcode: string;
   state: string;
@@ -35,6 +41,11 @@ export class EditprofilePage implements OnInit {
     this.param = route.snapshot.paramMap.get('param');
     this.type = route.snapshot.paramMap.get('type');
     this.id = route.snapshot.paramMap.get('id');
+    this.fromaddress =  route.snapshot.paramMap.get('fromaddress');
+    this.singleid = this.route.snapshot.paramMap.get('ids');
+    this.quantity = this.route.snapshot.paramMap.get('quantity');
+    this.fromcart = this.route.snapshot.paramMap.get('fromcart');
+    this.totalpricecart = this.route.snapshot.paramMap.get('totalamount');
     if(this.type == 'address'){
       this.getsingleaddress(this.id);
     }
@@ -56,11 +67,14 @@ export class EditprofilePage implements OnInit {
   }
   initaddressForm(){
     this.addressForm = this.formBuilder.group({
+      name: ['', Validators.compose([Validators.required])],
+      mobile: ['', Validators.compose([Validators.required])],
       address: ['', Validators.compose([Validators.required])],
       landmark: ['', Validators.compose([Validators.required])],
       city: ['', Validators.compose([Validators.required])],
       state: ['', Validators.compose([Validators.required])],
       zipcode: ['', Validators.compose([Validators.required])],
+      address_type: ['', Validators.compose([Validators.required])],
        });
   }
   ionViewWillEnter(){
@@ -68,6 +82,11 @@ export class EditprofilePage implements OnInit {
     this.param = this.route.snapshot.paramMap.get('param');
     this.type = this.route.snapshot.paramMap.get('type');
     this.id = this.route.snapshot.paramMap.get('id');
+    this.fromaddress =  this.route.snapshot.paramMap.get('fromaddress');
+    this.singleid = this.route.snapshot.paramMap.get('ids');
+    this.quantity = this.route.snapshot.paramMap.get('quantity');
+    this.fromcart = this.route.snapshot.paramMap.get('fromcart');
+    this.totalpricecart = this.route.snapshot.paramMap.get('totalamount');
     if(this.type == 'address'){
       this.getsingleaddress(this.id);
     }
@@ -78,11 +97,14 @@ export class EditprofilePage implements OnInit {
     this.productservice.viewsingleaddress(id)
     .subscribe(getsinaddress =>{ 
       this.getaddress = getsinaddress.data;
+      this.addressForm.controls['name'].setValue(this.getaddress.name);
+      this.addressForm.controls['mobile'].setValue(this.getaddress.mobile);
       this.addressForm.controls['address'].setValue(this.getaddress.address);
       this.addressForm.controls['landmark'].setValue(this.getaddress.landmark);
       this.addressForm.controls['city'].setValue(this.getaddress.city);
       this.addressForm.controls['state'].setValue(this.getaddress.state);
       this.addressForm.controls['zipcode'].setValue(this.getaddress.zipcode);
+      // this.addressForm.controls['address_type'].setValue(this.getaddress.address_type);
       this.productservice.loadingdismiss();
     },
     err =>{
@@ -118,7 +140,7 @@ export class EditprofilePage implements OnInit {
     .subscribe(profile =>{ 
       this.productservice.loadingdismiss();
       this.productservice.presentToast(profile.message);
-      this.router.navigate(['profile']);
+      this.router.navigate(['tabs/profile']);
     },
     err =>{
       this.productservice.loadingdismiss();
@@ -126,20 +148,31 @@ export class EditprofilePage implements OnInit {
    })
   }
   }
+  radioGroupChange(ev){
+    console.log(ev.detail.value)
+    this.address_type = ev.detail.value;
+      }
   editaddress(id){
+    this.addressForm.value.address_type = this.address_type;
     if(!this.addressForm.valid){
       this.submitAttempt = true;
       this.productservice.presentToast("Please Enter All The Details");
     }else{
     this.productservice.presentLoading();
-    let addressedit = {"address":this.addressForm.value.address,"landmark":this.addressForm.value.landmark,
+    let addressedit = {"name":this.addressForm.value.name,"mobile":this.addressForm.value.mobile,"address":this.addressForm.value.address,"landmark":this.addressForm.value.landmark,
     "city":this.addressForm.value.city,
-    "state":this.addressForm.value.state,"zipcode":this.addressForm.value.zipcode}
+    "state":this.addressForm.value.state,"zipcode":this.addressForm.value.zipcode,"address_type":this.addressForm.value.address_type}
     this.productservice.editaddress(id,addressedit)
     .subscribe(editadd =>{ 
       this.productservice.loadingdismiss();
       this.productservice.presentToast(editadd.message);
-      this.router.navigate(['profile']);
+      if(this.fromaddress == "1"){
+        this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart}]);
+      }
+      else{
+        this.router.navigate(['tabs/profile']);
+      }
+     
     },
     err =>{
       this.productservice.loadingdismiss();

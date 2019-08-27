@@ -30,11 +30,12 @@
                             <ion-text class="editBtn" (click)="editaddress(address.id)"><i class="fa fa-pencil"></i></ion-text>
                         </li>
                     </ul>
-
-                    <p>{{address.address}}</p>
-                    <p>{{address.landmark}}</p>
-                    <p>{{address.city}}</p>
-                    <p>{{address.state}} - {{address.zipcode}}</p>
+                    <p text-capitalize>{{address.name}}</p>
+                    <p>{{address.mobile}}</p>
+                    <p text-capitalize>{{address.address}}</p>
+                    <p text-capitalize>{{address.landmark}}</p>
+                    <p text-capitalize>{{address.city}}</p>
+                    <p text-capitalize>{{address.state}} - {{address.zipcode}}</p>
                 </div>
             </ion-col>
         </ion-row>

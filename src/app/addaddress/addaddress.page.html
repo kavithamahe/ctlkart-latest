@@ -12,6 +12,22 @@
 
     <form [formGroup]="checkoutForm">
         <ion-list lines="full" class="ion-no-margin ion-no-padding">
+                <div class="formList">
+                        <ion-label position="floating">Name
+                            <ion-text color="danger">*</ion-text>
+                        </ion-label>
+                        <ion-input formControlName="name" required type="text"></ion-input>
+                    </div>
+                    <p *ngIf="!checkoutForm.controls.name.valid && (checkoutForm.controls.name.dirty || submitAttempt)" class="err-reds shake">Please enter name.</p>
+
+                    <div class="formList">
+                            <ion-label position="floating">Mobile Number
+                                <ion-text color="danger">*</ion-text>
+                            </ion-label>
+                            <ion-input formControlName="mobile" required type="text"></ion-input>
+                        </div>
+                        <p *ngIf="!checkoutForm.controls.mobile.valid && (checkoutForm.controls.mobile.dirty || submitAttempt)" class="err-reds shake">Please enter mobile.</p>
+            
             <div class="formList">
                 <ion-label position="floating">Flat No / Area / Street
                     <ion-text color="danger">*</ion-text>
@@ -59,7 +75,7 @@
                           <ion-text color="danger">*</ion-text>
                        </ion-label>
                           <ion-list>
-                                <ion-radio-group>
+                                <ion-radio-group (ionChange)="radioGroupChange($event)">
                               <ion-item>
                                 <ion-label>Home</ion-label>
                                 <ion-radio slot="start" value="home" checked formControlName="address_type"></ion-radio>
