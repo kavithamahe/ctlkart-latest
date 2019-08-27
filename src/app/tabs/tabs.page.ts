@@ -45,6 +45,10 @@ export class TabsPage {
   })
   this.events.subscribe('loggedout', ()=>{
     this.token = localStorage.removeItem('token');
+    this.cartDetails = localStorage.removeItem('cart_items');
+    if(this.cartDetails){
+      this.cartcount = this.cartDetails.length;
+    }
   })
   this.events.subscribe('cart', ()=>{
     this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));

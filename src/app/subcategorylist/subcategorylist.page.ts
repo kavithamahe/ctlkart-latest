@@ -61,7 +61,7 @@ export class SubcategorylistPage implements OnInit {
     this.router.navigate(['/productbycategory',{"id":id,"subcategoryname":subcategory_name}],{skipLocationChange: true});
   }
   back(){
-    this.location.back();
+    this.router.navigate(['tabs/category']);
   }
   getItems(searchItem) {
     this.productservice.getsubcategorylistsearch(this.term.searchText)

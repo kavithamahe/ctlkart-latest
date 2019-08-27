@@ -56,7 +56,9 @@ export class RegisterPage implements OnInit {
 ;        this.firebaseAuthentication.verifyPhoneNumber(phoneNumberString, 30000)
         .then( confirmationResult => {
           this.verificationId = confirmationResult;
+          if(this.verificationId){
           this.router.navigate(['otpverification',{"mobile":this.registerForm.value.mobile,"verificationId":this.verificationId}]);
+          }
           this.registerForm.reset();
           
         })

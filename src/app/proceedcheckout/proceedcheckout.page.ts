@@ -26,7 +26,7 @@ export class ProceedcheckoutPage implements OnInit {
   totalprice: any;
   obj: any;
   quantityperproduct: { "quantityperproduct": any; };
-  private imageUrl = environment.imageUrl;
+  public imageUrl = environment.imageUrl;
   quantity: string;
   singleid: any;
   

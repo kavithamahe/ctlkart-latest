@@ -10,6 +10,9 @@ import { Location } from '@angular/common';
   styleUrls: ['./addaddress.page.scss'],
 })
 export class AddaddressPage implements OnInit {
+  fromcart: string;
+  quantity: string;
+  singleid: string;
   type: string;
   user_id: string;
   checkoutForm: FormGroup;
@@ -18,11 +21,17 @@ export class AddaddressPage implements OnInit {
   constructor(private location:Location,public formBuilder: FormBuilder,private router: Router,private route: ActivatedRoute,public productservice:ProductsService,) {
     this.user_id = localStorage.getItem("user_id");
     this.type = this.route.snapshot.paramMap.get('type');
+    this.singleid = this.route.snapshot.paramMap.get('id');
+    this.quantity = this.route.snapshot.paramMap.get('quantity');
+    this.fromcart = this.route.snapshot.paramMap.get('fromcart');
     this.initForm();
    }
 
   ngOnInit() {
     this.type = this.route.snapshot.paramMap.get('type');
+    this.singleid = this.route.snapshot.paramMap.get('id');
+    this.quantity = this.route.snapshot.paramMap.get('quantity');
+    this.fromcart = this.route.snapshot.paramMap.get('fromcart');
   }
   ionViewWillEnter(){
     this.type = this.route.snapshot.paramMap.get('type');
@@ -56,7 +65,7 @@ export class AddaddressPage implements OnInit {
         this.router.navigate(['getaddress']);
       }
       else{
-        this.router.navigate(['address']);
+        this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
       }
 
       
@@ -68,6 +77,6 @@ export class AddaddressPage implements OnInit {
   }
     }
     back(){
-      this.location.back();
+      this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
     }
 }

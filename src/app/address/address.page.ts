@@ -53,7 +53,7 @@ export class AddressPage implements OnInit {
    
   }
   addAddress(){
-    this.router.navigate(['addaddress'])
+    this.router.navigate(['addaddress',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"customer_id":this.customer_id,"totalamount":this.totalpricecart}])
   }
  
   initForm(){

@@ -13,7 +13,7 @@ import { Location } from '@angular/common';
 export class MyordersPage implements OnInit {
   cartcount: any;
   cartDetails: any;
-  private imageUrl = environment.imageUrl;
+  public imageUrl = environment.imageUrl;
   user_id: string;
   getallmyorderlists:any=[];
   constructor(public location:Location,public productservice:ProductsService,public events: Events,private router: Router) { 
