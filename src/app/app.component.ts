@@ -14,6 +14,9 @@ import { IonRouterOutlet } from '@ionic/angular';
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
+  quantity: string;
+  fromcart: string;
+  singleid: any;
   @ViewChild(IonRouterOutlet,{static: true}) routerOutlet: IonRouterOutlet;
   cartDetails: any;
   token: any;
@@ -61,8 +64,6 @@ export class AppComponent {
   }
 
   initializeApp() {
-    console.log(this.activatedRoute.snapshot.url); // array of states
-    // console.log(this.activatedRoute.snapshot.url[0].path); 
     this.events.subscribe('cart', ()=>{
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
       if(this.cartDetails){
@@ -92,11 +93,25 @@ export class AppComponent {
         }, 100);
         
         this.platform.backButton.subscribeWithPriority(0, () => {
+          this.singleid = this.activatedRoute.snapshot.paramMap.get('id');
+          this.fromcart = this.activatedRoute.snapshot.paramMap.get('fromcart');
+          this.quantity = this.activatedRoute.snapshot.paramMap.get('quantity');
           console.log(this.router.url)
-          console.log(this.activatedRoute.snapshot.url);
+          let urlTree = this.router.parseUrl(this.router.url);
+          let urlWithoutParams = urlTree.root.children['primary'].segments.map(it => it.path).join('/');
+          console.log(urlWithoutParams)
+          console.log(this.fromcart)
+          console.log(this.singleid)
           if (this.routerOutlet && this.routerOutlet.canGoBack()) {
-            if (this.router.url === '/address;id=2;quantity=1;fromcart=null'){
-              this.router.navigate(['']);
+            if (urlWithoutParams === 'address'){
+             
+            if(this.fromcart == "1"){
+              this.router.navigate(['tabs/viewcartproduct']);
+            }
+            else{
+              this.router.navigate(['viewsingleproduct',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
+            }
+              
             }
             else{
               

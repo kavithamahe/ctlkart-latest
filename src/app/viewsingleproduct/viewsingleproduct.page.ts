@@ -27,8 +27,10 @@ export class ViewsingleproductPage implements OnInit {
     this.singleid = route.snapshot.paramMap.get('id');
     this.getsingleproductlist(this.singleid);
     this.getproductList();
+   
   }
   ionViewWillEnter(){
+  
     this.events.subscribe('cart', ()=>{
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
       if(this.cartDetails){

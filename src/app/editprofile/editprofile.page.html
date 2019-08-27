@@ -44,6 +44,18 @@
         <div>
             <ion-list lines="full" class="ion-no-margin ion-no-padding">
                 <form [formGroup]="addressForm">
+                        <ion-item>
+                                <ion-label position="stacked">Name
+                                    <ion-text color="danger">*</ion-text>
+                                </ion-label>
+                                <ion-input formControlName="name" type="text"></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                    <ion-label position="stacked">Mobile
+                                        <ion-text color="danger">*</ion-text>
+                                    </ion-label>
+                                    <ion-input formControlName="mobile" type="text"></ion-input>
+                                </ion-item>
                 <ion-item>
                     <ion-label position="stacked">Flat No / Area / Street
                         <ion-text color="danger">*</ion-text>
@@ -74,6 +86,26 @@
                     </ion-label>
                     <ion-input formControlName="zipcode" type="text"></ion-input>
                 </ion-item>
+                <ion-list>
+                    
+                        <ion-label>Address Type
+                              <ion-text color="danger">*</ion-text>
+                           </ion-label>
+                              <ion-list>
+                                    <ion-radio-group (ionChange)="radioGroupChange($event)">
+                                  <ion-item>
+                                    <ion-label>Home</ion-label>
+                                    <ion-radio slot="start" value="home" formControlName="address_type"></ion-radio>
+                                  </ion-item>
+                              
+                                  <ion-item>
+                                    <ion-label>Work</ion-label>
+                                    <ion-radio slot="start" value="work" formControlName="address_type"></ion-radio>
+                                  </ion-item>
+                                  </ion-radio-group>
+                            </ion-list>
+        
+                  </ion-list>
                 </form>
             </ion-list>
             <br>

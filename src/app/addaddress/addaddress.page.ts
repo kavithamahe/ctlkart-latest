@@ -10,6 +10,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./addaddress.page.scss'],
 })
 export class AddaddressPage implements OnInit {
+  address_type: any;
   fromcart: string;
   quantity: string;
   singleid: string;
@@ -39,6 +40,8 @@ export class AddaddressPage implements OnInit {
   }
   initForm(){
     this.checkoutForm = this.formBuilder.group({
+      name:['', Validators.compose([Validators.required])],
+      mobile:['', Validators.compose([Validators.required])],
       address: ['', Validators.compose([Validators.required])],
       landmark: [''],
       city: ['', Validators.compose([Validators.required])],
@@ -48,8 +51,11 @@ export class AddaddressPage implements OnInit {
      
        });
   }
+  radioGroupChange(ev){
+  this.address_type = ev.detail.value;
+  }
   submitaddress(){
-    console.log(this.checkoutForm.value.address_type)
+    this.checkoutForm.value.address_type = this.address_type;
     let user_id = {"user_id":this.user_id};
     let obj = Object.assign(this.checkoutForm.value,user_id);
     if(!this.checkoutForm.valid){

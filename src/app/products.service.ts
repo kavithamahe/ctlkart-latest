@@ -161,7 +161,8 @@ export class ProductsService {
     this.headers = new HttpHeaders();
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers= this.headers.append("Authorization", "Bearer " + this.token);
-    const body= {"id":id,"address":addresss.address,"landmark":addresss.landmark,"city":addresss.city,"state":addresss.state,"zipcode":addresss.zipcode};
+    const body= {"id":id,"name":addresss.name,"mobile":addresss.mobile,"address":addresss.address,"landmark":addresss.landmark,"city":addresss.city,
+    "state":addresss.state,"zipcode":addresss.zipcode,"address_type":addresss.address_type};
     return this.http.post(this.apiUrl + 'editaddress',body,{ headers:this.headers });
   }
   async presentToast(datamessage) {

@@ -19,7 +19,10 @@
                                     <ion-text (click)="changeaddress()" class="addAddress">change</ion-text>
                                 </ion-list-header>
                                 <ion-item>
-                                    <ion-label style="white-space: normal !important;"><span>{{getaddress.address}},</span><span>{{getaddress.city}},</span><span>{{getaddress.state}} - {{getaddress.zipcode}}</span></ion-label>
+                                        <ion-label text-capitalize style="white-space: normal !important;"><span>{{getaddress.name}},</span><span>{{getaddress.mobile}}</span></ion-label>
+                                    </ion-item>
+                                <ion-item>
+                                    <ion-label text-capitalize style="white-space: normal !important;"><span>{{getaddress.address}},</span><span>{{getaddress.city}},</span><span>{{getaddress.state}} - {{getaddress.zipcode}}</span></ion-label>
                                 </ion-item>
                         </ion-list>
                     </ion-col>
