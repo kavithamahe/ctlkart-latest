@@ -195,7 +195,7 @@ export class ProceedcheckoutPage implements OnInit {
         .subscribe(product =>{ 
           this.productservice.loadingdismiss();
           this.productservice.presentToast(product.message);
-          this.router.navigate(['tabs/dashboard']);
+          this.router.navigate(['checkoutsuccess']);
           localStorage.removeItem('cart_items');
           this.events.publish('cart');
         },
@@ -242,7 +242,7 @@ export class ProceedcheckoutPage implements OnInit {
         .subscribe(product =>{ 
           this.productservice.loadingdismiss();
           this.productservice.presentToast(product.message);
-          this.router.navigate(['tabs/dashboard']);
+          this.router.navigate(['checkoutsuccess']);
          
         },
         err =>{

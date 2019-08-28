@@ -5,8 +5,10 @@ import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ng
 import { Platform,MenuController, Events, AlertController  } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Router, ActivatedRoute,RouterStateSnapshot,RoutesRecognized   } from '@angular/router';
+import { Router, ActivatedRoute,RouterStateSnapshot,RoutesRecognized,RouterState,ActivatedRouteSnapshot   } from '@angular/router';
 import { IonRouterOutlet } from '@ionic/angular';
+import { Observable, throwError } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 @Component({
@@ -18,7 +20,7 @@ export class AppComponent {
   quantity: string;
   fromcart: string;
   singleid: any;
-  @ViewChild(IonRouterOutlet) routerOutlet: IonRouterOutlet;
+  @ViewChild(IonRouterOutlet,{static:true}) routerOutlet: IonRouterOutlet;
   cartDetails: any;
   token: any;
   showButton : any=false;
@@ -94,18 +96,24 @@ export class AppComponent {
         }, 100);
         
         this.platform.backButton.subscribeWithPriority(0, () => {
-        const snapshot: RouterStateSnapshot = this.router.routerState.snapshot;
-        // console.log(snapshot);
-        // console.log(this.activatedRoute.snapshot.queryParamMap);
-        // console.log(this.router.url);
-        this.sub = this.router.events.subscribe(val => {
-          if (val instanceof RoutesRecognized) {
-            console.log(val.state.root.firstChild.params);
-            this.singleid = val.state.root.firstChild.params.id;
-            this.fromcart = val.state.root.firstChild.params.fromcart;
-            this.quantity = val.state.root.firstChild.params.quantity;
-          }
-        });
+      
+        const state: RouterState = this.router.routerState;
+        const snapshot: RouterStateSnapshot = state.snapshot;
+        const children: ActivatedRouteSnapshot["children"] = snapshot.root.children;
+        const child = children[0].params;
+        console.log(child.id);
+        this.singleid =child.id;
+        this.fromcart = child.fromcart;
+        this.quantity =child.quantity;
+        // this.sub = this.router.events.subscribe(val => {
+        //   if (val instanceof RoutesRecognized) {
+        //     console.log(val.state.root.firstChild.params);
+        //     this.singleid = val.state.root.firstChild.params.id;
+        //     this.fromcart = val.state.root.firstChild.params.fromcart;
+        //     this.quantity = val.state.root.firstChild.params.quantity;
+        //   }
+        // });
+        // console.log(this.sub);
           let urlTree = this.router.parseUrl(this.router.url);
           let urlWithoutParams = urlTree.root.children['primary'].segments.map(it => it.path).join('/');
           console.log(urlWithoutParams);
@@ -124,6 +132,7 @@ export class AppComponent {
             }
               
             }
+            
             else{
               console.log("this.singleid");
               if(urlWithoutParams == "viewsingleproduct"){
