@@ -6,6 +6,7 @@
     padding: 0;
     margin: 0;
 }
+
 ion-buttons {
     ion-icon {
         color: #000;
@@ -13,6 +14,7 @@ ion-buttons {
         padding-left: 10px;
     }
 }
+
 .cartProduct {
     display: block;
     background: #fff;
@@ -52,7 +54,7 @@ ion-buttons {
                             padding: 0;
                             margin: 0;
                             font-weight: 500;
-                            color: #feb82b;
+                            color: #fca411;
                             font-size: 14px;
                             letter-spacing: 0.2px;
                             text-align: right;
@@ -91,6 +93,7 @@ ion-buttons {
         }
     }
 }
+
 .subtoatalValue {
     padding: 10px;
     ion-grid {
@@ -117,6 +120,7 @@ ion-buttons {
         }
     }
 }
+
 .addAddress {
     display: inline-block;
     background: #fff;

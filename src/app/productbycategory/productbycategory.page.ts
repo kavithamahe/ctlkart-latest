@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../products.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { environment } from '../../environments/environment';
-import { Events } from '@ionic/angular';
+import { Events,ActionSheetController } from '@ionic/angular';
 import { Location } from '@angular/common';
 
 @Component({
@@ -29,7 +29,7 @@ export class ProductbycategoryPage implements OnInit {
   getallsubcategory:any=[];
   term = { searchText: ''};
 
-  constructor(private location:Location,public events: Events,public productservice:ProductsService,public router: Router,private route: ActivatedRoute) { 
+  constructor(private location:Location,public actionSheetController: ActionSheetController,public events: Events,public productservice:ProductsService,public router: Router,private route: ActivatedRoute) { 
     this.subcategory_id = route.snapshot.paramMap.get('id');
     this.subcategory_name = route.snapshot.paramMap.get('subcategoryname');
     if(this.subcategory_name){
@@ -64,6 +64,45 @@ export class ProductbycategoryPage implements OnInit {
       this.subcategory_name = "Products";
     }
     this.getproductbysubcategory(this.subcategory_id);
+  }
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Albums',
+      buttons: [{
+        text: 'Delete',
+        role: 'destructive',
+        icon: 'trash',
+        handler: () => {
+          console.log('Delete clicked');
+        }
+      }, {
+        text: 'Share',
+        icon: 'share',
+        handler: () => {
+          console.log('Share clicked');
+        }
+      }, {
+        text: 'Play (open modal)',
+        icon: 'arrow-dropright-circle',
+        handler: () => {
+          console.log('Play clicked');
+        }
+      }, {
+        text: 'Favorite',
+        icon: 'heart',
+        handler: () => {
+          console.log('Favorite clicked');
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
   }
   // getsubcategories(category_id){
   //   this.productservice.presentLoading();

@@ -22,10 +22,10 @@ ion-content {
             .formList {
                 padding: 0px 0px 10px;
                 ion-label {
-                    color: #999;
+                    color: #9b9b9b;
                     display: inline-block;
-                    font-size: 15px;
-                    margin-bottom: 12px;
+                    font-size: 14px;
+                    margin-bottom: 5px;
                     ion-text {
                         color: #ff0000;
                     }
@@ -44,30 +44,18 @@ ion-content {
     }
 }
 
-.loginBtn {
-    display: block;
-    background: #fca411;
-    color: #fff;
-    padding: 13px 5px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    text-align: center;
-    border-radius: 5px;
-    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.19);
-}
-
 .registerBtn {
-    color: #666;
+    color: #000;
     background: #fff;
     width: 100%;
     display: block;
     padding: 5px 0;
     text-align: center;
-    font-weight: 600;
+    font-weight: 500;
     margin: 20px 0 0 0;
     font-size: 14px;
     span {
-        color: #fca40f;
+        color: #fca411;
         font-weight: 600;
     }
 }

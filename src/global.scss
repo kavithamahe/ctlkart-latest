@@ -12,14 +12,15 @@
 
 /* === Font === */
 
-@import url('https://fonts.googleapis.com/css?family=Nunito:400,600,700,800,900&display=swap');
+// @import url('https://fonts.googleapis.com/css?family=Nunito:400,600,700,800,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Muli:400,600,700,800,900&display=swap');
 body {
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Muli', sans-serif;
     background: #f6f9ff;
 }
 
 ion-badge#cart-badge {
-    background: #feb82b;
+    background: #fca411;
     width: 25px;
     height: 25px;
     border-radius: 50%;
@@ -60,7 +61,7 @@ ion-header {
             font-size: 17px;
             font-weight: 800;
             span {
-                color: #ffb204;
+                color: #fca411;
             }
         }
     }
@@ -68,7 +69,7 @@ ion-header {
 
 app-productbycategory {
     ion-slides {
-        background-color: #feb82b !important;
+        background-color: #fca411 !important;
         vertical-align: middle;
         display: grid;
         padding: 0;
@@ -111,7 +112,7 @@ app-productbycategory {
                             margin: 0;
                             font-weight: 600;
                             letter-spacing: 0.4px;
-                            color: #feb82b;
+                            color: #fca411;
                         }
                     }
                 }
@@ -133,7 +134,7 @@ app-viewsingleproduct {
                 left: 6%;
                 width: 300px;
                 height: 300px;
-                background: #feb82b;
+                background: #fca411;
                 border-radius: 50%;
                 z-index: 0;
             }
@@ -156,7 +157,7 @@ app-viewsingleproduct {
                     margin: 0;
                 }
                 ion-card-subtitle {
-                    color: #feb82b;
+                    color: #fca411;
                     font-size: 17px;
                     letter-spacing: 0.5px;
                 }
@@ -194,7 +195,7 @@ app-viewsingleproduct {
                     color: #fff !important;
                     background: #000 !important;
                     &.segment-button-checked {
-                        background: #feb82b !important;
+                        background: #fca411 !important;
                     }
                 }
             }
@@ -257,7 +258,7 @@ app-dashboard {
                         box-shadow: none !important;
                     }
                     ion-icon {
-                        color: #feb82b;
+                        color: #fca411;
                     }
                 }
             }
@@ -281,7 +282,7 @@ app-productbycategory {
                         box-shadow: none !important;
                     }
                     ion-icon {
-                        color: #feb82b;
+                        color: #fca411;
                     }
                 }
             }
@@ -305,7 +306,7 @@ app-category {
                         box-shadow: none !important;
                     }
                     ion-icon {
-                        color: #feb82b;
+                        color: #fca411;
                     }
                 }
             }
@@ -329,7 +330,7 @@ app-subcategorylist {
                         box-shadow: none !important;
                     }
                     ion-icon {
-                        color: #feb82b;
+                        color: #fca411;
                     }
                 }
             }
@@ -339,10 +340,21 @@ app-subcategorylist {
 
 .tab-selected {
     ion-icon {
-        color: #000 !important;
+        color: #fca411 !important;
     }
     p {
-        color: #000 !important;
+        color: #fca411 !important;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+ion-tab-button {
+    ion-icon {
+        color: #999 !important;
+    }
+    p {
+        color: #999 !important;
         padding: 0;
         margin: 0;
     }
@@ -363,7 +375,7 @@ ion-content {
                 }
             }
             p {
-                color: #fca40f !important;
+                color: #fca411 !important;
                 font-size: 12px;
                 margin: 0;
                 padding: 5px;
@@ -381,7 +393,7 @@ ion-content {
     }
     .alert-button-group {
         button {
-            background-color: #fca40f;
+            background-color: #fca411;
             color: #fff;
             padding: 7px 25px 7px 25px;
             margin-bottom: 10px;
@@ -397,4 +409,18 @@ ion-content {
             }
         }
     }
+}
+
+.loginBtn {
+    display: block;
+    background: #fca411;
+    color: #fff;
+    padding: 13px 5px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-align: center;
+    border-radius: 30px !important;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.19);
+    text-transform: uppercase !important;
+    margin: 0 10px !important;
 }
