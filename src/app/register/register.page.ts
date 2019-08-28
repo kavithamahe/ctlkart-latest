@@ -36,9 +36,7 @@ export class RegisterPage implements OnInit {
       firstname: ['', Validators.compose([Validators.required])],
       lastname: ['', Validators.compose([Validators.required])],
       email: ['', Validators.compose([Validators.pattern(/^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i),Validators.required])],
-      // mobile: ['', Validators.compose([Validators.minLength(10),Validators.maxLength(10), Validators.required])],
       mobile: ['',  [Validators.required, this.productservice.checkLimit(1000000000,999999999999)]],
-
       password: ['', Validators.compose([Validators.required])],
      
        });

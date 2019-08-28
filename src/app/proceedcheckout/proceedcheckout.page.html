@@ -4,7 +4,7 @@
             <!-- <ion-menu-button autoHide="false"></ion-menu-button> -->
             <ion-icon name="arrow-back" (click)="back()"></ion-icon>
         </ion-buttons>
-        <ion-title>Payment</ion-title>
+        <ion-title>Checkout</ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -15,10 +15,11 @@
                 <ion-col size="12">
                     <ion-list>
                         <ion-list-header>
-                            <ion-label class="deliveryLabel">Delivery Address</ion-label>
-                            <ion-text (click)="changeaddress()" class="addAddress">change</ion-text>
+                            <ion-label class="deliveryLabel">Shipping Address</ion-label>
+                            
                         </ion-list-header>
                         <ion-item>
+                            <ion-text (click)="changeaddress()" class="addAddress">change</ion-text>
                             <ion-label text-capitalize style="white-space: normal !important;">
                                 <span>{{getaddress.name}},</span><span>{{getaddress.mobile}}</span></ion-label>
                         </ion-item>
@@ -33,6 +34,17 @@
             </ion-row>
         </ion-grid>
 
+    </div>
+    <div>
+        <ion-list-header>
+            <ion-label>Payment Type</ion-label>
+        </ion-list-header>
+        <ion-list>
+            <ion-item>
+                <ion-label style="white-space: normal !important;">Cash on delivery</ion-label>
+                <ion-radio slot="start" value="biff" checked></ion-radio>
+            </ion-item>
+        </ion-list>
     </div>
 
     <div *ngFor="let single of getsingleProductList">
@@ -165,19 +177,10 @@
         </ion-grid>
     </div>
     <!-- ---------------------------cart end----------------------- -->
-    <div>
-        <ion-list-header>
-            <ion-label>Payment Type</ion-label>
-        </ion-list-header>
-        <ion-list>
-            <ion-item>
-                <ion-label style="white-space: normal !important;">Cash on delivery</ion-label>
-                <ion-radio slot="start" value="biff" checked></ion-radio>
-            </ion-item>
-        </ion-list>
-        <div class="ion-padding">
+    
+
+    <div class="ion-padding">
             <ion-button expand="block" (click)="proceedtobuycart()" color="warning" shape="round" class="ion-no-margin">
                 Proceed</ion-button>
         </div>
-    </div>
 </ion-content>
