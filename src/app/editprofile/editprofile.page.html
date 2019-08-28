@@ -10,22 +10,22 @@
 </ion-header>
 
 <ion-content padding>
-    
+
     <ion-grid *ngIf="type != 'address'">
-            <form [formGroup]="profileForm">
-                    <ion-row style="border: 2px solid #d1af7b;">
-                        <ion-col class = "edit-profile">
-                            <ion-input type = "text" formControlName="firstname"></ion-input>
-                            <!-- <p *ngIf="!profileForm.controls.firstname.valid && (profileForm.controls.firstname.dirty || submitAttempt)" class="err-reds shake">Please enter firstname.</p> -->
-                            <ion-input type = "text" formControlName="lastname"></ion-input>
-                            <!-- <p *ngIf="!profileForm.controls.lastname.valid && (profileForm.controls.lastname.dirty || submitAttempt)" class="err-reds shake">Please enter lastname.</p> -->
-                            <ion-input type = "email" formControlName="email"></ion-input>
-                            <!-- <p *ngIf="!profileForm.controls.email.valid && (profileForm.controls.email.dirty || submitAttempt)" class="err-reds shake">Please enter email.</p> -->
-                            <ion-input type = "number" formControlName="mobile"></ion-input>
-                            <!-- <p *ngIf="!profileForm.controls.mobile.valid && (profileForm.controls.mobile.dirty || submitAttempt)" class="err-reds shake">Please enter mobile number.</p> -->
-                        </ion-col>
-                    </ion-row>
-                    </form>
+        <form [formGroup]="profileForm">
+            <ion-row>
+                <ion-col class="edit-profile">
+                    <ion-input type="text" formControlName="firstname"></ion-input>
+                    <!-- <p *ngIf="!profileForm.controls.firstname.valid && (profileForm.controls.firstname.dirty || submitAttempt)" class="err-reds shake">Please enter firstname.</p> -->
+                    <ion-input type="text" formControlName="lastname"></ion-input>
+                    <!-- <p *ngIf="!profileForm.controls.lastname.valid && (profileForm.controls.lastname.dirty || submitAttempt)" class="err-reds shake">Please enter lastname.</p> -->
+                    <ion-input type="email" formControlName="email"></ion-input>
+                    <!-- <p *ngIf="!profileForm.controls.email.valid && (profileForm.controls.email.dirty || submitAttempt)" class="err-reds shake">Please enter email.</p> -->
+                    <ion-input type="number" formControlName="mobile"></ion-input>
+                    <!-- <p *ngIf="!profileForm.controls.mobile.valid && (profileForm.controls.mobile.dirty || submitAttempt)" class="err-reds shake">Please enter mobile number.</p> -->
+                </ion-col>
+            </ion-row>
+        </form>
         <br>
         <div style="padding:0px 10px;">
             <ion-grid>
@@ -42,71 +42,73 @@
         <br>
     </ion-grid>
     <div *ngIf="type == 'address'">
-        <div>
+        <div class="editAddress">
             <ion-list lines="full" class="ion-no-margin ion-no-padding">
                 <form [formGroup]="addressForm">
-                        <ion-item>
-                                <ion-label position="stacked">Name
-                                    <ion-text color="danger">*</ion-text>
-                                </ion-label>
-                                <ion-input formControlName="name" type="text"></ion-input>
-                            </ion-item>
-                            <ion-item>
-                                    <ion-label position="stacked">Mobile
-                                        <ion-text color="danger">*</ion-text>
-                                    </ion-label>
-                                    <ion-input formControlName="mobile" type="text"></ion-input>
-                                </ion-item>
-                <ion-item>
-                    <ion-label position="stacked">Flat No / Area / Street
-                        <ion-text color="danger">*</ion-text>
+                    <ion-label>Address
                     </ion-label>
-                    <ion-input formControlName="address" type="text"></ion-input>
-                </ion-item>
-                <ion-item>
-                    <ion-label position="stacked">Landmark
-                        <ion-text color="danger">*</ion-text>
-                    </ion-label>
-                    <ion-input formControlName="landmark" type="text"></ion-input>
-                </ion-item>
-                <ion-item>
-                    <ion-label position="stacked">City
-                        <ion-text color="danger">*</ion-text>
-                    </ion-label>
-                    <ion-input formControlName="city" type="text"></ion-input>
-                </ion-item>
-                <ion-item>
-                    <ion-label position="stacked">State
-                        <ion-text color="danger">*</ion-text>
-                    </ion-label>
-                    <ion-input formControlName="state" type="text"></ion-input>
-                </ion-item>
-                <ion-item>
-                    <ion-label position="stacked">Zipcode
-                        <ion-text color="danger">*</ion-text>
-                    </ion-label>
-                    <ion-input formControlName="zipcode" type="text"></ion-input>
-                </ion-item>
-                <ion-list>
-                    
+                    <ion-item>
+                        <ion-label position="stacked">Name
+                            <ion-text color="danger">*</ion-text>
+                        </ion-label>
+                        <ion-input formControlName="name" type="text"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="stacked">Mobile
+                            <ion-text color="danger">*</ion-text>
+                        </ion-label>
+                        <ion-input formControlName="mobile" type="text"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="stacked">Flat No / Area / Street
+                            <ion-text color="danger">*</ion-text>
+                        </ion-label>
+                        <ion-input formControlName="address" type="text"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="stacked">Landmark
+                            <ion-text color="danger">*</ion-text>
+                        </ion-label>
+                        <ion-input formControlName="landmark" type="text"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="stacked">City
+                            <ion-text color="danger">*</ion-text>
+                        </ion-label>
+                        <ion-input formControlName="city" type="text"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="stacked">State
+                            <ion-text color="danger">*</ion-text>
+                        </ion-label>
+                        <ion-input formControlName="state" type="text"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="stacked">Zipcode
+                            <ion-text color="danger">*</ion-text>
+                        </ion-label>
+                        <ion-input formControlName="zipcode" type="text"></ion-input>
+                    </ion-item>
+                    <br>
+                    <ion-list>
                         <ion-label>Address Type
-                              <ion-text color="danger">*</ion-text>
-                           </ion-label>
-                              <ion-list>
-                                    <ion-radio-group (ionChange)="radioGroupChange($event)">
-                                  <ion-item>
+                            <ion-text color="danger">*</ion-text>
+                        </ion-label>
+                        <ion-list>
+                            <ion-radio-group (ionChange)="radioGroupChange($event)">
+                                <ion-item>
                                     <ion-label>Home</ion-label>
                                     <ion-radio slot="start" value="home" formControlName="address_type"></ion-radio>
-                                  </ion-item>
-                              
-                                  <ion-item>
+                                </ion-item>
+
+                                <ion-item>
                                     <ion-label>Work</ion-label>
                                     <ion-radio slot="start" value="work" formControlName="address_type"></ion-radio>
-                                  </ion-item>
-                                  </ion-radio-group>
-                            </ion-list>
-        
-                  </ion-list>
+                                </ion-item>
+                            </ion-radio-group>
+                        </ion-list>
+
+                    </ion-list>
                 </form>
             </ion-list>
             <br>

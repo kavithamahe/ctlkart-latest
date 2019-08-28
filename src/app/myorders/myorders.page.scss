@@ -1,4 +1,12 @@
 .productList {
+    padding: 10px;
+    p {
+        color: #666;
+        font-weight: 400;
+        padding: 10px 10px 10px;
+        margin: 0;
+        border-bottom: 1px dotted #999;
+    }
     ion-item {
         ion-label {
             h3 {
@@ -17,6 +25,7 @@
         }
     }
 }
+
 ion-buttons {
     ion-icon {
         color: #000;

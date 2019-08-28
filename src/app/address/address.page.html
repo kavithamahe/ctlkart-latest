@@ -15,23 +15,23 @@
 <ion-content>
     <div *ngIf="type != 'address'" class="addressField">
         <ion-grid>
-                <ion-list-header>
-                        <ion-label class="deliveryLabel">Delivery Address</ion-label>
-                    </ion-list-header>
-            <ion-row *ngFor="let address of getalladdress">
+            <ion-list-header>
+                <ion-label class="deliveryLabel">Shipping Address</ion-label>
+            </ion-list-header>
+            <ion-row class="addressbox" *ngFor="let address of getalladdress">
                 <ion-col size="10">
                     <ion-list>
                         <ion-radio-group>
-                            <ion-item>
-                                <ion-label text-capitalize style="white-space: normal !important;"><span *ngIf = "address.name">{{address.name}},</span><span *ngIf = "address.mobile">{{address.mobile}},</span><span>{{address.address}},</span><span>{{address.city}},</span><span>{{address.state}} - {{address.zipcode}}</span></ion-label>
+                            <div class="shippingAddressGroup">
                                 <ion-radio (ionSelect)="radioSelects($event,address.id)" slot="start" value="{{address.first_name}},{{address.address}},{{address.city}},{{address.state}}"></ion-radio>
-                            </ion-item>
-                        </ion-radio-group>
+                                <ion-label text-capitalize style="white-space: normal !important;"><span *ngIf="address.name"><b>{{address.name}},</b></span><span *ngIf="address.mobile">{{address.mobile}},</span><span>{{address.address}},</span><span>{{address.city}},</span><span>{{address.state}} - {{address.zipcode}}</span></ion-label>
 
+                            </div>
+                        </ion-radio-group>
                     </ion-list>
                 </ion-col>
-                <ion-col size="2">
-                        <i class="fa fa-pencil" (click)= "editaddress(address.id)" aria-hidden="true"></i>
+                <ion-col size="2" class="edit-btn">
+                    <i class="fa fa-pencil" (click)="editaddress(address.id)" aria-hidden="true"></i>
                 </ion-col>
             </ion-row>
         </ion-grid>

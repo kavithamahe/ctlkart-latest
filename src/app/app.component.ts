@@ -18,7 +18,7 @@ export class AppComponent {
   quantity: string;
   fromcart: string;
   singleid: any;
-  @ViewChild(IonRouterOutlet,{static: true}) routerOutlet: IonRouterOutlet;
+  @ViewChild(IonRouterOutlet) routerOutlet: IonRouterOutlet;
   cartDetails: any;
   token: any;
   showButton : any=false;
