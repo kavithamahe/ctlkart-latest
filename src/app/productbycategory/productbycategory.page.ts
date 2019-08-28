@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../products.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { environment } from '../../environments/environment';
-import { Events } from '@ionic/angular';
+import { Events,ActionSheetController } from '@ionic/angular';
 import { Location } from '@angular/common';
 
 @Component({
@@ -29,7 +29,7 @@ export class ProductbycategoryPage implements OnInit {
   getallsubcategory:any=[];
   term = { searchText: ''};
 
-  constructor(private location:Location,public events: Events,public productservice:ProductsService,public router: Router,private route: ActivatedRoute) { 
+  constructor(private location:Location,public actionSheetController: ActionSheetController,public events: Events,public productservice:ProductsService,public router: Router,private route: ActivatedRoute) { 
     this.subcategory_id = route.snapshot.paramMap.get('id');
     this.subcategory_name = route.snapshot.paramMap.get('subcategoryname');
     if(this.subcategory_name){
@@ -65,6 +65,7 @@ export class ProductbycategoryPage implements OnInit {
     }
     this.getproductbysubcategory(this.subcategory_id);
   }
+  
   // getsubcategories(category_id){
   //   this.productservice.presentLoading();
   //   this.productservice.getsubcategory(category_id)

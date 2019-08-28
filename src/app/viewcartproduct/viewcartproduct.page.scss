@@ -16,7 +16,7 @@
                 margin: 0;
                 font-weight: 600;
                 letter-spacing: 0.4px;
-                color: #feb82b;
+                color: #fca411;
             }
         }
         ion-item {
@@ -87,7 +87,7 @@ ion-buttons {
                             padding: 0;
                             margin: 0;
                             font-weight: 500;
-                            color: #feb82b;
+                            color: #fca411;
                             font-size: 14px;
                             letter-spacing: 0.2px;
                             text-align: right;
@@ -195,8 +195,9 @@ ion-buttons {
     font-weight: 500;
     letter-spacing: 0.5px;
     text-align: center;
-    border-radius: 5px;
+    border-radius: 30px;
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.19);
+    text-transform: uppercase;
 }
 
 .EmptyCart {
@@ -217,7 +218,7 @@ ion-buttons {
         color: #999;
     }
     .mail {
-        color: #FFC107;
+        color: #fca411;
         text-align: center;
         font-weight: 500;
         font-size: 17px;
