@@ -5,7 +5,7 @@ import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ng
 import { Platform,MenuController, Events, AlertController  } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute,RouterStateSnapshot,RoutesRecognized   } from '@angular/router';
 import { IonRouterOutlet } from '@ionic/angular';
 
 
@@ -14,6 +14,7 @@ import { IonRouterOutlet } from '@ionic/angular';
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
+  sub: any;
   quantity: string;
   fromcart: string;
   singleid: any;
@@ -93,30 +94,52 @@ export class AppComponent {
         }, 100);
         
         this.platform.backButton.subscribeWithPriority(0, () => {
-          this.singleid = this.activatedRoute.snapshot.paramMap.get('id');
-          this.fromcart = this.activatedRoute.snapshot.paramMap.get('fromcart');
-          this.quantity = this.activatedRoute.snapshot.paramMap.get('quantity');
-          console.log(this.router.url)
+        const snapshot: RouterStateSnapshot = this.router.routerState.snapshot;
+        // console.log(snapshot);
+        // console.log(this.activatedRoute.snapshot.queryParamMap);
+        // console.log(this.router.url);
+        this.sub = this.router.events.subscribe(val => {
+          if (val instanceof RoutesRecognized) {
+            console.log(val.state.root.firstChild.params);
+            this.singleid = val.state.root.firstChild.params.id;
+            this.fromcart = val.state.root.firstChild.params.fromcart;
+            this.quantity = val.state.root.firstChild.params.quantity;
+          }
+        });
           let urlTree = this.router.parseUrl(this.router.url);
           let urlWithoutParams = urlTree.root.children['primary'].segments.map(it => it.path).join('/');
-          console.log(urlWithoutParams)
-          console.log(this.fromcart)
-          console.log(this.singleid)
+          console.log(urlWithoutParams);
           if (this.routerOutlet && this.routerOutlet.canGoBack()) {
+         
             if (urlWithoutParams === 'address'){
-             
+              console.log(this.singleid);
             if(this.fromcart == "1"){
+              console.log("cart");
               this.router.navigate(['tabs/viewcartproduct']);
             }
             else{
+              console.log("single");
               this.router.navigate(['viewsingleproduct',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
+     
             }
               
             }
             else{
-              
-            this.routerOutlet.pop();
-            this.menu.close();
+              console.log("this.singleid");
+              if(urlWithoutParams == "viewsingleproduct"){
+                this.router.navigate(['tabs/dashboard']);
+              }
+              else{
+                if(urlWithoutParams == "tabs/viewcartproduct"){
+                  this.router.navigate(['tabs/dashboard']);
+                }
+                else{
+                  this.routerOutlet.pop();
+                  this.menu.close();
+                }
+               
+              }
+           
             }
           
           } else if (this.router.url === '/dashboard') {
