@@ -11,6 +11,7 @@ import { Events } from '@ionic/angular';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit  {
+  public toggled: boolean = false;
   cartDetails: any;
   cartcount: any;
   private imageUrl = environment.imageUrl;
@@ -35,6 +36,7 @@ export class DashboardPage implements OnInit  {
   imgURl:any;
   term = { searchText: '',};
   constructor(public productservice:ProductsService,public router: Router,public events: Events) { 
+    this.toggled = false;
     this.events.subscribe('cart', ()=>{
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
       if(this.cartDetails){
@@ -65,6 +67,12 @@ export class DashboardPage implements OnInit  {
     
     
   }
+  public toggle(): void {
+    this.toggled = !this.toggled;
+ }
+ cancelSearch(){
+   this.toggle();
+ }
   ionViewWillEnter(){
     this.events.subscribe('cart', ()=>{
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));

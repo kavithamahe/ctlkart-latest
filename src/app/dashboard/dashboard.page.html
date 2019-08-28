@@ -1,10 +1,15 @@
 <ion-header no-border-bottom>
     <ion-toolbar color="grey">
-        <ion-title>Explorer</ion-title>
+        <ion-title *ngIf="!toggled">Explorer</ion-title>
+        <ion-buttons slot="end">
+            <ion-icon *ngIf="!toggled" (click)="toggle()" name="search"></ion-icon>
+        </ion-buttons>
+        <ion-searchbar *ngIf="toggled" [(ngModel)]="term.searchText" (ionInput)="getItems(term.searchText)" (ionCancel)="cancelSearch($event)" (ionClear)="cancelSearch($event)" [showCancelButton]="true">
+        </ion-searchbar>
     </ion-toolbar>
-    <ion-toolbar class="ion-searchbar">
+    <!-- <ion-toolbar class="ion-searchbar">
         <ion-searchbar [(ngModel)]="term.searchText" (keyup.enter)="getItems(term.searchText)"></ion-searchbar>
-    </ion-toolbar>
+    </ion-toolbar> -->
 </ion-header>
 
 <ion-content>
