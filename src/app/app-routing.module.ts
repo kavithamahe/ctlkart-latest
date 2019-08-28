@@ -52,6 +52,13 @@ const routes: Routes = [
   { path: 'getaddress', 
   loadChildren: () => import('./getaddress/getaddress.module').then(m => m.GetaddressPageModule)
   },
+  { path: 'forgetpassword', 
+  loadChildren: () => import('./forgetpassword/forgetpassword.module').then(m => m.ForgetpasswordPageModule)
+  },
+  { path: 'checkoutsuccess', 
+  loadChildren: () => import('./checkoutsuccess/checkoutsuccess.module').then(m => m.CheckoutsuccessPageModule)
+  },
+
 ];
 @NgModule({
   imports: [

@@ -4,6 +4,8 @@ import { environment } from '../environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ToastController,LoadingController, AlertController } from '@ionic/angular';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
+
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +24,14 @@ export class ProductsService {
     this.headers= this.headers.append("Authorization", "Bearer " + this.token);
     
    }
+   checkLimit(min: number, max: number): ValidatorFn {
+    return (c: AbstractControl): { [key: string]: boolean } | null => {
+        if (c.value && (isNaN(c.value) || c.value < min || c.value > max)) {
+            return { 'range': true };
+        }
+        return null;
+    };
+  }
    getproductlist(id,subcategory_id,search,searchText): Observable<any> {
     const body= {"category_id":id,"subcategory_id":subcategory_id,"price":search};
     return this.http.post(this.apiUrl + 'getproductlist',body,this.headers);
