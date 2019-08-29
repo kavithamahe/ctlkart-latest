@@ -11,6 +11,7 @@ import { Events } from '@ionic/angular';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit  {
+  public toggled: boolean = false;
   cartDetails: any;
   cartcount: any;
   private imageUrl = environment.imageUrl;
@@ -35,6 +36,7 @@ export class DashboardPage implements OnInit  {
   imgURl:any;
   term = { searchText: '',};
   constructor(public productservice:ProductsService,public router: Router,public events: Events) { 
+    this.toggled = false;
     this.events.subscribe('cart', ()=>{
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
       if(this.cartDetails){
@@ -65,6 +67,14 @@ export class DashboardPage implements OnInit  {
     
     
   }
+  public toggle(): void {
+    this.toggled = !this.toggled;
+ }
+ cancelSearch(){
+   this.toggle();
+   this.getproductList();
+   this.term.searchText = "";
+ }
   ionViewWillEnter(){
     this.events.subscribe('cart', ()=>{
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
@@ -124,7 +134,7 @@ export class DashboardPage implements OnInit  {
     }, 2000);
   }
   getItems(searchItem) {
-    this.productservice.getproductlistsearch(this.term.searchText)
+    this.productservice.getproductlistsearch(searchItem)
     .subscribe(product =>{ 
       this.getProductLists = product.data;
     },
@@ -132,6 +142,18 @@ export class DashboardPage implements OnInit  {
       this.productservice.presentToast(err.error.message);
    })
   }
+  triggerInput( ev: any ) {
+    // Reset items back to all of the items
+    // this.getproductList();
+    // set val to the value of the searchbar
+    let val = ev.target.value;
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.getProductLists = this.getProductLists.filter((item) => {
+        return (item.product_name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }  
+}
   // getItems(ev) {
   //   // Reset items back to all of the items
   //   this.getproductList();
