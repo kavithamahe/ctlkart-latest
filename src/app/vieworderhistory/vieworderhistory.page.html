@@ -10,14 +10,13 @@
 
 <ion-content>
   <ion-list>
-    <ion-item>Order Date : {{getsingleorder.ordered_date | date: 'dd/MM/yyyy'}}</ion-item>
+    <ion-item *ngIf = "getsingleorder.status == 1">Order Date : {{getsingleorder.ordered_date | date: 'dd/MM/yyyy'}}</ion-item>
+    <ion-item *ngIf = "getsingleorder.status == 2">Delivered Date : {{getsingleorder.delivered_date | date: 'dd/MM/yyyy'}}</ion-item>
+    <ion-item *ngIf = "getsingleorder.status == 3">Cancelled Date : {{getsingleorder.cancelled_date | date: 'dd/MM/yyyy'}}</ion-item>
     <ion-item>Order # : {{getsingleorder.order_id}}</ion-item>
     <ion-item>Order Total : {{getsingleorder.amount  | number : '1.2-2'}}</ion-item>
   </ion-list>
   <ion-list>
-    <ion-list-header>
-      <ion-label>Shipment Details</ion-label>
-    </ion-list-header>
     <ion-item>
       <ion-thumbnail slot="start">
           <img [src]="imgURl + getsingleorder.product_image">
@@ -27,7 +26,20 @@
           <p><i class="fa fa-inr"></i>{{getsingleorder.amount | number : '1.2-2'}}</p>
           <p>Qty : {{getsingleorder.quantity}}</p>
       </ion-label>
-      <ion-badge slot="end">delivered</ion-badge>
+      <ion-badge slot="end" *ngIf = "getsingleorder.status == 2">Delivered</ion-badge>
+      <ion-badge slot="end" *ngIf = "getsingleorder.status == 1">Processing</ion-badge>
+      <ion-badge slot="end" *ngIf = "getsingleorder.status == 3">Cancelled</ion-badge>
   </ion-item>
+  </ion-list>
+  <ion-list>
+      <ion-list-header>
+          <ion-label>Order Information</ion-label>
+        </ion-list-header>
+        <ion-item>
+          <p>Shipping Address: <span>{{getsingleorder.address}},{{getsingleorder.city}},{{getsingleorder.state}} - {{getsingleorder.zipcode}}</span></p>
+        </ion-item>
+        <ion-item>
+            <p>Payment Method:<span>Cash On Delivery</span></p>
+        </ion-item>
   </ion-list>
 </ion-content>
