@@ -16,7 +16,8 @@
                 margin: 0;
                 font-weight: 600;
                 letter-spacing: 0.4px;
-                color: #fca411;
+                // color: #fca411;
+                color: #000;
             }
         }
         ion-item {
@@ -86,7 +87,7 @@ ion-buttons {
                         p {
                             padding: 0;
                             margin: 0;
-                            font-weight: 500;
+                            font-weight: 600;
                             color: #fca411;
                             font-size: 14px;
                             letter-spacing: 0.2px;
@@ -98,15 +99,18 @@ ion-buttons {
                                 background: #efefef;
                                 color: #000;
                                 padding: 5px;
+                                border-radius: 50%;
                                 font-size: 12px;
                                 margin: 5px 0 5px;
-                                border-radius: 0 !important;
+                                width: 30px;
+                                height:30px;
+                                // border-radius: 0 !important;
                                 box-shadow: none;
                                 outline: none;
                             }
                             span {
                                 background: #ffffff;
-                                padding: 8px 15px;
+                                padding: 12px 15px;
                                 color: #666;
                                 font-weight: 600;
                                 font-size: 14px;
@@ -134,10 +138,10 @@ ion-buttons {
     margin: 10px;
     border-radius: 4px;
     h2 {
-        color: #333;
+        color: #666;
         margin: 0 0 8px;
         padding: 5px 0 10px 0;
-        font-size: 20px;
+        font-size: 17px;
         text-align: center;
         border-bottom: 1px dotted #999;
     }
@@ -177,7 +181,7 @@ ion-buttons {
                     padding: 0;
                     margin: 0;
                     font-weight: 600 !important;
-                    color: #000 !important;
+                    color: #fca411 !important;
                     font-size: 15px !important;
                     letter-spacing: 0.1px;
                     text-align: right;

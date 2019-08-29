@@ -24,6 +24,10 @@ export class ProfilePage implements OnInit {
   }
 
   ngOnInit() {
+    this.events.subscribe('profileedit', ()=>{
+      this.user_id = localStorage.getItem("user_id");
+      this.getprofileDetail(this.user_id);
+    })
   }
   ionViewWillEnter(){
     this.user_id = localStorage.getItem("user_id");

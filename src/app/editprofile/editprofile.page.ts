@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../products.service';
 import { Location } from '@angular/common';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Events } from '@ionic/angular';
 
 
 @Component({
@@ -36,7 +37,7 @@ export class EditprofilePage implements OnInit {
   profileForm: FormGroup;
   addressForm: FormGroup;
   submitAttempt: boolean = false;
-  constructor(public location: Location, private route: ActivatedRoute, public formBuilder: FormBuilder, private router: Router, public productservice: ProductsService) {
+  constructor(public location: Location,public events:Events, private route: ActivatedRoute, public formBuilder: FormBuilder, private router: Router, public productservice: ProductsService) {
     this.user_id = localStorage.getItem("user_id");
     this.param = route.snapshot.paramMap.get('param');
     this.type = route.snapshot.paramMap.get('type');
@@ -134,11 +135,13 @@ export class EditprofilePage implements OnInit {
       this.submitAttempt = true;
       this.productservice.presentToast("Please Enter All The Details");
     } else {
+      this.submitAttempt = false;
       this.productservice.presentLoading();
       this.productservice.editprofile(this.user_id, this.profileForm.value)
         .subscribe(profile => {
           this.productservice.loadingdismiss();
           this.productservice.presentToast(profile.message);
+          this.events.publish('profileedit');
           this.router.navigate(['tabs/profile']);
         },
           err => {
@@ -152,11 +155,13 @@ export class EditprofilePage implements OnInit {
     this.address_type = ev.detail.value;
   }
   editaddress(id) {
+    console.log(this.addressForm.value)
     this.addressForm.value.address_type = this.address_type;
     if (!this.addressForm.valid) {
       this.submitAttempt = true;
       this.productservice.presentToast("Please Enter All The Details");
     } else {
+      this.submitAttempt = false;
       this.productservice.presentLoading();
       let addressedit = {
         "name": this.addressForm.value.name, 

@@ -4,7 +4,7 @@
             <!-- <ion-menu-button autoHide="false"></ion-menu-button> -->
             <ion-icon name="arrow-back" (click)="back()"></ion-icon>
         </ion-buttons>
-        <ion-title>Address</ion-title>
+        <ion-title>Shipping Addresses</ion-title>
         <!-- <ion-buttons slot="end" (click)="viewcart()">
             <i class="fa fa-shopping-basket" aria-hidden="true"></i>
             <ion-badge id="cart-badge" color="danger">{{cartcount}}</ion-badge>
@@ -15,30 +15,32 @@
 <ion-content>
     <div *ngIf="type != 'address'" class="addressField">
         <ion-grid>
-            <ion-list-header>
+            <!-- <ion-list-header>
                 <ion-label class="deliveryLabel">Shipping Address</ion-label>
-            </ion-list-header>
+            </ion-list-header> -->
             <ion-row class="addressbox" *ngFor="let address of getalladdress">
-                <ion-col size="10">
+                <ion-col >
                     <ion-list>
-                        <ion-radio-group>
-                            <div class="shippingAddressGroup">
-                                <ion-radio (ionSelect)="radioSelects($event,address.id)" slot="start" value="{{address.first_name}},{{address.address}},{{address.city}},{{address.state}}"></ion-radio>
-                                <ion-label text-capitalize style="white-space: normal !important;"><span *ngIf="address.name"><b>{{address.name}},</b></span><span *ngIf="address.mobile">{{address.mobile}},</span><span>{{address.address}},</span><span>{{address.city}},</span><span>{{address.state}} - {{address.zipcode}}</span></ion-label>
-
+                        <!-- <ion-radio-group> -->
+                            <div class="shippingAddressGroup">                                
+                                <ion-label text-capitalize style="white-space: normal !important;"><span class="wdt100" *ngIf="address.name"><b>{{address.name}},</b></span><span *ngIf="address.mobile" class="wdt100">{{address.mobile}},</span><span>{{address.address}},</span><span>{{address.city}},</span><span>{{address.state}} -{{address.zipcode}}</span></ion-label>                                
+                                <ion-text class="edit-btn" (click)="editaddress(address.id)">Edit</ion-text>
                             </div>
-                        </ion-radio-group>
+                            <div class="useAddress">
+                            <ion-radio (ionSelect)="radioSelects($event,address.id)" slot="start" value="{{address.first_name}},{{address.address}},{{address.city}},{{address.state}}"></ion-radio>
+                            <span>Use as the shipping address</span>
+                        </div>
+                        <!-- </ion-radio-group> -->
                     </ion-list>
                 </ion-col>
-                <ion-col size="2" class="edit-btn">
-                    <i class="fa fa-pencil" (click)="editaddress(address.id)" aria-hidden="true"></i>
-                </ion-col>
+                <!-- <ion-col size="2" class="edit-btn">
+                    <i class="fa fa-pencil"  aria-hidden="true"></i>
+                </ion-col> -->
             </ion-row>
         </ion-grid>
         <ion-grid>
             <ion-row>
                 <ion-col size="6">
-
                 </ion-col>
                 <ion-col size="6">
                     <ion-text (click)="addAddress()" class="addAddress">Add Address</ion-text>
