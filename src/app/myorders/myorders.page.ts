@@ -16,7 +16,12 @@ export class MyordersPage implements OnInit {
   public imageUrl = environment.imageUrl;
   user_id: string;
   getallmyorderlists:any=[];
+  getmyorders:string;
+  getallmyprocessinglists:any=[];
+  getallmydeliveredlists:any=[];
+  getallmycancelledlists:any=[];
   constructor(public location:Location,public productservice:ProductsService,public events: Events,private router: Router) { 
+    this.getmyorders="delivered";
     this.events.subscribe('cart', ()=>{
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
       if(this.cartDetails){
@@ -25,6 +30,9 @@ export class MyordersPage implements OnInit {
     })
     this.user_id = localStorage.getItem("user_id");
     this.getallmyorders(this.user_id);
+    this.getprocessingorders(this.user_id);
+    this.getdeliveredorders(this.user_id);
+    this.getcancelledorders(this.user_id);
   }
 
   ngOnInit() {
@@ -42,12 +50,51 @@ export class MyordersPage implements OnInit {
     })
     this.user_id = localStorage.getItem("user_id");
     this.getallmyorders(this.user_id);
+    this.getprocessingorders(this.user_id);
+    this.getdeliveredorders(this.user_id);
+    this.getcancelledorders(this.user_id);
   }
   getallmyorders(user_id){
     this.productservice.presentLoading();
     this.productservice.getallorders(user_id)
     .subscribe(product =>{ 
       this.getallmyorderlists = product.data;
+      this.productservice.loadingdismiss();
+    },
+    err =>{
+      this.productservice.loadingdismiss();
+      this.productservice.presentToast(err.error.message);
+   })
+  }
+  getprocessingorders(user_id){
+    this.productservice.presentLoading();
+    this.productservice.getmyprocessingorders(user_id)
+    .subscribe(product =>{ 
+      this.getallmyprocessinglists = product.data;
+      this.productservice.loadingdismiss();
+    },
+    err =>{
+      this.productservice.loadingdismiss();
+      this.productservice.presentToast(err.error.message);
+   })
+  }
+  getdeliveredorders(user_id){
+    this.productservice.presentLoading();
+    this.productservice.getmydeliveredorders(user_id)
+    .subscribe(product =>{ 
+      this.getallmydeliveredlists = product.data;
+      this.productservice.loadingdismiss();
+    },
+    err =>{
+      this.productservice.loadingdismiss();
+      this.productservice.presentToast(err.error.message);
+   })
+  }
+  getcancelledorders(user_id){
+    this.productservice.presentLoading();
+    this.productservice.getmycancelledorders(user_id)
+    .subscribe(product =>{ 
+      this.getallmycancelledlists = product.data;
       this.productservice.loadingdismiss();
     },
     err =>{

@@ -13,6 +13,11 @@
 </ion-header>
 
 <ion-content>
+        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+                <ion-fab-button color="warning" (click)="addAddress()">
+                    <ion-icon name="add"></ion-icon>
+                </ion-fab-button>
+            </ion-fab>
     <div *ngIf="type != 'address'" class="addressField">
         <ion-grid>
             <!-- <ion-list-header>
@@ -38,7 +43,7 @@
                 </ion-col> -->
             </ion-row>
         </ion-grid>
-        <ion-grid>
+        <!-- <ion-grid>
             <ion-row>
                 <ion-col size="6">
                 </ion-col>
@@ -46,7 +51,7 @@
                     <ion-text (click)="addAddress()" class="addAddress">Add Address</ion-text>
                 </ion-col>
             </ion-row>
-        </ion-grid>
+        </ion-grid> -->
         <ion-grid>
             <ion-row>
                 <ion-col size="12">

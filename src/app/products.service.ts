@@ -119,6 +119,30 @@ export class ProductsService {
     const body= {"user_id":user_id};
     return this.http.post(this.apiUrl + 'getmyorders',body,{ headers:this.headers });
   }
+  getmyprocessingorders(user_id): Observable<any> {
+    this.token=localStorage.getItem("token");
+    this.headers = new HttpHeaders();
+    this.headers = this.headers.append('Content-Type', 'application/json');
+    this.headers= this.headers.append("Authorization", "Bearer " + this.token);
+    const body= {"user_id":user_id};
+    return this.http.post(this.apiUrl + 'getprocessingorder',body,{ headers:this.headers });
+  }
+  getmydeliveredorders(user_id): Observable<any> {
+    this.token=localStorage.getItem("token");
+    this.headers = new HttpHeaders();
+    this.headers = this.headers.append('Content-Type', 'application/json');
+    this.headers= this.headers.append("Authorization", "Bearer " + this.token);
+    const body= {"user_id":user_id};
+    return this.http.post(this.apiUrl + 'getdeliveredorder',body,{ headers:this.headers });
+  }
+  getmycancelledorders(user_id): Observable<any> {
+    this.token=localStorage.getItem("token");
+    this.headers = new HttpHeaders();
+    this.headers = this.headers.append('Content-Type', 'application/json');
+    this.headers= this.headers.append("Authorization", "Bearer " + this.token);
+    const body= {"user_id":user_id};
+    return this.http.post(this.apiUrl + 'getcancelledorder',body,{ headers:this.headers });
+  }
   changepassword(password): Observable<any> {
     this.token=localStorage.getItem("token");
     this.headers = new HttpHeaders();
