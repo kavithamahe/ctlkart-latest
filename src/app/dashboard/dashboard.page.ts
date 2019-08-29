@@ -72,6 +72,8 @@ export class DashboardPage implements OnInit  {
  }
  cancelSearch(){
    this.toggle();
+   this.getproductList();
+   this.term.searchText = "";
  }
   ionViewWillEnter(){
     this.events.subscribe('cart', ()=>{
@@ -132,7 +134,7 @@ export class DashboardPage implements OnInit  {
     }, 2000);
   }
   getItems(searchItem) {
-    this.productservice.getproductlistsearch(this.term.searchText)
+    this.productservice.getproductlistsearch(searchItem)
     .subscribe(product =>{ 
       this.getProductLists = product.data;
     },
@@ -140,6 +142,18 @@ export class DashboardPage implements OnInit  {
       this.productservice.presentToast(err.error.message);
    })
   }
+  triggerInput( ev: any ) {
+    // Reset items back to all of the items
+    // this.getproductList();
+    // set val to the value of the searchbar
+    let val = ev.target.value;
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.getProductLists = this.getProductLists.filter((item) => {
+        return (item.product_name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }  
+}
   // getItems(ev) {
   //   // Reset items back to all of the items
   //   this.getproductList();

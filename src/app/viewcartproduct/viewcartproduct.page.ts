@@ -30,11 +30,39 @@ export class ViewcartproductPage implements OnInit {
   constructor(private location:Location,public events: Events,public productservice:ProductsService,private route: ActivatedRoute,public router:Router,private alertCtrl: AlertController) { 
     this.getproductList();
   }
+  ngOnInit() {
+    this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
+    console.log(this.cartDetails)
+    if(this.cartDetails){
+      this.cartcount = this.cartDetails.length;
+      console.log(this.cartcount)
+    }
+    this.token = localStorage.getItem('token');
+    this.imgURl = this.imageUrl;
+    for (let i = 1; i <= 100; i++) {
+      this.quantities.push(i)
+    }
+    this.getcartProductList = (JSON.parse(localStorage.getItem('cart_items')));
+    if(this.getcartProductList){
+    this.selectedlength = this.getcartProductList.length;
+    
+    let total = 0;
+    for (var i = 0; i < this.getcartProductList.length; i++) {
+        if (this.getcartProductList[i].totalproductprice) {
+            total += this.getcartProductList[i].totalproductprice;
+            this.totalamount = total;
+        }
+    }
+    return total;
+  }
+  }
   ionViewWillEnter(){
     this.events.subscribe('cart', ()=>{
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
+      console.log(this.cartDetails)
       if(this.cartDetails){
         this.cartcount = this.cartDetails.length;
+        console.log(this.cartcount)
       }
     })
     this.getproductList();
@@ -167,30 +195,7 @@ export class ViewcartproductPage implements OnInit {
       return total;
     }
     }
-  ngOnInit() {
-    this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
-    if(this.cartDetails){
-      this.cartcount = this.cartDetails.length;
-    }
-    this.token = localStorage.getItem('token');
-    this.imgURl = this.imageUrl;
-    for (let i = 1; i <= 100; i++) {
-      this.quantities.push(i)
-    }
-    this.getcartProductList = (JSON.parse(localStorage.getItem('cart_items')));
-    if(this.getcartProductList){
-    this.selectedlength = this.getcartProductList.length;
-    
-    let total = 0;
-    for (var i = 0; i < this.getcartProductList.length; i++) {
-        if (this.getcartProductList[i].totalproductprice) {
-            total += this.getcartProductList[i].totalproductprice;
-            this.totalamount = total;
-        }
-    }
-    return total;
-  }
-  }
+
   getproductList(){
     this.productservice.presentLoading();
     this.productservice.getproductlist('','','','')
