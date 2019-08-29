@@ -65,10 +65,16 @@
                     <p class="text-success">Free</p>
                 </ion-col>
             </ion-row>
+
+        </ion-grid>
+    </div>
+
+    <div class="bottom-card" *ngIf="cartcount != 0">
+        <ion-grid>
             <ion-row class="final-total">
                 <ion-col size="7">
                     <ion-label>
-                        <h3>Total </h3>
+                        <h3>Subtotal ( {{selectedlength}} items)</h3>
                         <!-- <h3>Subtotal ({{selectedlength}} items): <b><i class="fa fa-inr"></i> {{totalamount | number : '1.2-2'}}</b></h3> -->
                     </ion-label>
                 </ion-col>
@@ -77,9 +83,6 @@
                 </ion-col>
             </ion-row>
         </ion-grid>
-    </div>
-    <hr/>
-    <div style="padding: 10px;" *ngIf="cartcount != 0">
         <ion-text class="loginBtn" (click)="proceedtobuy()">Check Out</ion-text>
     </div>
 
@@ -91,8 +94,6 @@
         <p class="mail">
             <ion-text class="shopBtn" (click)="shopnow()">Shop your products</ion-text>
         </p>
-
-
     </div>
 
 </ion-content>
