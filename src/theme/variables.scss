@@ -7,6 +7,11 @@
     ion-content {
         --ion-background-color: #f9f9f9;
     }
+    form {
+        ion-item {
+            --ion-background-color: #fff;
+        }
+    }
     ion-item {
         --border-color: transparent;
     }
