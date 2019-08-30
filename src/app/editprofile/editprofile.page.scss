@@ -28,7 +28,10 @@ ion-buttons {
 }
 
 .editAddress {
+    background: #fff;
+    padding: 15px;
     ion-list {
+        background: #fff;
         form {
             ion-label {
                 color: #000;
@@ -51,6 +54,7 @@ ion-buttons {
                 ion-input {
                     color: #000;
                     font-size: 14px;
+                    border-bottom: 1px solid #ccc;
                 }
             }
         }
