@@ -154,6 +154,7 @@ export class EditprofilePage implements OnInit {
   }
   onChangeHandler($event) {
     this.data.sex = $event.target.value;
+    this.addressForm.value.address_type = this.data.sex;
   }
   editaddress(id) {
     console.log(this.addressForm.value.address_type)
