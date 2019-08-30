@@ -11,6 +11,7 @@ import { Location } from '@angular/common';
   selector: 'app-proceedcheckout',
   templateUrl: './proceedcheckout.page.html',
   styleUrls: ['./proceedcheckout.page.scss'],
+  
 })
 export class ProceedcheckoutPage implements OnInit {
   totalamount: number;
@@ -39,6 +40,7 @@ export class ProceedcheckoutPage implements OnInit {
   getaddress:any=[];
 
   constructor(private location:Location,public alertController: AlertController,public events: Events,public formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,public productservice:ProductsService) {
+    
     this.singleid = route.snapshot.paramMap.get('id');
     this.quantity = route.snapshot.paramMap.get('quantity');
     this.fromcart = route.snapshot.paramMap.get('fromcart');
@@ -61,7 +63,12 @@ export class ProceedcheckoutPage implements OnInit {
       this.cartcount = this.cartDetails.length;
     }
     this.user_id = localStorage.getItem("user_id");
+
   }
+
+  
+
+
   ionViewWillEnter(){
     this.events.subscribe('cart', ()=>{
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
