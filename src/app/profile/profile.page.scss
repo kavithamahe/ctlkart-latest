@@ -107,6 +107,9 @@ ion-header {
             font-size: 20px;
             padding-left: 10px;
         }
+        ion-title {
+            padding-left: 140px;
+        }
     }
 }
 
@@ -114,4 +117,8 @@ ion-header {
     font-size: 20px;
     color: #484848;
     padding: 0px 10px 0px 0px;
+}
+
+ion-header ion-toolbar ion-title {
+    padding-left: 140px;
 }

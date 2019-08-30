@@ -64,7 +64,6 @@ export class ProceedcheckoutPage implements OnInit {
     }
     this.user_id = localStorage.getItem("user_id");
 
-
   }
 
   
