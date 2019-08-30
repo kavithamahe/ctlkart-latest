@@ -1,18 +1,23 @@
 <ion-header no-border-bottom>
     <ion-toolbar>
-        <ion-buttons slot="start">
+        <ion-buttons slot="start" *ngIf="!toggled">
             <!-- <ion-menu-button autoHide="false"></ion-menu-button> -->
             <ion-icon name="arrow-back" (click)="back()"></ion-icon>
         </ion-buttons>
-        <ion-title>Sub Category</ion-title>
+        <ion-title *ngIf="!toggled">Sub Category</ion-title>
         <!-- <ion-buttons slot="end" (click)="viewcart()">
             <i class="fa fa-shopping-basket" aria-hidden="true"></i>
             <ion-badge id="cart-badge" color="danger">{{cartcount}}</ion-badge>
         </ion-buttons> -->
+        <ion-buttons slot="end">
+            <ion-icon *ngIf="!toggled" (click)="toggle()" name="search"></ion-icon>
+        </ion-buttons>
+        <ion-searchbar *ngIf="toggled" [(ngModel)]="term.searchText" (keyup.enter)="getItems(term.searchText)" (ionCancel)="cancelSearch($event)" (ionClear)="cancelSearch($event)" [showCancelButton]="true">
+        </ion-searchbar>
     </ion-toolbar>
-    <ion-toolbar class="ion-searchbar">
+    <!-- <ion-toolbar class="ion-searchbar">
         <ion-searchbar [(ngModel)]="term.searchText" (keyup.enter)="getItems(term.searchText)"></ion-searchbar>
-    </ion-toolbar>
+    </ion-toolbar> -->
 </ion-header>
 
 <ion-content padding class="categoryList">

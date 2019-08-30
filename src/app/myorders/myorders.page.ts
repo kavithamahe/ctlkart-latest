@@ -20,6 +20,8 @@ export class MyordersPage implements OnInit {
   getallmyprocessinglists:any=[];
   getallmydeliveredlists:any=[];
   getallmycancelledlists:any=[];
+  term = { searchText: ''};
+  public toggled: boolean = false;
   constructor(public location:Location,public productservice:ProductsService,public events: Events,private router: Router) { 
     this.getmyorders="delivered";
     this.events.subscribe('cart', ()=>{
@@ -54,6 +56,23 @@ export class MyordersPage implements OnInit {
     this.getdeliveredorders(this.user_id);
     this.getcancelledorders(this.user_id);
   }
+  public toggle(): void {
+    this.toggled = !this.toggled;
+ }
+ cancelSearch(){
+   this.toggle();
+   this.getallmyorders(this.user_id);
+   this.term.searchText = "";
+ }
+ getItems(searchItem) {
+  this.productservice.getmyorderlistsearch(this.user_id,this.term.searchText)
+  .subscribe(product =>{ 
+    this.getallmyprocessinglists = product.data;
+  },
+  err =>{
+    this.productservice.presentToast(err.error.message);
+ })
+}
   getallmyorders(user_id){
     this.productservice.presentLoading();
     this.productservice.getallorders(user_id)

@@ -20,6 +20,7 @@ export class SubcategorylistPage implements OnInit {
   getallcategories:any=[];
   getallsubcategory:any=[];
   term = { searchText: ''};
+  public toggled: boolean = false;
   constructor(private location:Location,private router: Router,public events: Events,public productservice:ProductsService,private route: ActivatedRoute) {
     this.category_id = route.snapshot.paramMap.get('id');
     this.getsubCategory(this.category_id);
@@ -54,6 +55,14 @@ export class SubcategorylistPage implements OnInit {
       this.productservice.presentToast(err.error.message);
    })
   }
+  public toggle(): void {
+    this.toggled = !this.toggled;
+ }
+ cancelSearch(){
+   this.toggle();
+   this.getsubCategory(this.category_id);
+   this.term.searchText = "";
+ }
   viewcart(){
     this.router.navigate(['/viewcartproduct']);
   }

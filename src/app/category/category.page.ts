@@ -18,6 +18,7 @@ export class CategoryPage implements OnInit {
   private imageUrl = environment.imageUrl;
   getallcategories:any=[];
   term = { searchText: ''};
+  public toggled: boolean = false;
   constructor(private location:Location,private router: Router,public events: Events,public productservice:ProductsService) {
     this.getCategory();
    }
@@ -54,6 +55,14 @@ export class CategoryPage implements OnInit {
     this.router.navigate(['']);
     
   }
+  public toggle(): void {
+    this.toggled = !this.toggled;
+ }
+ cancelSearch(){
+   this.toggle();
+   this.getCategory();
+   this.term.searchText = "";
+ }
   viewcart(){
     this.router.navigate(['/viewcartproduct']);
   }

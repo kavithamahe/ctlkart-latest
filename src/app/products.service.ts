@@ -119,6 +119,14 @@ export class ProductsService {
     const body= {"user_id":user_id};
     return this.http.post(this.apiUrl + 'getmyorders',body,{ headers:this.headers });
   }
+  getmyorderlistsearch(user_id,search): Observable<any> {
+    this.token=localStorage.getItem("token");
+    this.headers = new HttpHeaders();
+    this.headers = this.headers.append('Content-Type', 'application/json');
+    this.headers= this.headers.append("Authorization", "Bearer " + this.token);
+    const body= {"user_id":user_id,"search":search};
+    return this.http.post(this.apiUrl + 'searchmyorderproduct',body,{ headers:this.headers });
+  }
   getmyprocessingorders(user_id): Observable<any> {
     this.token=localStorage.getItem("token");
     this.headers = new HttpHeaders();

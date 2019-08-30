@@ -50,12 +50,36 @@ export class ProfilePage implements OnInit {
    })
   }
  
-  logout() {
-    this.events.publish('loggedout');
-    localStorage.removeItem('token');
-    localStorage.removeItem('cart_items');
-    this.router.navigate(['']);
+  async logout() {
+    const alert = await this.alertController.create({
+      header: '',
+      message: 'Are you sure want to logout from ctlkart!!!',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+            this.logoutconfirm();
+          }
+        }
+      ]
+    });
+  
+    await alert.present();
 
+
+}
+logoutconfirm(){
+  this.events.publish('loggedout');
+  localStorage.removeItem('token');
+  localStorage.removeItem('cart_items');
+  this.router.navigate(['']);
 }
 async deleteaccount() {
   const alert = await this.alertController.create({
