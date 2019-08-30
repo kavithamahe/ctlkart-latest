@@ -17,7 +17,6 @@ export class EditprofilePage implements OnInit {
   totalpricecart: string;
   fromcart: string;
   fromaddress: string;
-  address_type: any;
   lastname: any;
   zipcode: string;
   state: string;
@@ -37,6 +36,9 @@ export class EditprofilePage implements OnInit {
   profileForm: FormGroup;
   addressForm: FormGroup;
   submitAttempt: boolean = false;
+  public data: any = {
+    sex: ''
+  };
   constructor(public location: Location,public events:Events, private route: ActivatedRoute, public formBuilder: FormBuilder, private router: Router, public productservice: ProductsService) {
     this.user_id = localStorage.getItem("user_id");
     this.param = route.snapshot.paramMap.get('param');
@@ -104,7 +106,7 @@ export class EditprofilePage implements OnInit {
         this.addressForm.controls['city'].setValue(this.getaddress.city);
         this.addressForm.controls['state'].setValue(this.getaddress.state);
         this.addressForm.controls['zipcode'].setValue(this.getaddress.zipcode);
-        // this.addressForm.controls['address_type'].setValue(this.getaddress.address_type);
+        this.data.sex = this.getaddress.address_type;
         this.productservice.loadingdismiss();
       },
         err => {
@@ -150,13 +152,12 @@ export class EditprofilePage implements OnInit {
           })
     }
   }
-  radioGroupChange(ev) {
-    console.log(ev.detail.value)
-    this.address_type = ev.detail.value;
+  onChangeHandler($event) {
+    this.data.sex = $event.target.value;
   }
   editaddress(id) {
-    console.log(this.addressForm.value)
-    this.addressForm.value.address_type = this.address_type;
+    console.log(this.addressForm.value.address_type)
+    this.addressForm.value.address_type = this.data.sex;
     if (!this.addressForm.valid) {
       this.submitAttempt = true;
       this.productservice.presentToast("Please Enter All The Details");
