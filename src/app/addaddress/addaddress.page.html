@@ -8,8 +8,8 @@
 </ion-header>
 
 <ion-content>
-    <form [formGroup]="checkoutForm">
-        <ion-label>Address</ion-label>
+    <form [formGroup]="checkoutForm" class="newAddresAdd">
+        <ion-label class="titeAddres">Address</ion-label>
         <ion-list lines="full" class="ion-no-margin ion-no-padding">
             <div class="formList">
                 <ion-label position="floating">Name
@@ -56,8 +56,6 @@
             </div>
             <p *ngIf="!checkoutForm.controls.state.valid && (checkoutForm.controls.state.dirty || submitAttempt)" class="err-reds shake">Please enter state.</p>
 
-
-
             <div class="formList">
                 <ion-label position="floating">Zipcode
                     <ion-text color="danger">*</ion-text>
@@ -66,23 +64,23 @@
             </div>
             <p *ngIf="!checkoutForm.controls.zipcode.valid && (checkoutForm.controls.zipcode.dirty || submitAttempt)" class="err-reds shake">Please enter zipcode.</p>
 
-
         </ion-list>
+
         <ion-list>
 
-            <ion-label>Address Type
+            <ion-label class="titeAddressType">Address Type
                 <ion-text color="danger">*</ion-text>
             </ion-label>
             <ion-list>
                 <ion-radio-group (ionChange)="radioGroupChange($event)">
                     <ion-item>
                         <ion-label>Home</ion-label>
-                        <ion-radio slot="start" value="home"  formControlName="address_type"></ion-radio>
+                        <ion-radio slot="start" color="dark" value="home" formControlName="address_type"></ion-radio>
                     </ion-item>
 
                     <ion-item>
                         <ion-label>Work</ion-label>
-                        <ion-radio slot="start" value="work" formControlName="address_type"></ion-radio>
+                        <ion-radio slot="start" color="dark" value="work" formControlName="address_type"></ion-radio>
                     </ion-item>
                 </ion-radio-group>
             </ion-list>

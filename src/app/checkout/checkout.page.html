@@ -5,7 +5,7 @@
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content class="bgWhite">
     <h3 class="loginTitle">Login</h3>
     <div style="padding: 30px 15px 5px;">
         <form [formGroup]="loginForm">
@@ -32,7 +32,7 @@
     </div>
     <div style="padding:10px;">
         <ion-text class="loginBtn" color="cart" (click)="login()">Login</ion-text>
-        <ion-text  *ngIf = "onboard != '1'" class="registerBtn">Don't have an account? <span (click)="register()">Sign Up</span></ion-text>
+        <ion-text *ngIf="onboard != '1'" class="registerBtn">Don't have an account? <span (click)="register()">Sign Up</span></ion-text>
 
     </div>
     <!-- <div *ngIf="numberverify">
