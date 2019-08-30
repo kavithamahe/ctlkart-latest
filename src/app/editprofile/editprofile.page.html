@@ -94,20 +94,16 @@
                         <ion-label>Address Type
                             <ion-text color="danger">*</ion-text>
                         </ion-label>
-                        <ion-list>
-                            <ion-radio-group (ionChange)="radioGroupChange($event)">
-                                <ion-item>
-                                    <ion-label>Home</ion-label>
-                                    <ion-radio slot="start" value="home" formControlName="address_type"></ion-radio>
-                                </ion-item>
-
-                                <ion-item>
-                                    <ion-label>Work</ion-label>
-                                    <ion-radio slot="start" value="work" formControlName="address_type"></ion-radio>
-                                </ion-item>
-                            </ion-radio-group>
-                        </ion-list>
-
+                        <ion-radio-group (ionChange)="onChangeHandler($event)">
+                            <ion-item>
+                              <ion-label>Home</ion-label>
+                              <ion-radio formControlName="address_type" value="home" [checked]="this.data.sex==='home'"></ion-radio>
+                            </ion-item>
+                            <ion-item>
+                              <ion-label>Work</ion-label>
+                              <ion-radio formControlName="address_type" value="work" [checked]="this.data.sex==='work'"></ion-radio>
+                            </ion-item>
+                          </ion-radio-group>
                     </ion-list>
                 </form>
             </ion-list>

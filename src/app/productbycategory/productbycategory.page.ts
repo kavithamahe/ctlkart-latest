@@ -28,6 +28,7 @@ export class ProductbycategoryPage implements OnInit {
   };
   getallsubcategory:any=[];
   term = { searchText: ''};
+  public toggled: boolean = false;
 
   constructor(private location:Location,public actionSheetController: ActionSheetController,public events: Events,public productservice:ProductsService,public router: Router,private route: ActivatedRoute) { 
     this.subcategory_id = route.snapshot.paramMap.get('id');
@@ -48,6 +49,14 @@ export class ProductbycategoryPage implements OnInit {
     }
     this.imgURl = this.imageUrl;
   }
+  public toggle(): void {
+    this.toggled = !this.toggled;
+ }
+ cancelSearch(){
+   this.toggle();
+   this.getproductbysubcategory(this.subcategory_id);
+   this.term.searchText = "";
+ }
   ionViewWillEnter(){
     this.events.subscribe('cart', ()=>{
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
@@ -65,19 +74,18 @@ export class ProductbycategoryPage implements OnInit {
     }
     this.getproductbysubcategory(this.subcategory_id);
   }
-  
-  // getsubcategories(category_id){
-  //   this.productservice.presentLoading();
-  //   this.productservice.getsubcategory(category_id)
-  //   .subscribe(product =>{ 
-  //     this.getallsubcategory = product.data;
-  //     this.productservice.loadingdismiss();
-  //   },
-  //   err =>{
-  //     this.productservice.loadingdismiss();
-  //     this.productservice.presentToast(err.error.message);
-  //  })
-  // }
+  triggerInput( ev: any ) {
+    // Reset items back to all of the items
+    // this.getproductList();
+    // set val to the value of the searchbar
+    let val = ev.target.value;
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.getProductLists = this.getProductLists.filter((item) => {
+        return (item.product_name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }  
+}
   getproductbysubcategory(subcategory_id){
     this.productservice.presentLoading();
     this.productservice.getproductlist("",subcategory_id,"","")
