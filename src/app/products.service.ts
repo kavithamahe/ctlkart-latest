@@ -48,8 +48,8 @@ export class ProductsService {
     const body= {"search":search};
     return this.http.post(this.apiUrl + 'getcategorysearch',body,this.headers);
   }
-  getsubcategorylistsearch(search): Observable<any> {
-    const body= {"search":search};
+  getsubcategorylistsearch(category_id,search): Observable<any> {
+    const body= {"search":search,"category_id":category_id};
     return this.http.post(this.apiUrl + 'getsubcategorysearch',body,this.headers);
   }
   getproductlistsingle(id): Observable<any> {
@@ -125,7 +125,23 @@ export class ProductsService {
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers= this.headers.append("Authorization", "Bearer " + this.token);
     const body= {"user_id":user_id,"search":search};
-    return this.http.post(this.apiUrl + 'searchmyorderproduct',body,{ headers:this.headers });
+    return this.http.post(this.apiUrl + 'searchprocessing',body,{ headers:this.headers });
+  }
+  getmyorderlistsearchdelivered(user_id,search): Observable<any> {
+    this.token=localStorage.getItem("token");
+    this.headers = new HttpHeaders();
+    this.headers = this.headers.append('Content-Type', 'application/json');
+    this.headers= this.headers.append("Authorization", "Bearer " + this.token);
+    const body= {"user_id":user_id,"search":search};
+    return this.http.post(this.apiUrl + 'searchdelivered',body,{ headers:this.headers });
+  }
+  getmyorderlistsearchcancel(user_id,search): Observable<any> {
+    this.token=localStorage.getItem("token");
+    this.headers = new HttpHeaders();
+    this.headers = this.headers.append('Content-Type', 'application/json');
+    this.headers= this.headers.append("Authorization", "Bearer " + this.token);
+    const body= {"user_id":user_id,"search":search};
+    return this.http.post(this.apiUrl + 'searchcancelled',body,{ headers:this.headers });
   }
   getmyprocessingorders(user_id): Observable<any> {
     this.token=localStorage.getItem("token");

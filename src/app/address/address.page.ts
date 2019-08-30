@@ -46,6 +46,8 @@ export class AddressPage implements OnInit {
     this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
     this.totalpricecart = this.route.snapshot.paramMap.get('totalamount');
     this.type = this.route.snapshot.paramMap.get('type');
+    this.user_id = localStorage.getItem("user_id");
+    this.allgetAddress(this.user_id);
 
   }
   ionViewWillEnter() {
@@ -53,6 +55,8 @@ export class AddressPage implements OnInit {
     this.singleid = this.route.snapshot.paramMap.get('id');
     this.quantity = this.route.snapshot.paramMap.get('quantity');
     this.fromcart = this.route.snapshot.paramMap.get('fromcart');
+    this.user_id = localStorage.getItem("user_id");
+    this.allgetAddress(this.user_id);
 
   }
   addAddress() {

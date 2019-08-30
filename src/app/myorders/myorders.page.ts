@@ -59,19 +59,41 @@ export class MyordersPage implements OnInit {
   public toggle(): void {
     this.toggled = !this.toggled;
  }
- cancelSearch(){
+ cancelSearch(event){
    this.toggle();
    this.getallmyorders(this.user_id);
    this.term.searchText = "";
  }
  getItems(searchItem) {
-  this.productservice.getmyorderlistsearch(this.user_id,this.term.searchText)
-  .subscribe(product =>{ 
-    this.getallmyprocessinglists = product.data;
-  },
-  err =>{
-    this.productservice.presentToast(err.error.message);
- })
+   console.log(this.getmyorders)
+   if(this.getmyorders == "processing"){
+    this.productservice.getmyorderlistsearch(this.user_id,this.term.searchText)
+    .subscribe(product =>{ 
+      this.getallmyprocessinglists = product.data;
+    },
+    err =>{
+      this.productservice.presentToast(err.error.message);
+   })
+   }
+   else if(this.getmyorders == "delivered"){
+    this.productservice.getmyorderlistsearchdelivered(this.user_id,this.term.searchText)
+    .subscribe(product =>{ 
+      this.getallmydeliveredlists = product.data;
+    },
+    err =>{
+      this.productservice.presentToast(err.error.message);
+   })
+   }
+   else{
+    this.productservice.getmyorderlistsearchcancel(this.user_id,this.term.searchText)
+    .subscribe(product =>{ 
+      this.getallmycancelledlists = product.data;
+    },
+    err =>{
+      this.productservice.presentToast(err.error.message);
+   })
+   }
+
 }
   getallmyorders(user_id){
     this.productservice.presentLoading();

@@ -13,6 +13,7 @@ import {Location} from '@angular/common';
   styleUrls: ['./checkout.page.scss'],
 })
 export class CheckoutPage implements OnInit {
+  totalpricecart: string;
   cartcount: any;
   cartDetails: any;
   fromcart: string;
@@ -31,6 +32,8 @@ export class CheckoutPage implements OnInit {
     console.log(this.singleid)
     this.quantity = route.snapshot.paramMap.get('quantity');
     this.fromcart = route.snapshot.paramMap.get('fromcart');
+    this.fromcart = route.snapshot.paramMap.get('fromcart');
+    this.totalpricecart = route.snapshot.paramMap.get('totalamount');
     this.onboard = route.snapshot.paramMap.get('onboard');
     this.events.subscribe('cart', ()=>{
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
@@ -73,7 +76,7 @@ export class CheckoutPage implements OnInit {
   }
   
   register(){
-    this.router.navigate(['register',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
+    this.router.navigate(['register',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart}]);
   }
   login(){
     if(!this.loginForm.valid){
@@ -86,7 +89,7 @@ export class CheckoutPage implements OnInit {
         localStorage.setItem("user_id", data['userid']);
         this.events.publish('loggedin');
         if(this.fromcart || this.singleid){
-          this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
+          this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart}]);
         }
         else{
           this.router.navigate(['']);
@@ -96,15 +99,18 @@ export class CheckoutPage implements OnInit {
       err =>{
         if(err.status == 401){
           if(err.error.mobile){
+            console.log(err.error.message);
           const phoneNumberString = "+91" + err.error.mobile;
           this.firebaseAuthentication.verifyPhoneNumber(phoneNumberString, 30000)
           .then( confirmationResult => {
             this.verificationId = confirmationResult;
-            this.alert(this.verificationId);
+            if(this.verificationId){
+            this.alert(this.verificationId,err.error.mobile);
+            }
             
           })
         .catch((error) => {
-          this.alert(error);
+          this.productservice.presentAlert(error);
           console.error(error)
         });
         this.presentToast(err.error.message);
@@ -119,22 +125,6 @@ export class CheckoutPage implements OnInit {
             })
     }
   }
-  // verifynumber(mobilenumber){
-  //     this.productservice.presentLoading();
-  //       this.productservice.loadingdismiss();
-  //       const phoneNumberString = "+91" + mobilenumber;
-
-  //       this.firebaseAuthentication.verifyPhoneNumber(phoneNumberString, 30000)
-  //       .then( confirmationResult => {
-  //         this.verificationId = confirmationResult;
-  //         this.alert(this.verificationId);
-          
-  //       })
-  //     .catch((error) => {
-  //       this.alert(error);
-  //       console.error(error)
-  //     });
-  // }
   back(){
     if(this.onboard == "1"){
       this.router.navigate(['register',{"onboard":this.onboard}]);
@@ -144,7 +134,7 @@ export class CheckoutPage implements OnInit {
     }
     
   }
-  async alert(verificationId){
+  async alert(verificationId,mobile){
     const prompt = await this.alertCtrl.create({
       header: 'Enter the Confirmation code',
       inputs: [{ name: 'confirmationCode', placeholder: 'Confirmation Code' }],
@@ -156,20 +146,21 @@ export class CheckoutPage implements OnInit {
           handler: data => {
             let otp = "1";
           this.firebaseAuthentication.signInWithVerificationId(verificationId,data.confirmationCode).then((user) => {
-            this.productservice.onetimepassword(this.verify.mobile,otp).subscribe(otpdata =>{
-              this.numberverify = false;
+            this.productservice.onetimepassword(mobile,otp).subscribe(otpdata =>{
+              // this.numberverify = false;
+              if(this.fromcart || this.singleid){
+                this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart}]);
+              }
+              else{
+                this.router.navigate(['']);
+              }
             },
             err =>{
               this.productservice.presentToast(err.error.message);
            })
           // this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
           this.events.publish('loggedin');
-        if(this.fromcart || this.singleid){
-          this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
-        }
-        else{
-          this.router.navigate(['']);
-        }  
+         
         })
           .catch((error) => {
             // this.alert(error);
@@ -182,7 +173,7 @@ export class CheckoutPage implements OnInit {
     await prompt.present();
   }
   forgetpassword(){
-    this.router.navigate(['forgetpassword',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
+    this.router.navigate(['forgetpassword',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart}]);
   }
   async presentToast(datamessage) {
     const toast = await this.toastController.create({

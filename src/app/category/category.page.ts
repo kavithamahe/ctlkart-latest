@@ -58,7 +58,7 @@ export class CategoryPage implements OnInit {
   public toggle(): void {
     this.toggled = !this.toggled;
  }
- cancelSearch(){
+ cancelSearch(event){
    this.toggle();
    this.getCategory();
    this.term.searchText = "";

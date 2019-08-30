@@ -12,6 +12,7 @@ import {Validators, FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./forgetpassword.page.scss'],
 })
 export class ForgetpasswordPage implements OnInit {
+  totalpricecart: string;
   fromcart: any;
   quantity: any;
   singleid: any;
@@ -22,6 +23,7 @@ export class ForgetpasswordPage implements OnInit {
     this.singleid = route.snapshot.paramMap.get('id');
     this.quantity = route.snapshot.paramMap.get('quantity');
     this.fromcart = route.snapshot.paramMap.get('fromcart');
+    this.totalpricecart = route.snapshot.paramMap.get('totalamount');
     this.initForm();
 
   }
@@ -45,7 +47,7 @@ export class ForgetpasswordPage implements OnInit {
           this.productservice.loadingdismiss();
           this.presentAlert(password.message);
           this.forgotForm.reset();
-          this.navctrl.navigateBack(['/checkout', { "id": this.singleid, "quantity": this.quantity, "fromcart": this.fromcart }]);
+          this.navctrl.navigateBack(['/checkout', { "id": this.singleid, "quantity": this.quantity, "fromcart": this.fromcart,"totalpricecart":this.totalpricecart }]);
         },
           err => {
             this.productservice.loadingdismiss();

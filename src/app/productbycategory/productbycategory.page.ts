@@ -52,7 +52,7 @@ export class ProductbycategoryPage implements OnInit {
   public toggle(): void {
     this.toggled = !this.toggled;
  }
- cancelSearch(){
+ cancelSearch(event){
    this.toggle();
    this.getproductbysubcategory(this.subcategory_id);
    this.term.searchText = "";

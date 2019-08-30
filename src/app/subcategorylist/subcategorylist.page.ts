@@ -58,7 +58,7 @@ export class SubcategorylistPage implements OnInit {
   public toggle(): void {
     this.toggled = !this.toggled;
  }
- cancelSearch(){
+ cancelSearch(event){
    this.toggle();
    this.getsubCategory(this.category_id);
    this.term.searchText = "";
@@ -73,7 +73,7 @@ export class SubcategorylistPage implements OnInit {
     this.router.navigate(['tabs/category']);
   }
   getItems(searchItem) {
-    this.productservice.getsubcategorylistsearch(this.term.searchText)
+    this.productservice.getsubcategorylistsearch(this.category_id,this.term.searchText)
     .subscribe(category =>{ 
       this.getallsubcategory = category.data;
     },

@@ -53,7 +53,7 @@ export class ProfilePage implements OnInit {
   async logout() {
     const alert = await this.alertController.create({
       header: '',
-      message: 'Are you sure want to logout from ctlkart!!!',
+      message: 'Are you sure want to logout from ctlkart?',
       buttons: [
         {
           text: 'Cancel',
@@ -84,7 +84,7 @@ logoutconfirm(){
 async deleteaccount() {
   const alert = await this.alertController.create({
     header: '',
-    message: 'Are you sure want to remove from ctlkart!!!',
+    message: 'Are you sure want to remove from ctlkart?',
     buttons: [
       {
         text: 'Cancel',

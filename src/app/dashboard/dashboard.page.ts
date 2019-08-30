@@ -34,7 +34,7 @@ export class DashboardPage implements OnInit  {
     autoplay:true
   }
   imgURl:any;
-  term = { searchText: '',};
+  term = { searchText: ''};
   constructor(public productservice:ProductsService,public router: Router,public events: Events) { 
     this.toggled = false;
     this.events.subscribe('cart', ()=>{
@@ -70,7 +70,7 @@ export class DashboardPage implements OnInit  {
   public toggle(): void {
     this.toggled = !this.toggled;
  }
- cancelSearch(){
+ cancelSearch(event){
    this.toggle();
    this.getproductList();
    this.term.searchText = "";

@@ -10,6 +10,10 @@ import { Location } from '@angular/common';
   styleUrls: ['./otpverification.page.scss'],
 })
 export class OtpverificationPage implements OnInit {
+  totalpricecart: string;
+  fromcart: string;
+  quantity: string;
+  singleid: string;
   cartcount: any;
   cartDetails: any;
   verificationId: string;
@@ -19,6 +23,11 @@ export class OtpverificationPage implements OnInit {
   constructor(private location:Location,public router: Router,public firebaseAuthentication:FirebaseAuthentication,private route: ActivatedRoute,public productservice:ProductsService) { 
     this.mobilenumber = route.snapshot.paramMap.get('mobile');
     this.verificationId = route.snapshot.paramMap.get('verificationId');
+    this.singleid = route.snapshot.paramMap.get('id');
+    console.log(this.singleid)
+    this.quantity = route.snapshot.paramMap.get('quantity');
+    this.fromcart = route.snapshot.paramMap.get('fromcart');
+    this.totalpricecart = route.snapshot.paramMap.get('totalamount');
   }
 
   ngOnInit() {
@@ -34,12 +43,13 @@ export class OtpverificationPage implements OnInit {
       console.log(user);
       this.productservice.onetimepassword(this.mobilenumber,otp).subscribe(otpdata =>{
         console.log(otpdata);
+        this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalpricecart":this.totalpricecart}]);
       },
       err =>{
         this.productservice.presentToast(err.error.message);
      })
     console.log(user);
-    this.router.navigate(['checkout']);
+    
     })
     .catch((error) => {
       // this.alert(error);

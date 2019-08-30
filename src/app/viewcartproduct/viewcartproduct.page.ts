@@ -262,7 +262,7 @@ export class ViewcartproductPage implements OnInit {
       this.router.navigate(['address',{"fromcart":"1","productLists":this.productLists,"totalamount":this.totalamount}]);
     }
     else{
-      this.router.navigate(['checkout',{"fromcart":"1"}]);
+      this.router.navigate(['checkout',{"fromcart":"1","productLists":this.productLists,"totalamount":this.totalamount}]);
     }
     
   }
