@@ -6,10 +6,33 @@
 :root {
     ion-content {
         --ion-background-color: #f9f9f9;
+        &.bgWhite {
+            --ion-background-color: #fff;
+        }
     }
     form {
         ion-item {
             --ion-background-color: #fff;
+        }
+    }
+    ion-segment {
+        --border-color: #fca411;
+        --color-checked: #fca411;
+        --color-checked-disabled: var(--color-checked);
+        ion-segment-button {
+            --border-color: #fca411;
+            opacity: 1;
+            button {
+                --border-color: #fca411;
+            }
+        }
+    }
+    ion-avatar {
+        &.noneRadius {
+            --border-radius: 5px;
+            img {
+                --border-radius: 5px;
+            }
         }
     }
     ion-item {

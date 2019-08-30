@@ -10,7 +10,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content padding class="categoryList">
+<ion-content padding class="categoryList bgWhite">
     <ion-list *ngFor="let category of getallcategories">
         <div (click)="getsubcategory(category.category_id)">
             <ion-avatar slot="start">

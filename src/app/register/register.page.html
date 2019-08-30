@@ -6,7 +6,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="bgWhite">
     <h3 class="loginTitle">Sign Up</h3>
     <form [formGroup]="registerForm">
         <ion-list lines="full" class="ion-no-margin ion-no-padding">
@@ -41,7 +41,7 @@
             </div>
             <p *ngIf="!registerForm.controls.mobile.valid && (registerForm.controls.mobile.dirty || submitAttempt)" class="err-reds shake">Please enter mobile number.</p>
 
-          
+
 
             <div class="formList">
                 <ion-label position="floating">Password
