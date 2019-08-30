@@ -2,7 +2,7 @@
     <ion-toolbar color="grey">
         <ion-title *ngIf="!toggled">Explorer</ion-title>
         <ion-buttons slot="end">
-            <ion-icon *ngIf="!toggled" (click)="toggle()" name="search"></ion-icon>
+            <ion-icon class="searchIcOn" *ngIf="!toggled" (click)="toggle()" name="search"></ion-icon>
         </ion-buttons>
         <ion-searchbar *ngIf="toggled" [(ngModel)]="term.searchText" (ionInput)="getItems(term.searchText)" (ionCancel)="cancelSearch($event)" (ionClear)="cancelSearch($event)" [showCancelButton]="true">
         </ion-searchbar>
