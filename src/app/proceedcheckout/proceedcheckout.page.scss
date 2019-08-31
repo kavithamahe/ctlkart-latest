@@ -1,17 +1,113 @@
-.deliveryLabel {
-    color: #000;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    font-size: 15px;
-    padding: 0;
-    margin: 0;
-}
+.deliveryLabel {}
 
 ion-buttons {
     ion-icon {
         color: #000;
         font-size: 20px;
         padding-left: 10px;
+    }
+}
+
+.shipping {
+    padding: 15px;
+    .deliveryLabel {
+        color: #000;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        font-size: 16px;
+        padding: 10px 0 0 0;
+        margin: 0;
+    }
+    .addressbox {
+        background: #fff;
+        padding: 15px 0;
+        margin: 10px 0;
+        border-radius: 5px;
+        box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.07);
+        .shippingAddressGroup {
+            display: flex;
+            background: #fff;
+            ion-label {
+                width: 90%;
+                span {
+                    color: #444;
+                    padding-bottom: 5px;
+                    line-height: 22px;
+                    text-align: left;
+                    text-transform: capitalize;
+                    b {
+                        color: #000000;
+                    }
+                    &.wdt100 {
+                        width: 100%;
+                        display: block;
+                    }
+                }
+            }
+            ion-text {
+                color: #fca411;
+            }
+        }
+    }
+}
+
+.subtoatalValue {
+    padding: 10px;
+    background: #fff;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.04);
+    margin: 10px;
+    border-radius: 4px;
+    h2 {
+        color: #666;
+        margin: 0 0 8px;
+        padding: 5px 0 10px 0;
+        font-size: 17px;
+        text-align: center;
+        border-bottom: 1px dotted #999;
+    }
+    ion-grid {
+        ion-row {
+            ion-col {
+                h6 {
+                    font-size: 14px;
+                    color: #666;
+                }
+                p {
+                    padding: 0;
+                    margin: 0;
+                    font-weight: 600;
+                    color: #666;
+                    font-size: 14px;
+                    letter-spacing: 0.1px;
+                    text-align: right;
+                    &.text-success {
+                        color: #048e04;
+                    }
+                }
+            }
+            &.final-total {
+                border-top: 1px dotted #999;
+                padding: 10px 0 0;
+                margin: 5px 0 0 0;
+                h3 {
+                    font-size: 16px;
+                    color: #333;
+                    padding: 0;
+                    margin: 0;
+                    font-weight: 600;
+                    text-transform: capitalize;
+                }
+                p {
+                    padding: 0;
+                    margin: 0;
+                    font-weight: 600 !important;
+                    color: #fca411 !important;
+                    font-size: 15px !important;
+                    letter-spacing: 0.1px;
+                    text-align: right;
+                }
+            }
+        }
     }
 }
 
