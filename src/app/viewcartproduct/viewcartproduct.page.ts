@@ -31,6 +31,12 @@ export class ViewcartproductPage implements OnInit {
     this.getproductList();
   }
   ngOnInit() {
+    this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
+    console.log(this.cartDetails)
+    if(this.cartDetails){
+      this.cartcount = this.cartDetails.length;
+      console.log(this.cartcount)
+    }
     this.events.subscribe('cart', ()=>{
     this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
     console.log(this.cartDetails)
