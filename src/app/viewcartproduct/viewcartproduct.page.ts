@@ -31,12 +31,14 @@ export class ViewcartproductPage implements OnInit {
     this.getproductList();
   }
   ngOnInit() {
+    this.events.subscribe('cart', ()=>{
     this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
     console.log(this.cartDetails)
     if(this.cartDetails){
       this.cartcount = this.cartDetails.length;
       console.log(this.cartcount)
     }
+  })
     this.token = localStorage.getItem('token');
     this.imgURl = this.imageUrl;
     for (let i = 1; i <= 100; i++) {
@@ -262,7 +264,7 @@ export class ViewcartproductPage implements OnInit {
       this.router.navigate(['address',{"fromcart":"1","productLists":this.productLists,"totalamount":this.totalamount}]);
     }
     else{
-      this.router.navigate(['checkout',{"fromcart":"1"}]);
+      this.router.navigate(['checkout',{"fromcart":"1","productLists":this.productLists,"totalamount":this.totalamount}]);
     }
     
   }
