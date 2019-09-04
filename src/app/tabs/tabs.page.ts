@@ -42,6 +42,7 @@ export class TabsPage {
     
   this.events.subscribe('loggedin', ()=>{
     this.token = localStorage.getItem('token');
+    console.log(this.token)
   })
   this.events.subscribe('loggedout', ()=>{
     this.token = localStorage.removeItem('token');

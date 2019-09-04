@@ -9,7 +9,7 @@
 </ion-header>
 
 <ion-content>
-    <div class="proceedToPay">
+   
         <div class="shipping">
             <h3 class="deliveryLabel">Shipping Address</h3>
             <ion-list>
@@ -44,7 +44,8 @@
                 </ion-item>
             </ion-list>
         </div>
-        <div class="subtoatalValue" *ngIf="fromcart != '1'">
+        <div class="proceedToPay" *ngIf="fromcart != '1'">
+        <div class="subtoatalValue">
             <h2>Summary</h2>
             <ion-grid>
                 <ion-row>
@@ -79,11 +80,11 @@
                 </ion-row>
             </ion-grid>
         </div>
-        <div style="padding:15px 15px">
+        <div *ngIf="fromcart != '1'" style="padding:15px 15px">
             <h3 class="deliveryLabel">Order Details</h3>
         </div>
         <div class="cartProduct" *ngFor="let single of getsingleProductList">
-            <div class="mycartProduct">
+            <div class="mycartProduct" *ngIf="fromcart != '1'">
                 <div class="productImage">
                     <ion-thumbnail slot="start">
                         <img [src]="imageUrl + single.product_image">
@@ -106,9 +107,7 @@
                                     <button clear (click)="incrementQty()"><ion-icon name="add" ></ion-icon></button>
                                 </div>
                             </ion-col>
-                            <ion-col size="4">
-                                <span (click)="presentAlertConfirm(single.id)" class="closeBtn"><ion-icon name="close"></ion-icon></span>
-                            </ion-col>
+                            
                         </ion-row>
                     </ion-grid>
                 </div>
@@ -136,8 +135,8 @@
         </div> -->
     </div>
     <!-- ------------------------------------cart---------------------------------- -->
-    <div class="proceedToPay">
-        <div class="subtoatalValue" *ngIf="fromcart != 'null'">
+    <div class="proceedToPay" *ngIf="fromcart != 'null'">
+        <div class="subtoatalValue">
             <h2>Summary</h2>
             <ion-grid>
                 <ion-row>

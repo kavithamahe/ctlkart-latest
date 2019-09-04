@@ -84,11 +84,10 @@ export class CheckoutPage implements OnInit {
     }else{
       this.submitAttempt = false;
       this.productservice.login(this.loginForm.value).subscribe(data =>{
-        this.events.publish('loggedin');
         localStorage.setItem("token", data['refreshToken']);
         let token = localStorage.setItem("token", data['refreshToken']);
         localStorage.setItem("user_id", data['userid']);
-       
+        this.events.publish('loggedin');
         if(this.fromcart || this.singleid){
           this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart}]);
         }
