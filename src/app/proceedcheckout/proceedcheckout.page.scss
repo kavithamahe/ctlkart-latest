@@ -1,5 +1,3 @@
-.deliveryLabel {}
-
 ion-buttons {
     ion-icon {
         color: #000;
@@ -49,6 +47,31 @@ ion-buttons {
             }
         }
     }
+}
+
+.Payment {
+    padding: 0px 15px;
+    .deliveryLabel {
+        color: #000;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        font-size: 16px;
+        padding: 10px 0 0 0;
+        margin: 0;
+    }
+}
+
+.proceedToPay {
+    margin-bottom: 120px;
+}
+
+.deliveryLabel {
+    color: #000;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    font-size: 16px;
+    padding: 10px 0 0 0;
+    margin: 0;
 }
 
 .subtoatalValue {
@@ -196,17 +219,17 @@ ion-buttons {
         ion-row {
             ion-col {
                 h3 {
-                    font-size: 16px;
+                    font-size: 15px;
                     color: #333;
                     padding: 0;
                     margin: 0;
-                    font-weight: 600;
+                    font-weight: 500;
                     text-transform: capitalize;
                 }
                 p {
                     padding: 0;
                     margin: 0;
-                    font-weight: 600;
+                    font-weight: 500;
                     color: #000000;
                     font-size: 15px;
                     letter-spacing: 0.2px;

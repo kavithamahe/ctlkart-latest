@@ -2,6 +2,14 @@
     color: #000;
 }
 
+ion-content {
+    padding-bottom: 140px;
+}
+
+.mar-bt140 {
+    padding-bottom: 140px;
+}
+
 .cartProduct {
     ion-item {
         ion-label {
@@ -103,7 +111,7 @@ ion-buttons {
                                 font-size: 12px;
                                 margin: 5px 0 5px;
                                 width: 30px;
-                                height:30px;
+                                height: 30px;
                                 // border-radius: 0 !important;
                                 box-shadow: none;
                                 outline: none;
