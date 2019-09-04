@@ -119,6 +119,7 @@ export class ViewsingleproductPage implements OnInit {
   }
   }
   gotocartpage(){
+    this.events.publish('cartview');
     this.router.navigate(['tabs/viewcartproduct']);
   }
   async presentToast(datamessage) {
@@ -129,6 +130,10 @@ export class ViewsingleproductPage implements OnInit {
     toast.present();
   }
   buyNow(id,item_qty){
+    this.token = localStorage.getItem('token');
+    this.events.subscribe('loggedin',() => {
+      this.token = localStorage.getItem('token');
+    })
     if(item_qty == ""){
       this.presentToast("Please Select The Quantity");
     }

@@ -53,6 +53,7 @@ export class AppComponent {
     this.events.subscribe('loggedin', ()=>{
       this.showButton = true;  
       this.token = localStorage.getItem('token');
+      console.log(this.token)
     })
     this.events.subscribe('loggedout', ()=>{
       this.showButton = false;   
@@ -118,7 +119,7 @@ export class AppComponent {
           let urlWithoutParams = urlTree.root.children['primary'].segments.map(it => it.path).join('/');
           console.log(urlWithoutParams);
           if (this.routerOutlet && this.routerOutlet.canGoBack()) {
-         
+            console.log(urlWithoutParams);
             if (urlWithoutParams === 'address'){
               console.log(this.singleid);
             if(this.fromcart == "1"){
@@ -128,14 +129,43 @@ export class AppComponent {
             else{
               console.log("single");
               this.router.navigate(['viewsingleproduct',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
-     
             }
               
             }
+            else if(urlWithoutParams === 'checkout'){
+              console.log(this.singleid);
+              console.log("single");
+              if(this.fromcart == "1"){
+                console.log("cart");
+                this.router.navigate(['tabs/viewcartproduct']);
+              }
+              else if(this.singleid != 'null'){
+                console.log("single");
+                this.router.navigate(['viewsingleproduct',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
+              }
+              else{
+                this.router.navigate(['tabs/dashboard']);
+              }
+            }
             
             else{
-              console.log("this.singleid");
               if(urlWithoutParams == "viewsingleproduct"){
+                this.router.navigate(['tabs/dashboard']);
+              }
+              else if(urlWithoutParams == "checkoutsuccess"){
+                this.router.navigate(['tabs/dashboard']);
+              }
+              else if (urlWithoutParams == "tabs/dashboard"){
+                this.menu.close();
+                this.presentAlert("Exit App");
+              }
+              else if(urlWithoutParams == "tabs/checkout"){
+                this.router.navigate(['tabs/dashboard']);
+              }
+              else if(urlWithoutParams == "tabs/profile"){
+                this.router.navigate(['tabs/dashboard']);
+              }
+              else if(urlWithoutParams == "tabs/category"){
                 this.router.navigate(['tabs/dashboard']);
               }
               else{
@@ -151,13 +181,29 @@ export class AppComponent {
            
             }
           
-          } else if (this.router.url === '/dashboard') {
+          } else if (this.router.url === 'tabs/dashboard') {
+            console.log(urlWithoutParams);
             this.menu.close();
             // or if that doesn't work, try
             navigator['app'].exitApp();
           } else {
+            console.log("cart");
+            if(urlWithoutParams == "tabs/viewcartproduct"){
+              this.router.navigate(['tabs/dashboard']);
+            }
+            else if(urlWithoutParams == "tabs/profile"){
+              this.router.navigate(['tabs/dashboard']);
+            }
+            else if(urlWithoutParams == "tabs/category"){
+              this.router.navigate(['tabs/dashboard']);
+            }
+            else if(urlWithoutParams == "tabs/checkout"){
+              this.router.navigate(['tabs/dashboard']);
+            }
+            else{
             this.menu.close();
             this.presentAlert("Exit App");
+            }
           }
         });
       });
@@ -215,7 +261,7 @@ home(){
   this.menu.close();
 }
 viewaccount(){
-  this.router.navigate(['profile']);
+  this.router.navigate(['tabs/dashboard']);
   this.menu.close();
 }
 shopbycategory(){

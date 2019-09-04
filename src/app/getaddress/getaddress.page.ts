@@ -32,7 +32,8 @@ export class GetaddressPage implements OnInit {
     this.getAddress(this.user_id);
   }
   back(){
-    this.location.back();
+    // this.location.back();
+    this.router.navigate(['tabs/profile']);
   }
   getAddress(user_id){
     this.productservice.presentLoading();

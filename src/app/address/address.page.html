@@ -23,16 +23,25 @@
         <!-- <ion-list-header>
                 <ion-label class="deliveryLabel">Shipping Address</ion-label>
             </ion-list-header> -->
+            <!-- <div>
+                    <ul class="list-group">
+                          <li class="list-group-item"  *ngFor="let item of getalladdress">
+                            <input type="radio" [(ngModel)]="radioSelected" name="list_name" value="{{item.name}}" (change)="onItemChange(item)"/> 
+                            {{item.name}}
+                            
+                          </li>
+                    </ul>
+                  </div> -->
 
         <ion-list>
-            <ion-item class="addressbox" *ngFor="let address of getalladdress">
+            <ion-item class="addressbox" *ngFor="let address of getalladdress" [ngClass]="{'highlight': address.id === selectedAsset}">
                 <ion-radio-group>
                     <div class="shippingAddressGroup">
                         <ion-label text-capitalize style="white-space: normal !important;"><span class="wdt100" *ngIf="address.name"><b>{{address.name}},</b></span><span *ngIf="address.mobile" class="wdt100">{{address.mobile}},</span><span>{{address.address}},</span><span>{{address.city}},</span><span>{{address.state}} -{{address.zipcode}}</span></ion-label>
                         <ion-text class="edit-btn" (click)="editaddress(address.id)">Edit</ion-text>
                     </div>
                     <ion-item class="useAddress">
-                        <ion-radio (ionSelect)="radioSelects($event,address.id)" slot="start" value="{{address.first_name}},{{address.address}},{{address.city}},{{address.state}}"></ion-radio>
+                        <ion-radio (ionSelect)="radioSelects($event,address.id)" slot="start" value="{{address.name}},{{address.address}},{{address.city}},{{address.state}}"></ion-radio>
                         <span>Use as the shipping address</span>
                     </ion-item>
                 </ion-radio-group>

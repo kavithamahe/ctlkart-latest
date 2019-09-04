@@ -15,7 +15,7 @@ export class ViewcartproductPage implements OnInit {
   productLists: any;
   cartcount: any;
   cartDetails: any;
-  token: string;
+  token: any;
   selectedlength: any;
   totalamount: number;
   totalprice: any;
@@ -31,6 +31,19 @@ export class ViewcartproductPage implements OnInit {
     this.getproductList();
   }
   ngOnInit() {
+    this.events.subscribe('loggedout', ()=>{
+      this.token = localStorage.removeItem('token');
+      this.cartDetails = localStorage.removeItem('cart_items');
+      if(this.cartDetails){
+        this.cartcount = this.cartDetails.length;
+      }
+    })
+    this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
+    console.log(this.cartDetails)
+    if(this.cartDetails){
+      this.cartcount = this.cartDetails.length;
+      console.log(this.cartcount)
+    }
     this.events.subscribe('cart', ()=>{
     this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
     console.log(this.cartDetails)
@@ -59,6 +72,11 @@ export class ViewcartproductPage implements OnInit {
   }
   }
   ionViewWillEnter(){
+    console.log(this.cartDetails)
+    this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
+    if(this.cartDetails){
+      this.cartcount = this.cartDetails.length;
+    }
     this.events.subscribe('cart', ()=>{
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
       console.log(this.cartDetails)
@@ -67,13 +85,20 @@ export class ViewcartproductPage implements OnInit {
         console.log(this.cartcount)
       }
     })
-    this.getproductList();
-    this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
-    if(this.cartDetails){
-      this.cartcount = this.cartDetails.length;
+    this.events.subscribe('cartview', ()=>{
+      this.getcartProductList = (JSON.parse(localStorage.getItem('cart_items')));
+      if(this.getcartProductList){
+      this.selectedlength = this.getcartProductList.length;
+      let total = 0;
+      for (var i = 0; i < this.getcartProductList.length; i++) {
+          if (this.getcartProductList[i].totalproductprice) {
+              total += (this.getcartProductList[i].price * this.getcartProductList[i].quantityperproduct);
+              this.totalamount = total;
+          }
+      }
+      return total;
     }
-    this.token = localStorage.getItem('token');
-    this.imgURl = this.imageUrl;
+    })
     this.getcartProductList = (JSON.parse(localStorage.getItem('cart_items')));
     if(this.getcartProductList){
     this.selectedlength = this.getcartProductList.length;
@@ -86,6 +111,15 @@ export class ViewcartproductPage implements OnInit {
     }
     return total;
   }
+    
+    this.token = localStorage.getItem('token');
+    this.imgURl = this.imageUrl;
+  this.events.subscribe('loggedin',() => {
+    this.token = localStorage.getItem('token');
+    console.log(this.token)
+  })
+    this.getproductList();
+ 
   }
   incrementQty(quantityperproduct,id){
     quantityperproduct = +quantityperproduct;
@@ -259,6 +293,10 @@ export class ViewcartproductPage implements OnInit {
   }
  
   proceedtobuy(){
+    this.token = localStorage.getItem('token');
+  this.events.subscribe('loggedin',() => {
+    this.token = localStorage.getItem('token');
+  })
     this.productLists = (JSON.parse(localStorage.getItem('cart_items')))
     if(this.token){
       this.router.navigate(['address',{"fromcart":"1","productLists":this.productLists,"totalamount":this.totalamount}]);

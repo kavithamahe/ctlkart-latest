@@ -37,15 +37,19 @@ export class OtpverificationPage implements OnInit {
     }
   }
   otpsubmit(){
+    this.productservice.presentLoading();
     this.data = this.mobileotp.firebasemobileotp;
     let otp = "1";
     this.firebaseAuthentication.signInWithVerificationId(this.verificationId,this.data).then((user) => {
       console.log(user);
+      this.productservice.loadingdismiss();
       this.productservice.onetimepassword(this.mobilenumber,otp).subscribe(otpdata =>{
         console.log(otpdata);
         this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalpricecart":this.totalpricecart}]);
+        this.productservice.loadingdismiss();
       },
       err =>{
+        this.productservice.loadingdismiss();
         this.productservice.presentToast(err.error.message);
      })
     console.log(user);
@@ -53,6 +57,7 @@ export class OtpverificationPage implements OnInit {
     })
     .catch((error) => {
       // this.alert(error);
+      this.productservice.loadingdismiss();
       this.productservice.presentToast("Your OTP is invallid");
       console.error(error)});
   }
