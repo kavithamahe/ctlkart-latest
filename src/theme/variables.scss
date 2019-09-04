@@ -9,9 +9,17 @@
         &.bgWhite {
             --ion-background-color: #fff;
         }
+        &.f6bg {
+            --ion-background-color: #f6f6f6;
+        }
     }
     form {
         ion-item {
+            --ion-background-color: #fff;
+        }
+    }
+    ion-item {
+        &.bgWhite {
             --ion-background-color: #fff;
         }
     }
