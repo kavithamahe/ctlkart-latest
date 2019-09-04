@@ -11,6 +11,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./productbycategory.page.scss'],
 })
 export class ProductbycategoryPage implements OnInit {
+  category_id: any;
   subcategory_name: string;
   subcategory_id: string;
   getsubcategorylocal: any;
@@ -32,6 +33,7 @@ export class ProductbycategoryPage implements OnInit {
 
   constructor(private location:Location,public actionSheetController: ActionSheetController,public events: Events,public productservice:ProductsService,public router: Router,private route: ActivatedRoute) { 
     this.subcategory_id = route.snapshot.paramMap.get('id');
+    this.category_id = route.snapshot.paramMap.get('category_id');
     this.subcategory_name = route.snapshot.paramMap.get('subcategoryname');
     if(this.subcategory_name){
       this.subcategory_name = this.subcategory_name;
@@ -107,9 +109,9 @@ export class ProductbycategoryPage implements OnInit {
       this.productservice.presentToast(err.error.message);
    })
   }
-  filterbyCategory(id,getsubcategorylocal,val){
+  filterbyCategory(id,subcategory_id,val){
     this.productservice.presentLoading();
-    this.productservice.getproductlist("",getsubcategorylocal,val,'')
+    this.productservice.getproductlist("",subcategory_id,val,'')
     .subscribe(product =>{ 
       this.getProductLists = product.data;
       this.productservice.loadingdismiss();
@@ -137,12 +139,18 @@ export class ProductbycategoryPage implements OnInit {
   }
   sorybyvalue(val){
     this.getsubcategorylocal = localStorage.getItem('key');
-    this.filterbyCategory('',this.getsubcategorylocal,val);
+    this.filterbyCategory('',this.subcategory_id,val);
   }
   viewcart(){
     this.router.navigate(['tabs/viewcartproduct']);
   }
   back(){
-    this.location.back();
+    if(this.category_id){
+      this.router.navigate(['subcategorylist',{"id":this.category_id}]);
+    }
+    else{
+      this.router.navigate(['tabs/viewcartproduct']);
+    }
+    // this.location.back();
   }
 }

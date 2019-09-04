@@ -10,7 +10,7 @@
             <ion-badge id="cart-badge" color="danger">{{cartcount}}</ion-badge>
         </ion-buttons> -->
         <ion-buttons slot="end">
-            <ion-icon *ngIf="!toggled" (click)="toggle()" name="search"></ion-icon>
+            <ion-icon class="searchIcOn" *ngIf="!toggled" (click)="toggle()" name="search"></ion-icon>
         </ion-buttons>
         <ion-searchbar *ngIf="toggled" [(ngModel)]="term.searchText" (keyup.enter)="getItems(term.searchText)" (ionCancel)="cancelSearch($event)" (ionClear)="cancelSearch($event)" [showCancelButton]="true">
         </ion-searchbar>
