@@ -66,7 +66,9 @@ export class ProceedcheckoutPage implements OnInit {
 
   }
 
-  
+  editaddress(){
+
+  }
 
 
   ionViewWillEnter(){
@@ -166,7 +168,14 @@ export class ProceedcheckoutPage implements OnInit {
       this.totalprice = (this.price * this.item_qty);
     }
     }
-  
+  proceedtobuyitems(){
+    if(this.fromcart == '1'){
+      this.proceedtobuycart();
+    }
+    else{
+      this.proceedtobuy(this.singleid);
+    }
+  }
     async proceedtobuycart() {
       if(this.customer_id == "" || this.customer_id == undefined){
         this.productservice.presentToast("Please Select The Delivery Address");

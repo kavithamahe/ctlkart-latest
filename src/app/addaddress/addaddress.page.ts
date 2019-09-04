@@ -86,6 +86,11 @@ export class AddaddressPage implements OnInit {
   }
     }
     back(){
+      if(this.type == "address"){
+        this.router.navigate(['getaddress']);
+      }
+      else{
       this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart}]);
     }
+  }
 }

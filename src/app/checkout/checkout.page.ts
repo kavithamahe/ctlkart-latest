@@ -84,10 +84,11 @@ export class CheckoutPage implements OnInit {
     }else{
       this.submitAttempt = false;
       this.productservice.login(this.loginForm.value).subscribe(data =>{
+        this.events.publish('loggedin');
         localStorage.setItem("token", data['refreshToken']);
         let token = localStorage.setItem("token", data['refreshToken']);
         localStorage.setItem("user_id", data['userid']);
-        this.events.publish('loggedin');
+       
         if(this.fromcart || this.singleid){
           this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart}]);
         }
@@ -130,7 +131,15 @@ export class CheckoutPage implements OnInit {
       this.router.navigate(['register',{"onboard":this.onboard}]);
     }
     else{
-      this.router.navigate(['']);
+      if(this.fromcart == '1'){
+        this.router.navigate(['tabs/viewcartproduct']);
+      }
+      else if(this.singleid){
+        this.router.navigate(['viewsingleproduct',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart}]);
+      }
+      else{
+        this.router.navigate(['']);
+      }
     }
     
   }
@@ -183,6 +192,6 @@ export class CheckoutPage implements OnInit {
     toast.present();
   }
   viewcart(){
-    this.router.navigate(['/viewcartproduct']);
+    this.router.navigate(['tabs/viewcartproduct']);
   }
 }

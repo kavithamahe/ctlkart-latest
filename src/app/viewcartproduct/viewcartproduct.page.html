@@ -9,7 +9,7 @@
 
 <ion-content>
     <div class="cartProduct" *ngFor="let single of getcartProductList">
-        <div class="mycartProduct" *ngIf="cartcount != 0">
+        <div class="mycartProduct" *ngIf="cartcount != 0 || cartDetails != null">
             <div class="productImage">
                 <ion-thumbnail slot="start">
                     <img [src]="imgURl + single.product_image">
@@ -41,7 +41,7 @@
         </div>
     </div>
 
-    <div class="bottom-card" *ngIf="cartcount != 0">
+    <div class="bottom-card" *ngIf="cartDetails && cartcount != '0'">
         <ion-grid>
             <ion-row class="final-total">
                 <ion-col size="7">
@@ -58,7 +58,7 @@
         <ion-text class="loginBtn" (click)="proceedtobuy()">Check Out</ion-text>
     </div>
 
-    <div class="EmptyCart" *ngIf="cartcount == 0">
+    <div class="EmptyCart" *ngIf="cartcount == 0 || cartDetails == null">
         <div class="profile-img">
             <img src="assets/img/broken-image.png" />
         </div>

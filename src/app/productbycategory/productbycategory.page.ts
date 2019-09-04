@@ -140,7 +140,7 @@ export class ProductbycategoryPage implements OnInit {
     this.filterbyCategory('',this.getsubcategorylocal,val);
   }
   viewcart(){
-    this.router.navigate(['/viewcartproduct']);
+    this.router.navigate(['tabs/viewcartproduct']);
   }
   back(){
     this.location.back();

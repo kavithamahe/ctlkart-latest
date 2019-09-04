@@ -22,6 +22,7 @@ export class AddressPage implements OnInit {
   fromcart: string;
   totalpricecart: string;
   submitAttempt: boolean = false;
+  public selectedAsset;
   constructor(private location: Location, private router: Router, private route: ActivatedRoute, public productservice: ProductsService, public formBuilder: FormBuilder) {
     this.user_id = localStorage.getItem("user_id");
     this.allgetAddress(this.user_id);
@@ -74,9 +75,9 @@ export class AddressPage implements OnInit {
     });
   }
   radioSelects(event, id) {
+    console.log(id)
     this.customer_id = id;
   }
-
   allgetAddress(user_id) {
     this.productservice.presentLoading();
     this.productservice.getaddress(user_id)
