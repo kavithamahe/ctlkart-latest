@@ -14,7 +14,7 @@
 
 <ion-content padding>
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button color="warning" (click)="addaddress()">
+        <ion-fab-button class="addCircle" (click)="addaddress()">
             <ion-icon name="add"></ion-icon>
         </ion-fab-button>
     </ion-fab>
@@ -22,20 +22,30 @@
         <ion-row>
             <ion-col>
                 <div class="addressColumn">
-                    <ul>
+                    <!-- <ul>
                         <li>
                             <ion-text class="editBtn" (click)="presentAlertConfirm(address.id)"><i class="fa fa-trash"></i></ion-text>
                         </li>
                         <li>
                             <ion-text class="editBtn" (click)="editaddress(address.id)"><i class="fa fa-pencil"></i></ion-text>
                         </li>
+                    </ul> -->
+                    <div class="manageAd">
+                        <p text-capitalize><b>{{address.name}}</b></p>
+                        <p>{{address.mobile}}</p>
+                        <p text-capitalize>{{address.address}}</p>
+                        <p text-capitalize>{{address.landmark}}</p>
+                        <p text-capitalize>{{address.city}}</p>
+                        <p text-capitalize>{{address.state}} - {{address.zipcode}}</p>
+                    </div>
+                    <ul>
+                        <li>
+                            <ion-text class="DeleteBtn" (click)="presentAlertConfirm(address.id)">Delete</ion-text>
+                        </li>
+                        <li>
+                            <ion-text class="editBtn" (click)="editaddress(address.id)">Edit</ion-text>
+                        </li>
                     </ul>
-                    <p text-capitalize>{{address.name}}</p>
-                    <p>{{address.mobile}}</p>
-                    <p text-capitalize>{{address.address}}</p>
-                    <p text-capitalize>{{address.landmark}}</p>
-                    <p text-capitalize>{{address.city}}</p>
-                    <p text-capitalize>{{address.state}} - {{address.zipcode}}</p>
                 </div>
             </ion-col>
         </ion-row>

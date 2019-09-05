@@ -264,6 +264,14 @@ ion-menu {
     ion-header {
         ion-toolbar {
             background: #f2f2f2 !important;
+            ion-title {
+                padding-left: 0px;
+                color: #000;
+                text-transform: uppercase;
+                font-size: 18px;
+                font-weight: 800;
+                text-align: center;
+            }
         }
     }
 }
