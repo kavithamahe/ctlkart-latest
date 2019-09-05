@@ -167,6 +167,14 @@ export class ProductsService {
     const body= {"user_id":user_id};
     return this.http.post(this.apiUrl + 'getcancelledorder',body,{ headers:this.headers });
   }
+  cancelorderbyuser(id): Observable<any> {
+    this.token=localStorage.getItem("token");
+    this.headers = new HttpHeaders();
+    this.headers = this.headers.append('Content-Type', 'application/json');
+    this.headers= this.headers.append("Authorization", "Bearer " + this.token);
+    const body= {"id":id};
+    return this.http.post(this.apiUrl + 'ordercancelbyuser',body,{ headers:this.headers });
+  }
   changepassword(password): Observable<any> {
     this.token=localStorage.getItem("token");
     this.headers = new HttpHeaders();

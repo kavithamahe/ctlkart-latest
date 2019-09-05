@@ -143,6 +143,19 @@ export class MyordersPage implements OnInit {
       this.productservice.presentToast(err.error.message);
    })
   }
+  cancelorders(id){
+    this.productservice.presentLoading();
+    this.productservice.cancelorderbyuser(id)
+    .subscribe(product =>{ 
+      this.productservice.presentToast(product.message);
+      this.getprocessingorders(this.user_id);
+      this.productservice.loadingdismiss();
+    },
+    err =>{
+      this.productservice.loadingdismiss();
+      this.productservice.presentToast(err.error.message);
+   })
+  }
   viewsingleorder(id){
     this.router.navigate(['/vieworderhistory',{"id":id}]);
   }

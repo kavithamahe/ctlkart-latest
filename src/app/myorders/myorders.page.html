@@ -63,8 +63,8 @@
         </div>
         <div *ngSwitchCase="'processing'">
                 <div class="productList" *ngFor="let order of getallmyprocessinglists">
-                        <ion-list (click)="viewsingleorder(order.id)">
-                                <ion-row>
+                        <ion-list>
+                                <ion-row (click)="viewsingleorder(order.id)">
                                     <ion-col size="6">
                                         <p>Order No:<span>{{order.order_id}}</span></p>
                                     </ion-col>
@@ -72,7 +72,7 @@
                                         <p>{{order.ordered_date | date: 'dd/MM/yyyy'}}</p>
                                     </ion-col>
                                 </ion-row>
-                                <ion-row>
+                                <ion-row (click)="viewsingleorder(order.id)">
                                     <ion-col size="6">
                                         <p>Quantity:<span>{{order.quantity}}</span></p>
                                     </ion-col>
@@ -80,12 +80,17 @@
                                         <p>Total:<i class="fa fa-inr"></i><span>{{order.amount | number : '1.2-2'}}</span></p>
                                     </ion-col>
                                 </ion-row>
-                                <ion-row>
+                                <ion-row (click)="viewsingleorder(order.id)">
                                     <ion-col size="6">
                                         <ion-button size="small" color="light" outline>Details</ion-button>
                                     </ion-col>
                                     <ion-col size="6">
-                                        <ion-badge>Delivered</ion-badge>
+                                        <ion-badge>Processing</ion-badge>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col size="6">
+                                        <ion-button size="small" color="light" (click)="cancelorders(order.id)" outline>Cancel Order</ion-button>
                                     </ion-col>
                                 </ion-row>
                             </ion-list>
@@ -115,7 +120,7 @@
                                             <ion-button size="small" color="light" outline>Details</ion-button>
                                         </ion-col>
                                         <ion-col size="6">
-                                            <ion-badge>Delivered</ion-badge>
+                                            <ion-badge>Cancelled</ion-badge>
                                         </ion-col>
                                     </ion-row>
                                 </ion-list>
