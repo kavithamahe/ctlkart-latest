@@ -18,109 +18,112 @@
 </ion-header>
 
 <ion-content>
-     <ion-segment [(ngModel)]="getmyorders">
-            <ion-segment-button value="delivered">
-              <ion-label>Delivered</ion-label>
-            </ion-segment-button>
-            <ion-segment-button checked value="processing">
-                <ion-label>Processing</ion-label>
-            </ion-segment-button>
-            <ion-segment-button value="cancelled">
-                <ion-label>Cancelled</ion-label>
-            </ion-segment-button>
-      </ion-segment>
+    <ion-segment class="myOrderTabs" [(ngModel)]="getmyorders">
+        <ion-segment-button value="delivered">
+            <ion-label>Delivered</ion-label>
+        </ion-segment-button>
+        <ion-segment-button checked value="processing">
+            <ion-label>Processing</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="cancelled">
+            <ion-label>Cancelled</ion-label>
+        </ion-segment-button>
+    </ion-segment>
 
-      <div [ngSwitch]="getmyorders">
-          <div *ngSwitchCase="'delivered'">
-                    <div class="productList" *ngFor="let order of getallmydeliveredlists">
-                    <ion-list (click)="viewsingleorder(order.id)">
-                        <ion-row>
-                            <ion-col size="6">
-                                <p>Order No:<span>{{order.order_id}}</span></p>
-                            </ion-col>
-                            <ion-col size="6">
-                                <p>{{order.ordered_date | date: 'dd/MM/yyyy'}}</p>
-                            </ion-col>
-                        </ion-row>
-                        <ion-row>
-                            <ion-col size="6">
-                                <p>Quantity:<span>{{order.quantity}}</span></p>
-                            </ion-col>
-                            <ion-col size="6">
-                                <p>Total:<i class="fa fa-inr"></i><span>{{order.amount | number : '1.2-2'}}</span></p>
-                            </ion-col>
-                        </ion-row>
-                        <ion-row>
-                            <ion-col size="6">
-                                <ion-button size="small" color="light" outline>Details</ion-button>
-                            </ion-col>
-                            <ion-col size="6">
-                                <ion-badge>Delivered</ion-badge>
-                            </ion-col>
-                        </ion-row>
-                    </ion-list>
-                </div>
+    <div [ngSwitch]="getmyorders">
+        <div *ngSwitchCase="'delivered'">
+            <div class="productList" *ngFor="let order of getallmydeliveredlists">
+                <ion-list (click)="viewsingleorder(order.id)">
+                    <ion-row>
+                        <ion-col size="6">
+                            <p><b>Order No<span>{{order.order_id}}</span></b></p>
+                        </ion-col>
+                        <ion-col size="6">
+                            <p class="text-right">{{order.ordered_date | date: 'dd/MM/yyyy'}}</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="6">
+                            <p>Quantity:<span><b>{{order.quantity}}</b></span></p>
+                        </ion-col>
+                        <ion-col size="6">
+                            <p class="text-right">Total:<span><b><i class="fa fa-inr"></i>{{order.amount | number : '1.2-2'}}</b></span>
+                            </p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="6">
+                            <ion-button size="small" color="light" outline>Details</ion-button>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-badge class="text-Delivered text-right"><b>Delivered</b></ion-badge>
+                        </ion-col>
+                    </ion-row>
+                </ion-list>
+            </div>
         </div>
         <div *ngSwitchCase="'processing'">
-                <div class="productList" *ngFor="let order of getallmyprocessinglists">
-                        <ion-list (click)="viewsingleorder(order.id)">
-                                <ion-row>
-                                    <ion-col size="6">
-                                        <p>Order No:<span>{{order.order_id}}</span></p>
-                                    </ion-col>
-                                    <ion-col size="6">
-                                        <p>{{order.ordered_date | date: 'dd/MM/yyyy'}}</p>
-                                    </ion-col>
-                                </ion-row>
-                                <ion-row>
-                                    <ion-col size="6">
-                                        <p>Quantity:<span>{{order.quantity}}</span></p>
-                                    </ion-col>
-                                    <ion-col size="6">
-                                        <p>Total:<i class="fa fa-inr"></i><span>{{order.amount | number : '1.2-2'}}</span></p>
-                                    </ion-col>
-                                </ion-row>
-                                <ion-row>
-                                    <ion-col size="6">
-                                        <ion-button size="small" color="light" outline>Details</ion-button>
-                                    </ion-col>
-                                    <ion-col size="6">
-                                        <ion-badge>Delivered</ion-badge>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-list>
-                    </div>
+            <div class="productList" *ngFor="let order of getallmyprocessinglists">
+                <ion-list (click)="viewsingleorder(order.id)">
+                    <ion-row>
+                        <ion-col size="6">
+                            <p><b>Order No<span>{{order.order_id}}</span></b></p>
+                        </ion-col>
+                        <ion-col size="6">
+                            <p class="text-right">{{order.ordered_date | date: 'dd/MM/yyyy'}}</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="6">
+                            <p>Quantity:<span><b>{{order.quantity}}</b></span></p>
+                        </ion-col>
+                        <ion-col size="6">
+                            <p class="text-right">Total:<span><b><i class="fa fa-inr"></i>{{order.amount | number : '1.2-2'}}</b></span>
+                            </p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="6">
+                            <ion-button size="small" color="light" outline>Details</ion-button>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-badge class="text-Processing text-right"><b>Processing</b></ion-badge>
+                        </ion-col>
+                    </ion-row>
+                </ion-list>
             </div>
-            <div *ngSwitchCase="'cancelled'">
-                    <div class="productList" *ngFor="let order of getallmycancelledlists">
-                            <ion-list (click)="viewsingleorder(order.id)">
-                                    <ion-row>
-                                        <ion-col size="6">
-                                            <p>Order No:<span>{{order.order_id}}</span></p>
-                                        </ion-col>
-                                        <ion-col size="6">
-                                            <p>{{order.ordered_date | date: 'dd/MM/yyyy'}}</p>
-                                        </ion-col>
-                                    </ion-row>
-                                    <ion-row>
-                                        <ion-col size="6">
-                                            <p>Quantity:<span>{{order.quantity}}</span></p>
-                                        </ion-col>
-                                        <ion-col size="6">
-                                            <p>Total:<i class="fa fa-inr"></i><span>{{order.amount | number : '1.2-2'}}</span></p>
-                                        </ion-col>
-                                    </ion-row>
-                                    <ion-row>
-                                        <ion-col size="6">
-                                            <ion-button size="small" color="light" outline>Details</ion-button>
-                                        </ion-col>
-                                        <ion-col size="6">
-                                            <ion-badge>Delivered</ion-badge>
-                                        </ion-col>
-                                    </ion-row>
-                                </ion-list>
-                        </div>
-                </div>
-      </div>
-   
+        </div>
+        <div *ngSwitchCase="'cancelled'">
+            <div class="productList" *ngFor="let order of getallmycancelledlists">
+                <ion-list (click)="viewsingleorder(order.id)">
+                    <ion-row>
+                        <ion-col size="6">
+                            <p><b>Order No:<span>{{order.order_id}}</span></b>
+                            </p>
+                        </ion-col>
+                        <ion-col size="6">
+                            <p class="text-right">{{order.ordered_date | date: 'dd/MM/yyyy'}}</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="6">
+                            <p>Quantity:<span><b>{{order.quantity}}</b></span></p>
+                        </ion-col>
+                        <ion-col size="6">
+                            <p class="text-right">Total:<span><b><i class="fa fa-inr"></i>{{order.amount | number : '1.2-2'}}</b></span></p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="6">
+                            <ion-button size="small" color="light" outline>Details</ion-button>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-badge class="text-right"><b>Cancelled</b></ion-badge>
+                        </ion-col>
+                    </ion-row>
+                </ion-list>
+            </div>
+        </div>
+    </div>
+
 </ion-content>
