@@ -18,7 +18,8 @@
                 <ion-col size="6" *ngIf="order.status == '3'">{{order.cancelled_date | date: 'dd/MM/yyyy'}}</ion-col>
             </ion-row>
             <ion-row>
-                <ion-col size="6"></ion-col>
+                <ion-col size="6"> <p color="warning">Total Cost: <i class="fa fa-inr"></i>{{totalamount | number : '1.2-2'}}</p></ion-col>
+            
                 <ion-col size="6" *ngIf="order.status == 2">
                     <ion-text color="success">Delivered</ion-text>
                 </ion-col>
@@ -29,18 +30,40 @@
                     <ion-text color="danger">Cancelled</ion-text>
                 </ion-col>
             </ion-row>
-            <ion-list *ngFor = "let orderdetails of order.items">
-                <ion-item>
-                    <ion-thumbnail slot="start">
-                        <img [src]="imgURl + orderdetails.product_image">
-                    </ion-thumbnail>
-                    <ion-label>
-                        <h3>{{orderdetails.product_name}}</h3>
-                        <p><i class="fa fa-inr"></i>{{orderdetails.amount | number : '1.2-2'}}</p>
-                        <p>Qty : {{orderdetails.quantity}}</p>
-                    </ion-label>
-                </ion-item>
-            </ion-list>
+
+
+            <div class="cartProduct" *ngFor="let orderdetails of order.items">
+                <div class="mycartProduct">
+                    <div class="productImage">
+                        <ion-thumbnail slot="start">
+                            <img [src]="imgURl + orderdetails.product_image">
+                        </ion-thumbnail>
+                    </div>
+                    <div class="productContent">
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size="8">
+                                    <h3>{{orderdetails.product_name}}</h3>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <p color="warning"><i class="fa fa-inr"></i>{{orderdetails.amount | number : '1.2-2'}}</p>
+                                </ion-col>
+                            </ion-row>
+                            <ion-row>
+                                <ion-col size="8">
+                                    <div class="quantity">
+                                       <p>Qty: {{orderdetails.quantity}}</p>
+                                    </div>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <span (click)="presentAlertConfirm(orderdetails.id)" class="closeBtn"><ion-icon name="close"></ion-icon></span>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </div>
+                </div>
+            </div>
+
             <ion-list>
                 <ion-list-header>
                     <ion-label>Order Information</ion-label>
