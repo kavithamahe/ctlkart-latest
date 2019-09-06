@@ -211,7 +211,7 @@ export class ProductsService {
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers= this.headers.append("Authorization", "Bearer " + this.token);
     
-    const body= {"id":id};
+    const body= {"order_id":id};
     return this.http.post(this.apiUrl + 'viewsingleorder',body,{ headers:this.headers });
   }
   viewsingleaddress(id): Observable<any> { 

@@ -111,7 +111,7 @@ export class MyordersPage implements OnInit {
     this.productservice.presentLoading();
     this.productservice.getmyprocessingorders(user_id)
     .subscribe(product =>{ 
-      this.getallmyprocessinglists = product.data;
+      this.getallmyprocessinglists =  product.data;
       this.productservice.loadingdismiss();
     },
     err =>{
@@ -123,7 +123,7 @@ export class MyordersPage implements OnInit {
     this.productservice.presentLoading();
     this.productservice.getmydeliveredorders(user_id)
     .subscribe(product =>{ 
-      this.getallmydeliveredlists = product.data;
+      this.getallmydeliveredlists = product.data[0].items;
       this.productservice.loadingdismiss();
     },
     err =>{
@@ -135,7 +135,7 @@ export class MyordersPage implements OnInit {
     this.productservice.presentLoading();
     this.productservice.getmycancelledorders(user_id)
     .subscribe(product =>{ 
-      this.getallmycancelledlists = product.data;
+      this.getallmycancelledlists =  product.data[0].items;
       this.productservice.loadingdismiss();
     },
     err =>{
