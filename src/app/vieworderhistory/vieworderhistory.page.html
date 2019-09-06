@@ -55,7 +55,7 @@
                                        <p>Qty: {{orderdetails.quantity}}</p>
                                     </div>
                                 </ion-col>
-                                <ion-col size="4">
+                                <ion-col size="4" *ngIf="order.status == 1">
                                     <span (click)="presentAlertConfirm(orderdetails.id)" class="closeBtn"><ion-icon name="close"></ion-icon></span>
                                 </ion-col>
                             </ion-row>

@@ -205,13 +205,13 @@ export class ProductsService {
     const body= {"id":user_id,"firstname":profileForm.firstname,"lastname":profileForm.lastname,"email":profileForm.email,"mobile":profileForm.mobile};
     return this.http.post(this.apiUrl + 'editprofile',body,{ headers:this.headers });
   }
-  getsingleorderdetailsservice(id): Observable<any> { 
+  getsingleorderdetailsservice(id,status): Observable<any> { 
     this.token=localStorage.getItem("token");
     this.headers = new HttpHeaders();
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers= this.headers.append("Authorization", "Bearer " + this.token);
     
-    const body= {"order_id":id};
+    const body= {"order_id":id,"status":status};
     return this.http.post(this.apiUrl + 'viewsingleorder',body,{ headers:this.headers });
   }
   viewsingleaddress(id): Observable<any> { 

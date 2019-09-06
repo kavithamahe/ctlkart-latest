@@ -33,7 +33,7 @@
     <div [ngSwitch]="getmyorders">
         <div *ngSwitchCase="'delivered'">
             <div class="productList" *ngFor="let order of getallmydeliveredlists">
-                <ion-list (click)="viewsingleorder(order.order_id)">
+                <ion-list (click)="viewsingleorder(order.order_id,order.status)">
                     <ion-row>
                         <ion-col size="6">
                             <p><b>Order No<span>{{order.order_id}}</span></b></p>
@@ -65,7 +65,7 @@
         <div *ngSwitchCase="'processing'">
             <div class="productList" *ngFor="let order of getallmyprocessinglists">
                 <ion-list >
-                    <ion-row (click)="viewsingleorder(order.order_id)">
+                    <ion-row (click)="viewsingleorder(order.order_id,order.status)">
                         <ion-col size="6">
                             <p><b>Order No<span>{{order.order_id}}</span></b></p>
                         </ion-col>
@@ -73,7 +73,7 @@
                             <p class="text-right">{{order.ordered_date | date: 'dd/MM/yyyy'}}</p>
                         </ion-col>
                     </ion-row>
-                    <ion-row (click)="viewsingleorder(order.order_id)">
+                    <ion-row (click)="viewsingleorder(order.order_id,order.status)">
                         <!-- <ion-col size="6">
                             <p>Quantity:<span><b>{{order.quantity}}</b></span></p>
                         </ion-col> -->
@@ -82,7 +82,7 @@
                             </p>
                         </ion-col> -->
                     </ion-row>
-                    <ion-row (click)="viewsingleorder(order.order_id)">
+                    <ion-row (click)="viewsingleorder(order.order_id,order.status)">
                         <ion-col size="6">
                             <ion-button size="small" color="light" outline>Details</ion-button>
                         </ion-col>
@@ -95,7 +95,7 @@
         </div>
         <div *ngSwitchCase="'cancelled'">
             <div class="productList" *ngFor="let order of getallmycancelledlists">
-                <ion-list (click)="viewsingleorder(order.order_id)">
+                <ion-list (click)="viewsingleorder(order.order_id,order.status)">
                     <ion-row>
                         <ion-col size="6">
                             <p><b>Order No:<span>{{order.order_id}}</span></b>

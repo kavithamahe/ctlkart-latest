@@ -144,8 +144,9 @@ export class MyordersPage implements OnInit {
    })
   }
 
-  viewsingleorder(id){
-    this.router.navigate(['/vieworderhistory',{"id":id}]);
+  viewsingleorder(id,status){
+    console.log(status)
+    this.router.navigate(['/vieworderhistory',{"id":id,"status":status}]);
   }
   viewcart(){
     this.router.navigate(['/viewcartproduct']);
