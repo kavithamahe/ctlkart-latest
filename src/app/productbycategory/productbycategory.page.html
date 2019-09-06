@@ -20,7 +20,8 @@
     </ion-toolbar> -->
     <ion-toolbar class="sortFilter">
         <ion-item>
-            <ion-label><i class="fa fa-filter" aria-hidden="true"></i></ion-label>
+            <!-- <ion-label><i class="fa fa-filter" aria-hidden="true"></i></ion-label> -->
+            <ion-label>Sort By</ion-label>
             <ion-select [(ngModel)]="sortby.level" interface="action-sheet" (ionChange)="sorybyvalue(sortby.level)">
                 <ion-select-option value="low to high">Low to High</ion-select-option>
                 <ion-select-option value="high to low">High to Low</ion-select-option>
