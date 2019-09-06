@@ -10,7 +10,7 @@ ion-buttons {
     padding: 15px;
     .deliveryLabel {
         color: #000;
-        font-weight: 500;
+        font-weight: 600;
         letter-spacing: 0.5px;
         font-size: 16px;
         padding: 10px 0 0 0;
@@ -19,9 +19,9 @@ ion-buttons {
     .addressbox {
         background: #fff;
         padding: 15px 0;
-        margin: 10px 0;
+        margin: 10px 0 0;
         border-radius: 5px;
-        box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.07);
+        box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.04);
         .shippingAddressGroup {
             display: flex;
             background: #fff;
@@ -35,6 +35,7 @@ ion-buttons {
                     text-transform: capitalize;
                     b {
                         color: #000000;
+                        font-weight: 500;
                     }
                     &.wdt100 {
                         width: 100%;
@@ -53,11 +54,17 @@ ion-buttons {
     padding: 0px 15px;
     .deliveryLabel {
         color: #000;
-        font-weight: 500;
+        font-weight: 600;
         letter-spacing: 0.5px;
         font-size: 16px;
-        padding: 10px 0 0 0;
+        padding: 1px 0 10px 0;
         margin: 0;
+    }
+    ion-item {
+        --background: #fff;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.04);
     }
 }
 
@@ -67,11 +74,11 @@ ion-buttons {
 
 .deliveryLabel {
     color: #000;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.5px;
     font-size: 16px;
-    padding: 10px 0 0 0;
-    margin: 0;
+    padding: 10px 0 10px 0;
+    margin: 6px 15px;
 }
 
 .subtoatalValue {
@@ -80,13 +87,13 @@ ion-buttons {
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.04);
     margin: 10px;
     border-radius: 4px;
-    h2 {
-        color: #666;
-        margin: 0 0 8px;
-        padding: 5px 0 10px 0;
-        font-size: 17px;
-        text-align: center;
-        border-bottom: 1px dotted #999;
+    .deliveryLabel {
+        color: #000;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        font-size: 16px;
+        padding: 10px 0 0 0;
+        margin: 0;
     }
     ion-grid {
         ion-row {
@@ -139,7 +146,7 @@ ion-buttons {
     background: #fff;
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.04);
     padding: 6px;
-    margin: 8px;
+    margin: 0px 10px 14px;
     border-radius: 5px;
     .mycartProduct {
         display: flex;
@@ -252,4 +259,10 @@ ion-buttons {
     border: 1px solid #000;
     float: right;
     margin: 0px 5px 30px 0px;
+}
+
+.finalTotal {
+    border-top: 1px dotted #999;
+    margin: 5px 0 0 0;
+    padding: 3px 0 0 0;
 }
