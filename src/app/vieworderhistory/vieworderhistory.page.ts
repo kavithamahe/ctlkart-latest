@@ -34,6 +34,7 @@ export class VieworderhistoryPage implements OnInit {
     .subscribe(product =>{ 
       this.getsingleorder = product.data;
       this.getsingleorderprice = product.data[0].items;
+      console.log(this.getsingleorderprice)
       let total = 0;
       for (var i = 0; i < this.getsingleorderprice.length; i++) {
           if (this.getsingleorderprice[i].amount) {
