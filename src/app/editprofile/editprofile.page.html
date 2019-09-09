@@ -13,15 +13,20 @@
 
     <ion-grid *ngIf="type != 'address'">
         <form [formGroup]="profileForm">
+                <div class="profile-edit">
+                    <span class="profile-img" (click)="accessGallery()">
+                        <img src="assets/img/profile.jpg"/>
+                    </span>
+                </div>
             <ion-row>
                 <ion-col class="edit-profile">
                     <ion-input type="text" formControlName="firstname"></ion-input>
                     <!-- <p *ngIf="!profileForm.controls.firstname.valid && (profileForm.controls.firstname.dirty || submitAttempt)" class="err-reds shake">Please enter firstname.</p> -->
                     <ion-input type="text" formControlName="lastname"></ion-input>
                     <!-- <p *ngIf="!profileForm.controls.lastname.valid && (profileForm.controls.lastname.dirty || submitAttempt)" class="err-reds shake">Please enter lastname.</p> -->
-                    <ion-input type="email" formControlName="email"></ion-input>
+                    <ion-input type="email" formControlName="email" readonly></ion-input>
                     <!-- <p *ngIf="!profileForm.controls.email.valid && (profileForm.controls.email.dirty || submitAttempt)" class="err-reds shake">Please enter email.</p> -->
-                    <ion-input type="number" formControlName="mobile"></ion-input>
+                    <ion-input type="number" formControlName="mobile" readonly></ion-input>
                     <!-- <p *ngIf="!profileForm.controls.mobile.valid && (profileForm.controls.mobile.dirty || submitAttempt)" class="err-reds shake">Please enter mobile number.</p> -->
                 </ion-col>
             </ion-row>

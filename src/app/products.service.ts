@@ -196,13 +196,13 @@ export class ProductsService {
     const body= {"user_id":user_id};
     return this.http.post(this.apiUrl + 'getprofile',body,{ headers:this.headers });
   }
-  editprofile(user_id,profileForm): Observable<any> { 
+  editprofile(user_id,profileForm,base64_image): Observable<any> { 
     this.token=localStorage.getItem("token");
     this.headers = new HttpHeaders();
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers= this.headers.append("Authorization", "Bearer " + this.token);
     
-    const body= {"id":user_id,"firstname":profileForm.firstname,"lastname":profileForm.lastname,"email":profileForm.email,"mobile":profileForm.mobile};
+    const body= {"id":user_id,"firstname":profileForm.firstname,"lastname":profileForm.lastname,"email":profileForm.email,"mobile":profileForm.mobile,"base64Image":base64_image};
     return this.http.post(this.apiUrl + 'editprofile',body,{ headers:this.headers });
   }
   getsingleorderdetailsservice(id,status): Observable<any> { 

@@ -96,3 +96,17 @@ ion-radio-group {
         }
     }
 }
+.profile-img {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 20px 0px 10px;
+    img {
+        height: 130px;
+        width: 130px;
+        margin: 0 auto;
+        /* border: 3px solid #7e7d7d; */
+        border-radius: 50%;
+        background: #ececec;
+    }
+}

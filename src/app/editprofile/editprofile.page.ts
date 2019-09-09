@@ -4,6 +4,7 @@ import { ProductsService } from '../products.service';
 import { Location } from '@angular/common';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Events } from '@ionic/angular';
+// import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 
 @Component({
@@ -12,6 +13,7 @@ import { Events } from '@ionic/angular';
   styleUrls: ['./editprofile.page.scss'],
 })
 export class EditprofilePage implements OnInit {
+  base64_image: any;
   singleid: string;
   quantity: string;
   totalpricecart: string;
@@ -59,6 +61,34 @@ export class EditprofilePage implements OnInit {
     this.initForm();
     this.initaddressForm();
   }
+  accessGallery(){
+  //   // Camera.getPicture({
+  //   //   sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM,
+  //   //   destinationType: Camera.DestinationType.DATA_URL
+  //   //  }).then((imageData) => {
+  //   //    this.base64Image = 'data:image/jpeg;base64,'+imageData;
+  //   //    this.avatar1 = this.base64Image;
+  //   //    this.avatar = this.base64Image;
+  //   //   }, (err) => {
+  //   //    console.log(err);
+  //   //  });
+     
+  //     const options: CameraOptions = {
+  //       quality: 100,
+  //       destinationType: this.camera.DestinationType.FILE_URI,
+  //       encodingType: this.camera.EncodingType.JPEG,
+  //       mediaType: this.camera.MediaType.PICTURE
+  //     }
+
+  //     this.camera.getPicture(options).then((imageData) => {
+  //     // imageData is either a base64 encoded string or a file URI
+  //     // If it's base64 (DATA_URL):
+  //     this.base64_image = imageData;
+  //     let base64Image = 'data:image/jpeg;base64,' + imageData;
+  //     }, (err) => {
+  //       console.log(err);
+  //     });
+   }
   initForm() {
     this.profileForm = this.formBuilder.group({
       firstname: ['', Validators.compose([Validators.required])],
@@ -139,7 +169,7 @@ export class EditprofilePage implements OnInit {
     } else {
       this.submitAttempt = false;
       this.productservice.presentLoading();
-      this.productservice.editprofile(this.user_id, this.profileForm.value)
+      this.productservice.editprofile(this.user_id, this.profileForm.value,this.base64_image)
         .subscribe(profile => {
           this.productservice.loadingdismiss();
           this.productservice.presentToast(profile.message);
