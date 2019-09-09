@@ -43,13 +43,14 @@
                         </ion-col>
                     </ion-row>
                     <ion-row>
-                        <!-- <ion-col size="6">
-                            <p>Quantity:<span><b>{{order.quantity}}</b></span></p>
-                        </ion-col> -->
-                        <!-- <ion-col size="6">
-                            <p class="text-right">Total:<span><b><i class="fa fa-inr"></i>{{order.amount | number : '1.2-2'}}</b></span>
+                        <ion-col size="6">
+                            <p>Total:&nbsp;&nbsp;<span class="amt"><b><i class="fa fa-inr"></i>&nbsp;{{order.amount | number : '1.2-2'}}</b></span>
                             </p>
-                        </ion-col> -->
+                        </ion-col>
+                        <ion-col size="6">
+                            <p class="text-right">Quantity:&nbsp;&nbsp;<span><b>{{order.quantity}}</b></span></p>
+                        </ion-col>
+
                     </ion-row>
                     <ion-row>
                         <ion-col size="6">
@@ -64,7 +65,7 @@
         </div>
         <div *ngSwitchCase="'processing'">
             <div class="productList" *ngFor="let order of getallmyprocessinglists">
-                <ion-list >
+                <ion-list>
                     <ion-row (click)="viewsingleorder(order.order_id,order.status)">
                         <ion-col size="6">
                             <p><b>Order No<span>{{order.order_id}}</span></b></p>
@@ -74,13 +75,14 @@
                         </ion-col>
                     </ion-row>
                     <ion-row (click)="viewsingleorder(order.order_id,order.status)">
-                        <!-- <ion-col size="6">
-                            <p>Quantity:<span><b>{{order.quantity}}</b></span></p>
-                        </ion-col> -->
-                        <!-- <ion-col size="6">
-                            <p class="text-right">Total:<span><b><i class="fa fa-inr"></i>{{order.amount | number : '1.2-2'}}</b></span>
+                        <ion-col size="6">
+                            <p>Total:&nbsp;&nbsp;<span class="amt"><b><i class="fa fa-inr"></i>&nbsp;{{order.amount | number : '1.2-2'}}</b></span>
                             </p>
-                        </ion-col> -->
+                        </ion-col>
+                        <ion-col size="6">
+                            <p class="text-right">Quantity:&nbsp;&nbsp;<span><b>{{order.quantity}}</b></span></p>
+                        </ion-col>
+
                     </ion-row>
                     <ion-row (click)="viewsingleorder(order.order_id,order.status)">
                         <ion-col size="6">
@@ -106,19 +108,22 @@
                         </ion-col>
                     </ion-row>
                     <ion-row>
-                        <!-- <ion-col size="6">
-                            <p>Quantity:<span><b>{{order.quantity}}</b></span></p>
-                        </ion-col> -->
-                        <!-- <ion-col size="6">
-                            <p class="text-right">Total:<span><b><i class="fa fa-inr"></i>{{order.amount | number : '1.2-2'}}</b></span></p>
-                        </ion-col> -->
+                        <ion-col size="6">
+                            <p>Total:&nbsp;&nbsp;<span class="amt"><b><i class="fa fa-inr"></i>&nbsp;{{order.amount | number : '1.2-2'}}</b></span></p>
+                        </ion-col>
+                        <ion-col size="6">
+
+                            <p class="text-right">Quantity:&nbsp;&nbsp;<span><b>{{order.quantity}}</b></span></p>
+                        </ion-col>
+
                     </ion-row>
                     <ion-row>
                         <ion-col size="6">
                             <ion-button size="small" color="light" outline>Details</ion-button>
                         </ion-col>
                         <!-- <ion-col size="6">
-                            <ion-badge class="text-right"><b>Cancelled</b></ion-badge>
+
+                            <ion-badge class="text-cancel text-right"><b>Cancelled</b></ion-badge>
                         </ion-col> -->
                     </ion-row>
                 </ion-list>
