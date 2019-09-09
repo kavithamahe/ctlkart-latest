@@ -11,6 +11,7 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./vieworderhistory.page.scss'],
 })
 export class VieworderhistoryPage implements OnInit {
+  status: any;
   totalamount: any;
   singleid: string;
   private imageUrl = environment.imageUrl;
@@ -20,32 +21,37 @@ export class VieworderhistoryPage implements OnInit {
 
   constructor(private location:Location,private router: Router,private alertCtrl: AlertController,public productservice:ProductsService,private route: ActivatedRoute) {
     this.singleid = route.snapshot.paramMap.get('id');
-    this.getsingleorderdetails(this.singleid);
+    this.status = route.snapshot.paramMap.get('status');
+    this.getsingleorderdetails(this.singleid,this.status);
    }
 
   ngOnInit() {
     this.imgURl = this.imageUrl;
     this.singleid = this.route.snapshot.paramMap.get('id');
-    this.getsingleorderdetails(this.singleid);
+    this.status = this.route.snapshot.paramMap.get('status');
+    this.getsingleorderdetails(this.singleid,this.status);
   }
-  getsingleorderdetails(id){
+  getsingleorderdetails(id,status){
     this.productservice.presentLoading();
-    this.productservice.getsingleorderdetailsservice(id)
+    this.productservice.getsingleorderdetailsservice(id,status)
     .subscribe(product =>{ 
       this.getsingleorder = product.data;
+      if(product.data){
       this.getsingleorderprice = product.data[0].items;
-      console.log(this.getsingleorderprice)
+      if(this.getsingleorderprice){
       let total = 0;
       for (var i = 0; i < this.getsingleorderprice.length; i++) {
           if (this.getsingleorderprice[i].amount) {
               total +=(this.getsingleorderprice[i].amount * this.getsingleorderprice[i].quantity);
               this.totalamount = total;
-              console.log(this.totalamount)
           }
       }
+      
       this.productservice.loadingdismiss();
       return total;
- 
+    }
+  }
+    this.productservice.loadingdismiss();
     },
     err =>{
       this.productservice.loadingdismiss();
@@ -80,7 +86,7 @@ export class VieworderhistoryPage implements OnInit {
     this.productservice.cancelorderbyuser(id)
     .subscribe(product =>{ 
       this.productservice.presentToast(product.message);
-      this.getsingleorderdetails(this.singleid);
+      this.getsingleorderdetails(this.singleid,this.status);
       this.productservice.loadingdismiss();
     },
     err =>{
