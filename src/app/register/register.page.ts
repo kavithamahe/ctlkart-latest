@@ -12,17 +12,23 @@ import {Location} from '@angular/common';
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit {
+  subcategory_name: any;
+  category_id: any;
+  subcategory_id: any;
   totalpricecart: string;
   onboard: any;
   quantity: string;
   fromcart: string;
-  singleid: string;
+  singleid: any;
   registerForm: FormGroup;
   submitAttempt: boolean = false;
   verificationId: any;
   constructor(public firebaseAuthentication:FirebaseAuthentication,private route: ActivatedRoute,public events: Events,private _location: Location, private alertCtrl: AlertController,private router: Router,public formBuilder: FormBuilder,public productservice:ProductsService) { 
     this.singleid = route.snapshot.paramMap.get('id');
-    console.log(this.singleid)
+    console.log(this.singleid);
+    this.subcategory_id = route.snapshot.paramMap.get('subcategory_id');
+    this.category_id = route.snapshot.paramMap.get('category_id');
+    this.subcategory_name = route.snapshot.paramMap.get('subcategoryname');
     this.quantity = route.snapshot.paramMap.get('quantity');
     this.fromcart = route.snapshot.paramMap.get('fromcart');
     this.totalpricecart = route.snapshot.paramMap.get('totalamount');
@@ -74,7 +80,7 @@ firebase(phoneNumberString){
     console.log(this.verificationId)
     if(this.verificationId){
       this.productservice.loadingdismiss();
-    this.router.navigate(['otpverification',{"mobile":this.registerForm.value.mobile,"verificationId":this.verificationId,"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart}]);
+    this.router.navigate(['otpverification',{"mobile":this.registerForm.value.mobile,"verificationId":this.verificationId,"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id}]);
     }
     this.registerForm.reset();
     
@@ -83,7 +89,7 @@ firebase(phoneNumberString){
   console.error(error)
   // this.alert(error);
   this.productservice.presentAlert(error);
-  this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart}]);
+  this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id}]);
   console.error(error)});
 }
   back(){
@@ -91,13 +97,13 @@ firebase(phoneNumberString){
       this.router.navigate(['onboard']);
     }
     else{
-      this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart}]);
+      this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id}]);
     }
 
   }
 
   Login(){
-    this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"onboard":this.onboard}]);
+    this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"onboard":this.onboard,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id}]);
 
   }
 

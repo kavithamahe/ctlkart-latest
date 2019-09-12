@@ -32,7 +32,7 @@ export class ProductbycategoryPage implements OnInit {
   public toggled: boolean = false;
 
   constructor(private location:Location,public actionSheetController: ActionSheetController,public events: Events,public productservice:ProductsService,public router: Router,private route: ActivatedRoute) { 
-    this.subcategory_id = route.snapshot.paramMap.get('id');
+    this.subcategory_id = route.snapshot.paramMap.get('subcategory_id');
     this.category_id = route.snapshot.paramMap.get('category_id');
     this.subcategory_name = route.snapshot.paramMap.get('subcategoryname');
     if(this.subcategory_name){
@@ -66,7 +66,7 @@ export class ProductbycategoryPage implements OnInit {
         this.cartcount = this.cartDetails.length;
       }
     })
-    this.subcategory_id = this.route.snapshot.paramMap.get('id');
+    this.subcategory_id = this.route.snapshot.paramMap.get('subcategory_id');
     this.subcategory_name = this.route.snapshot.paramMap.get('subcategoryname');
     if(this.subcategory_name){
       this.subcategory_name = this.subcategory_name;
@@ -135,7 +135,7 @@ export class ProductbycategoryPage implements OnInit {
   //  })
   // }
   viewsingleproduct(id){
-    this.router.navigate(['/viewsingleproduct',{"id":id}]);
+    this.router.navigate(['/viewsingleproduct',{"id":id,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id}]);
   }
   sorybyvalue(val){
     this.getsubcategorylocal = localStorage.getItem('key');

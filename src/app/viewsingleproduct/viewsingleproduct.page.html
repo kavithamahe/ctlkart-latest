@@ -1,10 +1,22 @@
+<ion-header no-border-bottom>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <!-- <ion-menu-button autoHide="false"></ion-menu-button> -->
+            <ion-icon name="arrow-back" (click)="back()"></ion-icon>
+        </ion-buttons>
+        <ion-buttons slot="end" (click)="viewcart()">
+            <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+            <ion-badge id="cart-badge" color="danger">{{cartcount}}</ion-badge>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
 <ion-content class="viewDetailsPage">
     <ion-card *ngFor="let single of getsingleProductList">
-        <div class="backtoproduct">
+        <!-- <div class="backtoproduct">
             <ion-buttons slot="start">
                 <ion-icon name="arrow-back" (click)="back()"></ion-icon>
             </ion-buttons>
-        </div>
+        </div> -->
         <div class="circlebg">
             <img [src]="imgURl + single.product_image" />
         </div>

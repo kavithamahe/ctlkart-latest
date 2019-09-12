@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../products.service';
 import { Events, AlertController } from '@ionic/angular';
 import { Location } from '@angular/common';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-profile',
@@ -11,6 +12,7 @@ import { Location } from '@angular/common';
 })
 export class ProfilePage implements OnInit {
 
+  profile_image: any;
   lastname: any;
   mobile: any;
   email: any;
@@ -18,6 +20,7 @@ export class ProfilePage implements OnInit {
   user_id: any;
   getprofile:any=[];
   getaddresslist:any=[];
+  public imageUrl = environment.imageUrl;
   constructor(private location:Location,public alertController: AlertController,public events: Events,private route: ActivatedRoute,private router: Router,public productservice:ProductsService) { 
     this.user_id = localStorage.getItem("user_id");
     this.getprofileDetail(this.user_id);
@@ -43,6 +46,7 @@ export class ProfilePage implements OnInit {
       this.lastname = this.getprofile[0].lastname;
       this.email = this.getprofile[0].email;
       this.mobile = this.getprofile[0].mobile;
+      this.profile_image = this.getprofile[0].profile_image;
     },
     err =>{
       this.productservice.loadingdismiss();

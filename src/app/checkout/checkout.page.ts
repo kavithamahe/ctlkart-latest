@@ -13,6 +13,9 @@ import {Location} from '@angular/common';
   styleUrls: ['./checkout.page.scss'],
 })
 export class CheckoutPage implements OnInit {
+  subcategory_name: any;
+  category_id: any;
+  subcategory_id: any;
   totalpricecart: string;
   cartcount: any;
   cartDetails: any;
@@ -29,7 +32,9 @@ export class CheckoutPage implements OnInit {
 
   constructor(public firebaseAuthentication:FirebaseAuthentication,private _location: Location ,public events: Events,private route: ActivatedRoute,private alertCtrl: AlertController,private router: Router,public formBuilder: FormBuilder,public productservice:ProductsService,public toastController: ToastController) { 
     this.singleid = route.snapshot.paramMap.get('id');
-    console.log(this.singleid)
+    this.subcategory_id = route.snapshot.paramMap.get('subcategory_id');
+    this.category_id = route.snapshot.paramMap.get('category_id');
+    this.subcategory_name = route.snapshot.paramMap.get('subcategoryname');
     this.quantity = route.snapshot.paramMap.get('quantity');
     this.fromcart = route.snapshot.paramMap.get('fromcart');
     this.fromcart = route.snapshot.paramMap.get('fromcart');
@@ -76,7 +81,7 @@ export class CheckoutPage implements OnInit {
   }
   
   register(){
-    this.router.navigate(['register',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart}]);
+    this.router.navigate(['register',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id}]);
   }
   login(){
     if(!this.loginForm.valid){
@@ -89,7 +94,7 @@ export class CheckoutPage implements OnInit {
         localStorage.setItem("user_id", data['userid']);
         this.events.publish('loggedin');
         if(this.fromcart || this.singleid){
-          this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart}]);
+          this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id}]);
         }
         else{
           this.router.navigate(['']);
@@ -99,13 +104,14 @@ export class CheckoutPage implements OnInit {
       err =>{
         if(err.status == 401){
           if(err.error.mobile){
-            console.log(err.error.message);
           const phoneNumberString = "+91" + err.error.mobile;
           this.firebaseAuthentication.verifyPhoneNumber(phoneNumberString, 30000)
           .then( confirmationResult => {
             this.verificationId = confirmationResult;
             if(this.verificationId){
-            this.alert(this.verificationId,err.error.mobile);
+              this.router.navigate(['otpverification',{"mobile":err.error.mobile,"verificationId":this.verificationId,"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,
+            "fromlogin":"1"}]);
+            // this.alert(this.verificationId,err.error.mobile);
             }
             
           })
@@ -134,7 +140,7 @@ export class CheckoutPage implements OnInit {
         this.router.navigate(['tabs/viewcartproduct']);
       }
       else if(this.singleid){
-        this.router.navigate(['viewsingleproduct',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart}]);
+        this.router.navigate(['viewsingleproduct',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id}]);
       }
       else{
         this.router.navigate(['']);
@@ -157,7 +163,7 @@ export class CheckoutPage implements OnInit {
             this.productservice.onetimepassword(mobile,otp).subscribe(otpdata =>{
               // this.numberverify = false;
               if(this.fromcart || this.singleid){
-                this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart}]);
+                this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id}]);
               }
               else{
                 this.router.navigate(['']);
@@ -181,7 +187,7 @@ export class CheckoutPage implements OnInit {
     await prompt.present();
   }
   forgetpassword(){
-    this.router.navigate(['forgetpassword',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart}]);
+    this.router.navigate(['forgetpassword',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id}]);
   }
   async presentToast(datamessage) {
     const toast = await this.toastController.create({

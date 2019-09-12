@@ -11,9 +11,12 @@ import { Location } from '@angular/common';
   styleUrls: ['./viewsingleproduct.page.scss'],
 })
 export class ViewsingleproductPage implements OnInit {
+  subcategory_id: any;
+  category_id: any;
+  subcategory_name:any;
   cartcount: any;
   cartDetails: any;
-  token: string;
+  token: any;
   private imageUrl = environment.imageUrl;
   imgURl: any;
   getsingleProductList:any =[];
@@ -25,6 +28,9 @@ export class ViewsingleproductPage implements OnInit {
   gotocart:boolean=false;
   constructor(public events: Events,private _location: Location, public productservice:ProductsService,private route: ActivatedRoute,public router:Router,public toastController: ToastController) { 
     this.singleid = route.snapshot.paramMap.get('id');
+    this.subcategory_id = route.snapshot.paramMap.get('subcategory_id');
+    this.category_id = route.snapshot.paramMap.get('category_id');
+    this.subcategory_name = route.snapshot.paramMap.get('subcategoryname');
     this.getsingleproductlist(this.singleid);
     this.getproductList();
    
@@ -38,6 +44,8 @@ export class ViewsingleproductPage implements OnInit {
       }
     })
     this.singleid = this.route.snapshot.paramMap.get('id');
+    this.category_id = this.route.snapshot.paramMap.get('category_id');
+    this.subcategory_name = this.route.snapshot.paramMap.get('subcategoryname');
     this.getsingleproductlist(this.singleid);
     this.getproductList();
   }
@@ -139,16 +147,21 @@ export class ViewsingleproductPage implements OnInit {
     }
     else{
       if(this.token){
-        this.router.navigate(['address',{"id":id,"quantity":item_qty}]);
+        this.router.navigate(['address',{"id":id,"quantity":item_qty,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id}]);
       }
       else{
-    this.router.navigate(['checkout',{"id":id,"quantity":item_qty}]);
+    this.router.navigate(['checkout',{"id":id,"quantity":item_qty,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id}]);
       }
     }
     }
 
 
     back(){
-      this.router.navigate(['']);
+      if(this.category_id != "null"){
+        this.router.navigate(['productbycategory',{"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id}]);
+      }
+      else{
+        this.router.navigate(['']);
+      }
     }
 }

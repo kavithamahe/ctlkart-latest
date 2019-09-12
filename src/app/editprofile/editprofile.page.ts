@@ -4,7 +4,9 @@ import { ProductsService } from '../products.service';
 import { Location } from '@angular/common';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Events } from '@ionic/angular';
-// import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { environment } from '../../environments/environment';
 
 
 @Component({
@@ -13,6 +15,7 @@ import { Events } from '@ionic/angular';
   styleUrls: ['./editprofile.page.scss'],
 })
 export class EditprofilePage implements OnInit {
+  profile_image: any;
   base64_image: any;
   singleid: string;
   quantity: string;
@@ -41,7 +44,8 @@ export class EditprofilePage implements OnInit {
   public data: any = {
     sex: ''
   };
-  constructor(public location: Location,public events:Events, private route: ActivatedRoute, public formBuilder: FormBuilder, private router: Router, public productservice: ProductsService) {
+  public imageUrl = environment.imageUrl;
+  constructor(public file :File,public camera: Camera,public location: Location,public events:Events, private route: ActivatedRoute, public formBuilder: FormBuilder, private router: Router, public productservice: ProductsService) {
     this.user_id = localStorage.getItem("user_id");
     this.param = route.snapshot.paramMap.get('param');
     this.type = route.snapshot.paramMap.get('type');
@@ -62,32 +66,15 @@ export class EditprofilePage implements OnInit {
     this.initaddressForm();
   }
   accessGallery(){
-  //   // Camera.getPicture({
-  //   //   sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM,
-  //   //   destinationType: Camera.DestinationType.DATA_URL
-  //   //  }).then((imageData) => {
-  //   //    this.base64Image = 'data:image/jpeg;base64,'+imageData;
-  //   //    this.avatar1 = this.base64Image;
-  //   //    this.avatar = this.base64Image;
-  //   //   }, (err) => {
-  //   //    console.log(err);
-  //   //  });
-     
-  //     const options: CameraOptions = {
-  //       quality: 100,
-  //       destinationType: this.camera.DestinationType.FILE_URI,
-  //       encodingType: this.camera.EncodingType.JPEG,
-  //       mediaType: this.camera.MediaType.PICTURE
-  //     }
-
-  //     this.camera.getPicture(options).then((imageData) => {
-  //     // imageData is either a base64 encoded string or a file URI
-  //     // If it's base64 (DATA_URL):
-  //     this.base64_image = imageData;
-  //     let base64Image = 'data:image/jpeg;base64,' + imageData;
-  //     }, (err) => {
-  //       console.log(err);
-  //     });
+ 
+    this.camera.getPicture({
+      sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
+      destinationType: this.camera.DestinationType.DATA_URL
+     }).then((imageData) => {
+      this.base64_image ='data:image/jpeg;base64,'+imageData;
+      }, (err) => {
+       console.log(err);
+     });
    }
   initForm() {
     this.profileForm = this.formBuilder.group({
@@ -102,7 +89,7 @@ export class EditprofilePage implements OnInit {
       name: ['', Validators.compose([Validators.required])],
       mobile: ['',  [Validators.required, this.productservice.checkLimit(1000000000,999999999999)]],
       address: ['', Validators.compose([Validators.required])],
-      landmark: ['', Validators.compose([Validators.required])],
+      landmark: [''],
       city: ['', Validators.compose([Validators.required])],
       state: ['', Validators.compose([Validators.required])],
       zipcode: ['', Validators.compose([Validators.required])],
@@ -154,6 +141,7 @@ export class EditprofilePage implements OnInit {
         this.profileForm.controls['lastname'].setValue(this.getprofile[0].lastname);
         this.profileForm.controls['email'].setValue(this.getprofile[0].email);
         this.profileForm.controls['mobile'].setValue(this.getprofile[0].mobile);
+        this.profile_image = this.getprofile[0].profile_image;
         this.productservice.loadingdismiss();
 
       },

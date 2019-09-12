@@ -15,7 +15,8 @@
         <form [formGroup]="profileForm">
                 <div class="profile-edit">
                     <span class="profile-img" (click)="accessGallery()">
-                        <img src="assets/img/profile.jpg"/>
+                        <img [src]="imageUrl + profile_image" *ngIf="!base64_image"/>
+                        <img [src]="base64_image" *ngIf="base64_image"/>
                     </span>
                 </div>
             <ion-row>
@@ -73,7 +74,6 @@
                     </div>
                     <div class="formList">
                         <ion-label position="stacked">Landmark
-                            <ion-text color="danger">*</ion-text>
                         </ion-label>
                         <ion-input formControlName="landmark" type="text"></ion-input>
                     </div>

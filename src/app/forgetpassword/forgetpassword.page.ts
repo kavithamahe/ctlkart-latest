@@ -16,11 +16,17 @@ export class ForgetpasswordPage implements OnInit {
   fromcart: any;
   quantity: any;
   singleid: any;
+  subcategory_id:any;
+  category_id:any;
+  subcategory_name:any;
   forgotForm: FormGroup;
   submitAttempt: boolean = false;
 
   constructor(public location: Location,public formBuilder:FormBuilder, public productservice: ProductsService, public alertController: AlertController, public navctrl: NavController, private route: ActivatedRoute) {
     this.singleid = route.snapshot.paramMap.get('id');
+    this.subcategory_id = route.snapshot.paramMap.get('subcategory_id');
+    this.category_id = route.snapshot.paramMap.get('category_id');
+    this.subcategory_name = route.snapshot.paramMap.get('subcategoryname');
     this.quantity = route.snapshot.paramMap.get('quantity');
     this.fromcart = route.snapshot.paramMap.get('fromcart');
     this.totalpricecart = route.snapshot.paramMap.get('totalamount');
@@ -47,7 +53,7 @@ export class ForgetpasswordPage implements OnInit {
           this.productservice.loadingdismiss();
           this.presentAlert(password.message);
           this.forgotForm.reset();
-          this.navctrl.navigateBack(['/checkout', { "id": this.singleid, "quantity": this.quantity, "fromcart": this.fromcart,"totalpricecart":this.totalpricecart }]);
+          this.navctrl.navigateBack(['/checkout', { "id": this.singleid, "quantity": this.quantity, "fromcart": this.fromcart,"totalpricecart":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id }]);
         },
           err => {
             this.productservice.loadingdismiss();

@@ -14,7 +14,7 @@
 <ion-content class="Myprofile">
     <div class="profile-edit">
         <span class="profile-img">
-                  <img src="assets/img/profile.jpg"/>
+                  <img [src]="imageUrl + profile_image"/>
                 </span>
         <p class="name" text-capitalize>{{name}} {{lastname}}</p>
         <p class="mail">{{email}}</p>

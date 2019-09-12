@@ -16,6 +16,9 @@ import { map } from 'rxjs/operators';
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
+  subcategoryname: any;
+  subcategory_id: any;
+  category_id: any;
   sub: any;
   quantity: string;
   fromcart: string;
@@ -102,10 +105,11 @@ export class AppComponent {
         const snapshot: RouterStateSnapshot = state.snapshot;
         const children: ActivatedRouteSnapshot["children"] = snapshot.root.children;
         const child = children[0].params;
-        console.log(child.id);
+        console.log(child);
         this.singleid =child.id;
         this.fromcart = child.fromcart;
         this.quantity =child.quantity;
+        
         // this.sub = this.router.events.subscribe(val => {
         //   if (val instanceof RoutesRecognized) {
         //     console.log(val.state.root.firstChild.params);
@@ -118,39 +122,66 @@ export class AppComponent {
           let urlTree = this.router.parseUrl(this.router.url);
           let urlWithoutParams = urlTree.root.children['primary'].segments.map(it => it.path).join('/');
           console.log(urlWithoutParams);
+          if(urlWithoutParams == "address"){
+           localStorage.setItem("category_id",child.category_id);
+           localStorage.setItem("subcategory_id",child.subcategory_id);
+           localStorage.setItem("subcategoryname",child.subcategoryname);
+          }
           if (this.routerOutlet && this.routerOutlet.canGoBack()) {
-            console.log(urlWithoutParams);
             if (urlWithoutParams === 'address'){
-              console.log(this.singleid);
             if(this.fromcart == "1"){
-              console.log("cart");
               this.router.navigate(['tabs/viewcartproduct']);
             }
             else{
-              console.log("single");
               this.router.navigate(['viewsingleproduct',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
             }
-              
+            this.menu.close();
             }
             else if(urlWithoutParams === 'checkout'){
-              console.log(this.singleid);
-              console.log("single");
               if(this.fromcart == "1"){
-                console.log("cart");
                 this.router.navigate(['tabs/viewcartproduct']);
               }
               else if(this.singleid != 'null'){
-                console.log("single");
                 this.router.navigate(['viewsingleproduct',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart}]);
               }
               else{
                 this.router.navigate(['tabs/dashboard']);
               }
+              this.menu.close();
             }
-            
+             
             else{
+             
               if(urlWithoutParams == "viewsingleproduct"){
-                this.router.navigate(['tabs/dashboard']);
+                this.category_id = localStorage.getItem('category_id');
+                this.subcategory_id = localStorage.getItem('subcategory_id');
+                this.subcategoryname = localStorage.getItem('subcategoryname');
+                console.log(this.subcategoryname)
+                 if(this.category_id != "null"){
+                  
+                   console.log(this.subcategoryname)
+                  this.router.navigate(['productbycategory',{"category_id":this.category_id,"subcategoryname":this.subcategoryname,"subcategory_id":this.subcategory_id}]);
+                }
+                else{
+                  localStorage.removeItem('category_id');
+                  localStorage.removeItem('subcategory_id');
+                  localStorage.removeItem('subcategoryname');
+                  this.router.navigate(['tabs/dashboard']);
+                }
+               
+              }
+              else if(urlWithoutParams == "productbycategory"){
+                if(this.category_id){
+                  this.category_id = localStorage.getItem('category_id');
+                  this.router.navigate(['subcategorylist',{"id":this.category_id}]);
+                }
+                else{
+                  localStorage.removeItem('category_id');
+                  this.router.navigate(['tabs/viewcartproduct']);
+                }
+              }
+              else if(urlWithoutParams == "subcategorylist"){
+                this.router.navigate(['tabs/category']);
               }
               else if(urlWithoutParams == "checkoutsuccess"){
                 this.router.navigate(['tabs/dashboard']);
@@ -176,18 +207,17 @@ export class AppComponent {
                   this.routerOutlet.pop();
                   this.menu.close();
                 }
-               
+                this.menu.close();
               }
-           
+              this.menu.close();
             }
-          
+            this.menu.close();
           } else if (this.router.url === 'tabs/dashboard') {
             console.log(urlWithoutParams);
             this.menu.close();
             // or if that doesn't work, try
             navigator['app'].exitApp();
           } else {
-            console.log("cart");
             if(urlWithoutParams == "tabs/viewcartproduct"){
               this.router.navigate(['tabs/dashboard']);
             }
@@ -204,6 +234,7 @@ export class AppComponent {
             this.menu.close();
             this.presentAlert("Exit App");
             }
+            this.menu.close();
           }
         });
       });

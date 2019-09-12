@@ -19,11 +19,11 @@
 
 <ion-content>
     <ion-segment class="myOrderTabs" [(ngModel)]="getmyorders">
-        <ion-segment-button value="delivered">
-            <ion-label>Delivered</ion-label>
-        </ion-segment-button>
         <ion-segment-button checked value="processing">
             <ion-label>Processing</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="delivered">
+            <ion-label>Delivered</ion-label>
         </ion-segment-button>
         <ion-segment-button value="cancelled">
             <ion-label>Cancelled</ion-label>
@@ -44,11 +44,11 @@
                     </ion-row>
                     <ion-row>
                         <ion-col size="6">
-                            <p>Total:&nbsp;&nbsp;<span class="amt"><b><i class="fa fa-inr"></i>&nbsp;{{order.amount | number : '1.2-2'}}</b></span>
+                            <p>Total:&nbsp;&nbsp;<span class="amt"><b><i class="fa fa-inr"></i>&nbsp;{{order.totalamounts | number : '1.2-2'}}</b></span>
                             </p>
                         </ion-col>
                         <ion-col size="6">
-                            <p class="text-right">Quantity:&nbsp;&nbsp;<span><b>{{order.quantity}}</b></span></p>
+                            <p class="text-right">Items:&nbsp;&nbsp;<span><b>{{order.itemslength}}</b></span></p>
                         </ion-col>
 
                     </ion-row>
@@ -76,11 +76,11 @@
                     </ion-row>
                     <ion-row (click)="viewsingleorder(order.order_id,order.status)">
                         <ion-col size="6">
-                            <p>Total:&nbsp;&nbsp;<span class="amt"><b><i class="fa fa-inr"></i>&nbsp;{{order.amount | number : '1.2-2'}}</b></span>
+                            <p>Total:&nbsp;&nbsp;<span class="amt"><b><i class="fa fa-inr"></i>&nbsp;{{order.totalamounts | number : '1.2-2'}}</b></span>
                             </p>
                         </ion-col>
                         <ion-col size="6">
-                            <p class="text-right">Quantity:&nbsp;&nbsp;<span><b>{{order.quantity}}</b></span></p>
+                            <p class="text-right">Items:&nbsp;&nbsp;<span><b>{{order.itemslength}}</b></span></p>
                         </ion-col>
 
                     </ion-row>
@@ -109,11 +109,11 @@
                     </ion-row>
                     <ion-row>
                         <ion-col size="6">
-                            <p>Total:&nbsp;&nbsp;<span class="amt"><b><i class="fa fa-inr"></i>&nbsp;{{order.amount | number : '1.2-2'}}</b></span></p>
+                            <p>Total:&nbsp;&nbsp;<span class="amt"><b><i class="fa fa-inr"></i>&nbsp;{{order.totalamounts | number : '1.2-2'}}</b></span></p>
                         </ion-col>
                         <ion-col size="6">
 
-                            <p class="text-right">Quantity:&nbsp;&nbsp;<span><b>{{order.quantity}}</b></span></p>
+                            <p class="text-right">Items:&nbsp;&nbsp;<span><b>{{order.itemslength}}</b></span></p>
                         </ion-col>
 
                     </ion-row>

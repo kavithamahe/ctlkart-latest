@@ -10,6 +10,9 @@ import { Location } from '@angular/common';
   styleUrls: ['./address.page.scss'],
 })
 export class AddressPage implements OnInit {
+  subcategory_name: any;
+  category_id: any;
+  subcategory_id: any;
   type: string;
   customer_id: any;
   user_id: string;
@@ -26,6 +29,9 @@ export class AddressPage implements OnInit {
   constructor(private location: Location, private router: Router, private route: ActivatedRoute, public productservice: ProductsService, public formBuilder: FormBuilder) {
     this.user_id = localStorage.getItem("user_id");
     this.allgetAddress(this.user_id);
+    this.subcategory_id = route.snapshot.paramMap.get('subcategory_id');
+    this.category_id = route.snapshot.paramMap.get('category_id');
+    this.subcategory_name = route.snapshot.paramMap.get('subcategoryname');
     this.singleid = this.route.snapshot.paramMap.get('id');
     this.quantity = this.route.snapshot.paramMap.get('quantity');
     this.fromcart = this.route.snapshot.paramMap.get('fromcart');
@@ -110,7 +116,7 @@ export class AddressPage implements OnInit {
       this.router.navigate(['tabs/viewcartproduct']);
     }
     else {
-      this.router.navigate(['viewsingleproduct', { "id": this.singleid, "quantity": this.quantity, "fromcart": this.fromcart, "customer_id": this.customer_id, "totalamount": this.totalpricecart }]);
+      this.router.navigate(['viewsingleproduct', { "id": this.singleid, "quantity": this.quantity, "fromcart": this.fromcart, "customer_id": this.customer_id, "totalamount": this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id }]);
     }
   }
 }
