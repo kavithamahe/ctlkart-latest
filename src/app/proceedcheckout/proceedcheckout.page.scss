@@ -266,14 +266,16 @@ ion-buttons {
     margin: 5px 0 0 0;
     padding: 3px 0 0 0;
 }
+
 .newqty {
     p {
-        color: #333;
-        font-size: 15px;
         text-align: left;
         padding: 4px 0 0;
+        color: #333 !important;
+        font-size: 15px !important;
         span {
-            color: #999;
+            font-weight: 400 !important;
+            font-size: 15px !important;
             padding: 8px 0px !important;
         }
     }
