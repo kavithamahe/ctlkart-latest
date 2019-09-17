@@ -1,14 +1,9 @@
 <ion-header no-border-bottom>
     <ion-toolbar>
         <ion-buttons slot="start" *ngIf="!toggled">
-            <!-- <ion-menu-button autoHide="false"></ion-menu-button> -->
             <ion-icon name="arrow-back" (click)="back()"></ion-icon>
         </ion-buttons>
         <ion-title *ngIf="!toggled">My Order</ion-title>
-        <!-- <ion-buttons slot="end" (click)="viewcart()">
-            <i class="fa fa-shopping-basket" aria-hidden="true"></i>
-            <ion-badge id="cart-badge" color="danger">{{cartcount}}</ion-badge>
-        </ion-buttons> -->
         <ion-buttons slot="end">
             <ion-icon class="searchIcOn" *ngIf="!toggled" (click)="toggle()" name="search"></ion-icon>
         </ion-buttons>
@@ -35,10 +30,10 @@
             <div class="productList" *ngFor="let order of getallmydeliveredlists">
                 <ion-list (click)="viewsingleorder(order.order_id,order.status)">
                     <ion-row>
-                        <ion-col size="6">
-                            <p><b>Order No<span>{{order.order_id}}</span></b></p>
+                        <ion-col size="7">
+                            <p>Order No: <b><span>{{order.order_id}}</span></b></p>
                         </ion-col>
-                        <ion-col size="6">
+                        <ion-col size="5">
                             <p class="text-right">{{order.ordered_date | date: 'dd/MM/yyyy'}}</p>
                         </ion-col>
                     </ion-row>
@@ -51,9 +46,13 @@
                         </ion-col>
 
                     </ion-row>
-                    <ion-row>
+                    <ion-row class="viewMoreDetails">
                         <ion-col size="6">
-                            <ion-button size="small" color="light" outline>Details</ion-button>
+
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-text size="small" color="light" outline>View Details <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                            </ion-text>
                         </ion-col>
                         <!-- <ion-col size="6">
                             <ion-badge class="text-Delivered text-right"><b>Delivered</b></ion-badge>
@@ -66,10 +65,10 @@
             <div class="productList" *ngFor="let order of getallmyprocessinglists">
                 <ion-list>
                     <ion-row (click)="viewsingleorder(order.order_id,order.status)">
-                        <ion-col size="6">
-                            <p><b>Order No<span>{{order.order_id}}</span></b></p>
+                        <ion-col size="7">
+                            <p>Order No: <b>{{order.order_id}}</b></p>
                         </ion-col>
-                        <ion-col size="6">
+                        <ion-col size="5">
                             <p class="text-right">{{order.ordered_date | date: 'dd/MM/yyyy'}}</p>
                         </ion-col>
                     </ion-row>
@@ -89,9 +88,13 @@
                         
 
                     </ion-row>
-                    <ion-row (click)="viewsingleorder(order.order_id,order.status)">
+                    <ion-row class="viewMoreDetails" (click)="viewsingleorder(order.order_id,order.status)">
                         <ion-col size="6">
-                            <ion-button size="small" color="light" outline>Details</ion-button>
+
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-text size="small" color="light" outline>View Details <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                            </ion-text>
                         </ion-col>
                         <!-- <ion-col size="6">
                             <ion-badge class="text-Processing text-right"><b>Processing</b></ion-badge>
@@ -104,11 +107,11 @@
             <div class="productList" *ngFor="let order of getallmycancelledlists">
                 <ion-list (click)="viewsingleorder(order.order_id,order.status)">
                     <ion-row>
-                        <ion-col size="6">
-                            <p><b>Order No:<span>{{order.order_id}}</span></b>
+                        <ion-col size="7">
+                            <p>Order No: <b>{{order.order_id}}</b>
                             </p>
                         </ion-col>
-                        <ion-col size="6">
+                        <ion-col size="5">
                             <p class="text-right">{{order.ordered_date | date: 'dd/MM/yyyy'}}</p>
                         </ion-col>
                     </ion-row>
@@ -122,9 +125,13 @@
                         </ion-col>
 
                     </ion-row>
-                    <ion-row>
+                    <ion-row class="viewMoreDetails">
                         <ion-col size="6">
-                            <ion-button size="small" color="light" outline>Details</ion-button>
+
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-text size="small" color="light" outline>View Details <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                            </ion-text>
                         </ion-col>
                         <!-- <ion-col size="6">
 

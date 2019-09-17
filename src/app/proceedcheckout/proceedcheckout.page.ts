@@ -183,7 +183,7 @@ export class ProceedcheckoutPage implements OnInit {
       else{
       const alert = await this.alertController.create({
         header: '',
-        message: 'DO you want to submit this order?',
+        message: 'Do you want to submit this order?',
         buttons: [
           {
             text: 'Cancel',
