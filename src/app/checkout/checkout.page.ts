@@ -40,6 +40,7 @@ export class CheckoutPage implements OnInit {
     this.fromcart = route.snapshot.paramMap.get('fromcart');
     this.totalpricecart = route.snapshot.paramMap.get('totalamount');
     this.onboard = route.snapshot.paramMap.get('onboard');
+    console.log(this.onboard)
     this.events.subscribe('cart', ()=>{
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
       if(this.cartDetails){
@@ -58,6 +59,15 @@ export class CheckoutPage implements OnInit {
   }
   ionViewWillEnter(){
     this.singleid = this.route.snapshot.paramMap.get('id');
+    this.subcategory_id = this.route.snapshot.paramMap.get('subcategory_id');
+    this.category_id = this.route.snapshot.paramMap.get('category_id');
+    this.subcategory_name = this.route.snapshot.paramMap.get('subcategoryname');
+    this.quantity = this.route.snapshot.paramMap.get('quantity');
+    this.fromcart = this.route.snapshot.paramMap.get('fromcart');
+    this.fromcart = this.route.snapshot.paramMap.get('fromcart');
+    this.totalpricecart = this.route.snapshot.paramMap.get('totalamount');
+    this.onboard = this.route.snapshot.paramMap.get('onboard');
+    console.log(this.onboard)
     this.events.subscribe('cart', ()=>{
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
       if(this.cartDetails){
@@ -93,7 +103,11 @@ export class CheckoutPage implements OnInit {
         let token = localStorage.setItem("token", data['refreshToken']);
         localStorage.setItem("user_id", data['userid']);
         this.events.publish('loggedin');
-        if(this.fromcart || this.singleid){
+        console.log(this.fromcart)
+        if(this.onboard == 1){
+          this.router.navigate(['']);
+        }
+        else if(this.fromcart || this.singleid && this.onboard != 1){
           this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id}]);
         }
         else{
@@ -109,8 +123,9 @@ export class CheckoutPage implements OnInit {
           .then( confirmationResult => {
             this.verificationId = confirmationResult;
             if(this.verificationId){
-              this.router.navigate(['otpverification',{"mobile":err.error.mobile,"verificationId":this.verificationId,"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,
-            "fromlogin":"1"}]);
+              this.router.navigate(['otpverification',{"mobile":err.error.mobile,"refreshToken":err.error.refreshToken,"userid":err.error.userid,
+              "verificationId":this.verificationId,"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,
+            "fromlogin":"1","onboard":this.onboard}]);
             // this.alert(this.verificationId,err.error.mobile);
             }
             

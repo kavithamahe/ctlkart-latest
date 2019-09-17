@@ -12,6 +12,7 @@ import { File } from '@ionic-native/file/ngx';
 import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { IonicRatingModule } from 'ionic4-rating';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 
@@ -43,6 +44,7 @@ export const firebaseConfig = {
      IonicModule.forRoot(), 
      AngularFireModule.initializeApp(firebaseConfig),
      AppRoutingModule,
+     IonicRatingModule
      
     ],
   providers: [

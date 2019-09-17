@@ -65,7 +65,7 @@ export class MyordersPage implements OnInit {
    this.term.searchText = "";
  }
  getItems(searchItem) {
-   console.log(this.getmyorders)
+  //  console.log(this.getmyorders)
    if(this.getmyorders == "processing"){
     this.productservice.getmyorderlistsearch(this.user_id,this.term.searchText)
     .subscribe(product =>{ 
@@ -118,9 +118,11 @@ export class MyordersPage implements OnInit {
         this.getallmyprocessinglists[i].itemslength = this.getallmyprocessinglists[i].items.length;
         if(this.getallmyprocessinglists[i].items){
           var itemsamount = this.getallmyprocessinglists[i].items;
-          for (var j=0;j<=itemsamount.length;j++){
-            if(itemsamount[j]){
+          for (var j=0;j<=this.getallmyprocessinglists[i].items.length;j++){
+            if(this.getallmyprocessinglists[i].items[j] != undefined){
+              // console.log(this.getallmyprocessinglists[i].items[j].quantity);
             this.getallmyprocessinglists[i].totalamounts = (this.getallmyprocessinglists[i].items[j].quantity * this.getallmyprocessinglists[i].items[j].amount);
+            // console.log(this.getallmyprocessinglists[i].totalamounts);
           }
         }
         }
@@ -129,6 +131,7 @@ export class MyordersPage implements OnInit {
         }
     }
     this.getallmyprocessinglists =  this.getallmyprocessinglists;
+    // console.log(this.getallmyprocessinglists);
       this.productservice.loadingdismiss();
     },
     err =>{
@@ -190,11 +193,11 @@ export class MyordersPage implements OnInit {
   }
 
   viewsingleorder(id,status){
-    console.log(status)
-    this.router.navigate(['/vieworderhistory',{"id":id,"status":status}]);
+    // console.log(status)
+    this.router.navigate(['/vieworderhistory',{"orderid":id,"status":status}]);
   }
   viewcart(){
-    this.router.navigate(['/viewcartproduct']);
+    this.router.navigate(['tabs/viewcartproduct']);
   }
   back(){
     this.router.navigate(['']);

@@ -47,7 +47,6 @@ export class DashboardPage implements OnInit  {
 
     this.getproductList();
     this.getCategory();
-    this.getsubsubcategory();
   }
 
   ngOnInit() {
@@ -87,7 +86,7 @@ export class DashboardPage implements OnInit  {
   }
   getproductList(){
     this.productservice.presentLoading();
-    this.productservice.getproductlist('','','',this.term.searchText)
+    this.productservice.getproductlist('','','',this.term.searchText,'')
     .subscribe(product =>{ 
       this.getProductLists = product.data;
       this.productservice.loadingdismiss();
@@ -108,16 +107,6 @@ export class DashboardPage implements OnInit  {
     err =>{
       this.productservice.loadingdismiss();
       this.productservice.presentToast(err.error.message); 
-   })
-  }
-  getsubsubcategory(){
-    this.productservice.presentLoading();
-    this.productservice.getsubsubcategory()
-    .subscribe(category =>{ 
-    },
-    err =>{
-      this.productservice.loadingdismiss();
-      this.productservice.presentToast(err.error.message);
    })
   }
   filterbyCategory(id){

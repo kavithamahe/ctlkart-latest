@@ -31,6 +31,9 @@ export class AppComponent {
   cartcount: any;
   public href: string = "";
   tabsbar :any = true;
+  fromorder:any;
+  status:any;
+  orderid:any;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -122,11 +125,15 @@ export class AppComponent {
           let urlTree = this.router.parseUrl(this.router.url);
           let urlWithoutParams = urlTree.root.children['primary'].segments.map(it => it.path).join('/');
           console.log(urlWithoutParams);
-          if(urlWithoutParams == "address"){
-           localStorage.setItem("category_id",child.category_id);
-           localStorage.setItem("subcategory_id",child.subcategory_id);
-           localStorage.setItem("subcategoryname",child.subcategoryname);
-          }
+          // if(urlWithoutParams == "address" || urlWithoutParams == "checkout" || urlWithoutParams == "viewsingleproduct"){
+          //  localStorage.setItem("category_id",child.category_id);
+          //  localStorage.setItem("subcategory_id",child.subcategory_id);
+          //  localStorage.setItem("subcategoryname",child.subcategoryname);
+          //  localStorage.setItem("fromorder",child.fromorder);
+          //  localStorage.setItem("singleid",child.singleid);
+          //  localStorage.setItem("id",child.id);
+          //  localStorage.setItem("status",child.status);
+          // }
           if (this.routerOutlet && this.routerOutlet.canGoBack()) {
             if (urlWithoutParams === 'address'){
             if(this.fromcart == "1"){
@@ -151,22 +158,43 @@ export class AppComponent {
             }
              
             else{
-             
+              this.category_id = localStorage.getItem('category_id');
+              this.subcategory_id = localStorage.getItem('subcategory_id');
+              this.subcategoryname = localStorage.getItem('subcategoryname');
+              this.fromorder = localStorage.getItem('fromorder');
+              this.status = localStorage.getItem('status');
+              this.orderid = localStorage.getItem('singleid');
               if(urlWithoutParams == "viewsingleproduct"){
+                console.log("this.category_id")
                 this.category_id = localStorage.getItem('category_id');
                 this.subcategory_id = localStorage.getItem('subcategory_id');
                 this.subcategoryname = localStorage.getItem('subcategoryname');
+                this.fromorder = localStorage.getItem('fromorder');
+                this.status = localStorage.getItem('status');
+                this.orderid = localStorage.getItem('singleid');
                 console.log(this.subcategoryname)
-                 if(this.category_id != "null"){
+                console.log(this.category_id)
+                 if(this.category_id != "null" && this.category_id && this.fromorder != "1"){
                   
-                   console.log(this.subcategoryname)
                   this.router.navigate(['productbycategory',{"category_id":this.category_id,"subcategoryname":this.subcategoryname,"subcategory_id":this.subcategory_id}]);
+                }
+                else if(this.fromorder == "1"){
+                  localStorage.removeItem('category_id');
+                  localStorage.removeItem('subcategory_id');
+                  localStorage.removeItem('subcategoryname');
+                  localStorage.removeItem('singleid');
+                  localStorage.removeItem('status');
+                  localStorage.removeItem('fromorder');
+                  this.router.navigate(['vieworderhistory',{'orderid':this.orderid,'status':this.status}]);
                 }
                 else{
                   localStorage.removeItem('category_id');
                   localStorage.removeItem('subcategory_id');
                   localStorage.removeItem('subcategoryname');
                   this.router.navigate(['tabs/dashboard']);
+                  localStorage.removeItem('singleid');
+                  localStorage.removeItem('status');
+                  localStorage.removeItem('fromorder');
                 }
                
               }
@@ -230,6 +258,9 @@ export class AppComponent {
             else if(urlWithoutParams == "tabs/checkout"){
               this.router.navigate(['tabs/dashboard']);
             }
+            else if(urlWithoutParams == "tabs/myorders"){
+              this.router.navigate(['tabs/dashboard']);
+            }
             else{
             this.menu.close();
             this.presentAlert("Exit App");
@@ -284,7 +315,7 @@ changepassword(){
   this.menu.close();
 }
 getmyorders(){
-  this.router.navigate(['myorders']);
+  this.router.navigate(['tabs/myorders']);
   this.menu.close();
 }
 home(){

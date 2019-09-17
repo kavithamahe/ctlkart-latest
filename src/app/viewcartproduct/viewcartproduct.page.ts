@@ -39,17 +39,17 @@ export class ViewcartproductPage implements OnInit {
       }
     })
     this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
-    console.log(this.cartDetails)
+    // console.log(this.cartDetails)
     if(this.cartDetails){
       this.cartcount = this.cartDetails.length;
-      console.log(this.cartcount)
+      // console.log(this.cartcount)
     }
     this.events.subscribe('cart', ()=>{
     this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
-    console.log(this.cartDetails)
+    // console.log(this.cartDetails)
     if(this.cartDetails){
       this.cartcount = this.cartDetails.length;
-      console.log(this.cartcount)
+      // console.log(this.cartcount)
     }
   })
     this.token = localStorage.getItem('token');
@@ -72,17 +72,17 @@ export class ViewcartproductPage implements OnInit {
   }
   }
   ionViewWillEnter(){
-    console.log(this.cartDetails)
+    // console.log(this.cartDetails)
     this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
     if(this.cartDetails){
       this.cartcount = this.cartDetails.length;
     }
     this.events.subscribe('cart', ()=>{
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
-      console.log(this.cartDetails)
+      // console.log(this.cartDetails)
       if(this.cartDetails){
         this.cartcount = this.cartDetails.length;
-        console.log(this.cartcount)
+        // console.log(this.cartcount)
       }
     })
     this.events.subscribe('cartview', ()=>{
@@ -116,7 +116,7 @@ export class ViewcartproductPage implements OnInit {
     this.imgURl = this.imageUrl;
   this.events.subscribe('loggedin',() => {
     this.token = localStorage.getItem('token');
-    console.log(this.token)
+    // console.log(this.token)
   })
     this.getproductList();
  
@@ -234,7 +234,7 @@ export class ViewcartproductPage implements OnInit {
 
   getproductList(){
     this.productservice.presentLoading();
-    this.productservice.getproductlist('','','','')
+    this.productservice.getproductlist('','','','','')
     .subscribe(product =>{ 
       this.getProductLists = product.data;
       this.productservice.loadingdismiss();

@@ -30,18 +30,47 @@ export class ProductbycategoryPage implements OnInit {
   getallsubcategory:any=[];
   term = { searchText: ''};
   public toggled: boolean = false;
+  subsubcategory_name:any;
+  subsubcategory_id:any;
+  product_name:any;
 
   constructor(private location:Location,public actionSheetController: ActionSheetController,public events: Events,public productservice:ProductsService,public router: Router,private route: ActivatedRoute) { 
     this.subcategory_id = route.snapshot.paramMap.get('subcategory_id');
+    this.subsubcategory_id = route.snapshot.paramMap.get('subsubcategory_id');
     this.category_id = route.snapshot.paramMap.get('category_id');
     this.subcategory_name = route.snapshot.paramMap.get('subcategoryname');
-    if(this.subcategory_name){
-      this.subcategory_name = this.subcategory_name;
+    this.subsubcategory_name = route.snapshot.paramMap.get('subsubcategory_name');
+    localStorage.setItem("category_id",this.category_id);
+    localStorage.setItem("subcategory_id",this.subcategory_id);
+    localStorage.setItem("subcategoryname",this.subcategory_name);
+    // localStorage.setItem("fromorder",child.fromorder);
+    // localStorage.setItem("singleid",child.singleid);
+    // localStorage.setItem("id",child.id);
+    // localStorage.setItem("status",child.status);
+    if(this.subsubcategory_id == "null"){
+      this.subsubcategory_id = "";
+    }
+    if(this.subcategory_id == "null"){
+      this.subcategory_id = "";
+    }
+    if(this.subcategory_name == "null"){
+      this.subcategory_name = "";
+    }
+    if(this.subsubcategory_name == "null"){
+      this.subsubcategory_name = "";
+    }
+    if(this.subcategory_name && !this.subsubcategory_name){
+      console.log(this.subcategory_name)
+      this.product_name = this.subcategory_name;
+    }
+    else if(this.subcategory_name && this.subsubcategory_name){
+      console.log(this.subsubcategory_name)
+      this.product_name = this.subsubcategory_name;
     }
     else{
-      this.subcategory_name = "Products";
+      this.product_name = "Products";
     }
-    this.getproductbysubcategory(this.subcategory_id);
+    this.getproductbysubcategory(this.subcategory_id,this.subsubcategory_id);
   }
 
   ngOnInit() {
@@ -56,7 +85,7 @@ export class ProductbycategoryPage implements OnInit {
  }
  cancelSearch(event){
    this.toggle();
-   this.getproductbysubcategory(this.subcategory_id);
+   this.getproductbysubcategory(this.subcategory_id,this.subsubcategory_id);
    this.term.searchText = "";
  }
   ionViewWillEnter(){
@@ -67,14 +96,35 @@ export class ProductbycategoryPage implements OnInit {
       }
     })
     this.subcategory_id = this.route.snapshot.paramMap.get('subcategory_id');
+    this.subsubcategory_id = this.route.snapshot.paramMap.get('subsubcategory_id');
+    this.category_id = this.route.snapshot.paramMap.get('category_id');
     this.subcategory_name = this.route.snapshot.paramMap.get('subcategoryname');
-    if(this.subcategory_name){
-      this.subcategory_name = this.subcategory_name;
+    this.subsubcategory_name = this.route.snapshot.paramMap.get('subsubcategory_name');
+    if(this.subsubcategory_id == "null"){
+      this.subsubcategory_id = "";
+    }
+    if(this.subcategory_id == "null"){
+      this.subcategory_id = "";
+    }
+    if(this.subcategory_name == "null"){
+      this.subcategory_name = "";
+    }
+    if(this.subsubcategory_name == "null"){
+      this.subsubcategory_name = "";
+    }
+    if(this.subcategory_name && !this.subsubcategory_name){
+      this.product_name = this.subcategory_name;
+    }
+    else if(this.subcategory_name && this.subsubcategory_name){
+      this.product_name = this.subsubcategory_name;
     }
     else{
-      this.subcategory_name = "Products";
+      this.product_name = "Products";
     }
-    this.getproductbysubcategory(this.subcategory_id);
+    if(this.subsubcategory_id == "null"){
+      this.subsubcategory_id = "";
+    }
+    this.getproductbysubcategory(this.subcategory_id,this.subsubcategory_id);
   }
   triggerInput( ev: any ) {
     // Reset items back to all of the items
@@ -88,9 +138,9 @@ export class ProductbycategoryPage implements OnInit {
       })
     }  
 }
-  getproductbysubcategory(subcategory_id){
+  getproductbysubcategory(subcategory_id,subsubcategory_id){
     this.productservice.presentLoading();
-    this.productservice.getproductlist("",subcategory_id,"","")
+    this.productservice.getproductlist("",subcategory_id,"","",subsubcategory_id)
     .subscribe(product =>{ 
       this.getProductLists = product.data;
       this.productservice.loadingdismiss();
@@ -111,7 +161,7 @@ export class ProductbycategoryPage implements OnInit {
   }
   filterbyCategory(id,subcategory_id,val){
     this.productservice.presentLoading();
-    this.productservice.getproductlist("",subcategory_id,val,'')
+    this.productservice.getproductlist("",subcategory_id,val,'','')
     .subscribe(product =>{ 
       this.getProductLists = product.data;
       this.productservice.loadingdismiss();
@@ -135,7 +185,7 @@ export class ProductbycategoryPage implements OnInit {
   //  })
   // }
   viewsingleproduct(id){
-    this.router.navigate(['/viewsingleproduct',{"id":id,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id}]);
+    this.router.navigate(['/viewsingleproduct',{"id":id,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,"subsubcategory_id":this.subsubcategory_id,"subsubcategory_name":this.subsubcategory_name}]);
   }
   sorybyvalue(val){
     this.getsubcategorylocal = localStorage.getItem('key');
@@ -145,8 +195,11 @@ export class ProductbycategoryPage implements OnInit {
     this.router.navigate(['tabs/viewcartproduct']);
   }
   back(){
-    if(this.category_id){
+    if(this.category_id && !this.subsubcategory_id){
       this.router.navigate(['subcategorylist',{"id":this.category_id}]);
+    }
+    else if(this.category_id && this.subsubcategory_id){
+      this.router.navigate(['/childcategory',{"subcategory_id":this.subcategory_id,"subcategoryname":this.subcategory_name,"category_id":this.category_id}],{skipLocationChange: true});
     }
     else{
       this.router.navigate(['tabs/viewcartproduct']);

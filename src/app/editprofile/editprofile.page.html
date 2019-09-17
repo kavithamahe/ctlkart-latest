@@ -15,7 +15,8 @@
         <form [formGroup]="profileForm">
                 <div class="profile-edit">
                     <span class="profile-img" (click)="accessGallery()">
-                        <img [src]="imageUrl + profile_image" *ngIf="!base64_image"/>
+                        <img *ngIf = "!profile_image" src="../../assets/img/icon.png"/>
+                        <img [src]="imageUrl + profile_image" *ngIf="!base64_image && profile_image"/>
                         <img [src]="base64_image" *ngIf="base64_image"/>
                     </span>
                 </div>

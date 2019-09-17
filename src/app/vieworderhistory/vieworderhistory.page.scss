@@ -144,3 +144,63 @@ ion-buttons {
         }
     }
 }
+
+    ion-rating {
+
+        [ion-button][disabled] {
+            opacity: 1;
+        }
+        ion-buttons {
+            display: flex;
+            justify-content: left !important;
+            font-size: 20px !important;
+        }
+        
+        ion-icon {  
+            color: gray;
+            font-size: 20px !important;
+  
+          &.filled {
+              color: #ffb400;
+              font-size: 20px !important;   
+            }
+        }
+    }#sample-books {
+        margin-top: 5px;
+        ion-buttons {
+            float: left;
+        }
+        ion-button {
+            width: 26px !important;
+            height: 20px !important;
+            display: contents;
+        }
+        ion-icon {
+            width: 18px;
+            height: 20px;
+            color: gray;
+    
+            &.filled {
+                //color: #ffb400;
+                color: var(--ion-color-RRyellow) !important;
+            }
+        }
+    }
+    
+    #book-detail {
+        ion-button {
+            width: 32px !important;
+            height: 24px !important;
+        }
+        ion-icon {
+            color: gray;
+            &.filled {
+                color: #ffb400;
+            }
+        }
+    }
+
+// ion-rating {
+//     --color: gray;
+//     --color-filled: green;
+//   }

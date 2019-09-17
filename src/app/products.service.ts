@@ -11,7 +11,6 @@ import { AbstractControl, ValidatorFn } from '@angular/forms';
   providedIn: 'root'
 })
 export class ProductsService {
-  dasda: HttpHeaders;
   token: string;
   private apiUrl = environment.apiUrl;
   headers: any;
@@ -32,8 +31,8 @@ export class ProductsService {
         return null;
     };
   }
-   getproductlist(id,subcategory_id,search,searchText): Observable<any> {
-    const body= {"category_id":id,"subcategory_id":subcategory_id,"price":search};
+   getproductlist(id,subcategory_id,search,searchText,subsubcategory_id): Observable<any> {
+    const body= {"category_id":id,"subcategory_id":subcategory_id,"price":search,"subsubcategory_id":subsubcategory_id};
     return this.http.post(this.apiUrl + 'getproductlist',body,this.headers);
   }
   getproductlistsearch(search): Observable<any> {
@@ -52,6 +51,10 @@ export class ProductsService {
     const body= {"search":search,"category_id":category_id};
     return this.http.post(this.apiUrl + 'getsubcategorysearch',body,this.headers);
   }
+  getsubsubcategorylistsearch(subcategory_id,search): Observable<any> {
+    const body= {"search":search,"subcategory_id":subcategory_id};
+    return this.http.post(this.apiUrl + 'getsubsubcategorysearch',body,this.headers);
+  }
   getproductlistsingle(id): Observable<any> {
     const body= {"id":id};
     return this.http.post(this.apiUrl + 'viewsingleproduct',body,this.headers);
@@ -60,8 +63,8 @@ export class ProductsService {
     const body= {"category_id":category_id};
     return this.http.post(this.apiUrl + 'getsubcategory',body,this.headers);
   }
-  getsubsubcategory(): Observable<any> {
-    const body= {"category_id":"12","subcategory_id":"10"};
+  getsubsubcategory(id): Observable<any> {
+    const body= {"category_id":"","subcategory_id":id};
     return this.http.post(this.apiUrl + 'getsubsubcategory',body,this.headers);
   }
   userregister(formvalue): Observable<any>{
@@ -174,6 +177,14 @@ export class ProductsService {
     this.headers= this.headers.append("Authorization", "Bearer " + this.token);
     const body= {"id":id};
     return this.http.post(this.apiUrl + 'ordercancelbyuser',body,{ headers:this.headers });
+  }
+  reviewsentuser(id,user_id,rating,ratingcomments): Observable<any> {
+    this.token=localStorage.getItem("token");
+    this.headers = new HttpHeaders();
+    this.headers = this.headers.append('Content-Type', 'application/json');
+    this.headers= this.headers.append("Authorization", "Bearer " + this.token);
+    const body= {"product_id":id,"user_id":user_id,"rating":rating,"ratingcomments":ratingcomments};
+    return this.http.post(this.apiUrl + 'productreview',body,{ headers:this.headers });
   }
   changepassword(password): Observable<any> {
     this.token=localStorage.getItem("token");

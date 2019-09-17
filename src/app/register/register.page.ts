@@ -79,8 +79,8 @@ firebase(phoneNumberString){
     this.verificationId = confirmationResult;
     console.log(this.verificationId)
     if(this.verificationId){
-      this.productservice.loadingdismiss();
-    this.router.navigate(['otpverification',{"mobile":this.registerForm.value.mobile,"verificationId":this.verificationId,"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id}]);
+      // this.productservice.loadingdismiss();
+    this.router.navigate(['otpverification',{"mobile":this.registerForm.value.mobile,"verificationId":this.verificationId,"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,"onboard":this.onboard}]);
     }
     this.registerForm.reset();
     

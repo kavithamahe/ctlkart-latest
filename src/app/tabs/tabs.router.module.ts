@@ -58,6 +58,16 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'myorders',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+             import('../myorders/myorders.module').then(m => m.MyordersPageModule)
+          }
+        ]
+      },
+      {
         path: 'editprofile',
         children: [
           {
