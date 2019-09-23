@@ -25,12 +25,16 @@ export class ViewsingleproductPage implements OnInit {
   getProductLists:any;
   data: any;
   item_qty :any=1;
+  item_qtycheck :any=1;
   gotocart:boolean=false;
   fromorder:any;
   orderid:any;
   orderstatus:any;
   subsubcategory_id:any;
   subsubcategory_name:any;
+  totalQty:any;
+  qtycheck:any;
+  existingtotalQty:boolean = false;
   constructor(public events: Events,private _location: Location, public productservice:ProductsService,private route: ActivatedRoute,public router:Router,public toastController: ToastController) { 
     this.singleid = route.snapshot.paramMap.get('id');
     this.fromorder = route.snapshot.paramMap.get('fromorder');
@@ -42,8 +46,8 @@ export class ViewsingleproductPage implements OnInit {
     this.subsubcategory_id = route.snapshot.paramMap.get('subsubcategory_id');
     this.subsubcategory_name = route.snapshot.paramMap.get('subsubcategory_name');
           localStorage.setItem("fromorder",this.fromorder);
-           localStorage.setItem("singleid",this.orderid);
-           localStorage.setItem("status",this.orderstatus);
+          localStorage.setItem("singleid",this.orderid);
+          localStorage.setItem("status",this.orderstatus);
     this.getsingleproductlist(this.singleid);
     this.getproductList();
    
@@ -79,7 +83,23 @@ export class ViewsingleproductPage implements OnInit {
     }
   }
   incrementQty(){
-    this.item_qty += 1;
+    var qty = this.item_qtycheck += 1;
+    this.productservice.quantityavailcheck(qty,this.singleid)
+    .subscribe(qtny =>{ 
+      this.qtycheck = qtny.message;
+      if(this.qtycheck == "true"){
+        this.item_qty += 1;
+        }
+        else{
+          this.productservice.presentToast( this.qtycheck)
+        }
+    },
+    err =>{
+      this.productservice.presentToast(err.error.message);
+   })
+
+  
+   
     }
     
    
@@ -111,6 +131,11 @@ export class ViewsingleproductPage implements OnInit {
     this.productservice.getproductlistsingle(id)
     .subscribe(product =>{ 
       this.getsingleProductList = product.data;
+      this.totalQty = product['data'][0]['quantity'];
+      if(product['data'][0]['existing_quantity'] <= 10){
+        this.existingtotalQty = true;
+      }
+      
       this.productservice.loadingdismiss();
     },
     err =>{
@@ -129,11 +154,14 @@ export class ViewsingleproductPage implements OnInit {
     let total_price = {"totalproductprice":toatlprice};
     let quantityperproduct = {"quantityperproduct":item_qtystr};
     var obj = Object.assign(this.data, quantityperproduct,total_price);
-    console.log(obj)
+    // console.log(obj)
     var existingEntries = JSON.parse(localStorage.getItem("cart_items") || '[]');
-    console.log(this.data)
+    // console.log(this.data)
 // Add item if it's not already in the array, then store array again
-    if (!existingEntries.includes(this.data)) {
+if(this.cartDetails){
+    let tempProduct = this.cartDetails.find(p => this.data.id == p.id);
+    if(tempProduct == null){
+    // if (!existingEntries.includes(this.data)) {
       existingEntries.push(this.data);
       localStorage.setItem("cart_items", JSON.stringify(existingEntries));
       this.events.publish('cart');
@@ -141,8 +169,16 @@ export class ViewsingleproductPage implements OnInit {
       this.presentToast("One item is added to cart");
     }else{
       // or tell user it's already there
-      console.log(this.data + ' already exists')
+      this.presentToast("item already exists");
     }
+  }
+  else{
+    existingEntries.push(this.data);
+    localStorage.setItem("cart_items", JSON.stringify(existingEntries));
+    this.events.publish('cart');
+    this.gotocart = true;
+    this.presentToast("One item is added to cart");
+  }
   }
   }
   gotocartpage(){
@@ -167,22 +203,24 @@ export class ViewsingleproductPage implements OnInit {
     }
     else{
       if(this.token){
-        this.router.navigate(['address',{"id":id,"quantity":item_qty,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,"subsubcategory_id":this.subsubcategory_id,"subsubcategory_name":this.subsubcategory_name}]);
+        this.router.navigate(['address',{"id":id,"quantity":item_qty,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,"subsubcategory_id":this.subsubcategory_id,"subsubcategory_name":this.subsubcategory_name,'fromorder':this.fromorder}]);
       }
       else{
-    this.router.navigate(['checkout',{"id":id,"quantity":item_qty,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,"subsubcategory_id":this.subsubcategory_id,"subsubcategory_name":this.subsubcategory_name}]);
+    this.router.navigate(['checkout',{"id":id,"quantity":item_qty,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,"subsubcategory_id":this.subsubcategory_id,"subsubcategory_name":this.subsubcategory_name,'fromorder':this.fromorder}]);
       }
     }
     }
 
 
     back(){
+      var orderidlocal= localStorage.getItem("singleid");
+      var orderstatuslocal=  localStorage.getItem("status");
       console.log(this.fromorder)
       if(this.category_id != "null" && this.category_id){
         this.router.navigate(['productbycategory',{"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,"subsubcategory_id":this.subsubcategory_id,"subsubcategory_name":this.subsubcategory_name}]);
       }
       else if(this.fromorder == '1'){
-        this.router.navigate(['vieworderhistory',{'orderid':this.orderid,'status':this.orderstatus}]);
+        this.router.navigate(['vieworderhistory',{'orderid':orderidlocal,'status':orderstatuslocal}]);
       }
       else{
         this.router.navigate(['']);

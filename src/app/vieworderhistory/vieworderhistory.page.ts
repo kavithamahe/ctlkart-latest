@@ -3,7 +3,7 @@ import { environment } from '../../environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../products.service';
 import { Location } from '@angular/common';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ActionSheetController, BooleanValueAccessor } from '@ionic/angular';
 
 @Component({
   selector: 'app-vieworderhistory',
@@ -20,8 +20,9 @@ export class VieworderhistoryPage implements OnInit {
   getsingleorderprice:any=[];
   user_id:any;
   review = { rating: '',ratingcomments:''};
+  closerating:boolean = false;
 
-  constructor(private location:Location,private router: Router,private alertCtrl: AlertController,public productservice:ProductsService,private route: ActivatedRoute) {
+  constructor(public actionSheetController: ActionSheetController,private location:Location,private router: Router,private alertCtrl: AlertController,public productservice:ProductsService,private route: ActivatedRoute) {
     this.singleid = route.snapshot.paramMap.get('orderid');
     this.status = route.snapshot.paramMap.get('status');
     this.getsingleorderdetails(this.singleid,this.status);
@@ -61,6 +62,9 @@ export class VieworderhistoryPage implements OnInit {
       this.productservice.presentToast(err.error.message);
    })
   }
+  ordereview(){
+    this.closerating = true;
+  }
   onRateChange(event) {
     this.review.rating = event;
      console.log("‘Your rate:’", event);
@@ -68,6 +72,7 @@ export class VieworderhistoryPage implements OnInit {
   viewProduct(id){
     this.router.navigate(['viewsingleproduct',{'id':id,'fromorder':'1','singleid':this.singleid,'status':this.status}]);
   }
+
   async presentAlertConfirm(id) {
     const alert = await this.alertCtrl.create({
       header: '',
@@ -111,6 +116,7 @@ export class VieworderhistoryPage implements OnInit {
       this.productservice.presentToast(product.data);
       this.review.rating = "";
       this.review.ratingcomments = "";
+      this.closerating = false;
       this.productservice.loadingdismiss();
     },
     err =>{

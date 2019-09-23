@@ -33,6 +33,7 @@ export class ChildcategoryPage implements OnInit {
       this.subcategory_name = "Products";
     }
     this.getsubsubCategory(this.subcategory_id);
+    this.toggled = false;
    }
 
   ngOnInit() {
@@ -75,9 +76,11 @@ export class ChildcategoryPage implements OnInit {
    this.term.searchText = "";
  }
   viewcart(){
-    this.router.navigate(['/viewcartproduct']);
+    this.toggled = false;
+    this.router.navigate(['tabs/viewcartproduct']);
   }
   getsubcategory(id,subsubcategory_name){
+    this.toggled = false;
     this.router.navigate(['/productbycategory',{"subsubcategory_id":id,"subcategory_id":this.subcategory_id,"subsubcategory_name":subsubcategory_name,"subcategoryname":this.subcategory_name,"category_id":this.category_id}],{skipLocationChange: true});
   }
   back(){

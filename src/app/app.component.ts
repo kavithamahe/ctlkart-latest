@@ -209,22 +209,58 @@ export class AppComponent {
                 }
               }
               else if(urlWithoutParams == "subcategorylist"){
+                localStorage.removeItem('category_id');
+                    localStorage.removeItem('subcategory_id');
+                    localStorage.removeItem('subcategoryname');
+                    localStorage.removeItem('singleid');
+                    localStorage.removeItem('status');
+                    localStorage.removeItem('fromorder');
                 this.router.navigate(['tabs/category']);
               }
               else if(urlWithoutParams == "checkoutsuccess"){
+                localStorage.removeItem('category_id');
+                    localStorage.removeItem('subcategory_id');
+                    localStorage.removeItem('subcategoryname');
+                    localStorage.removeItem('singleid');
+                    localStorage.removeItem('status');
+                    localStorage.removeItem('fromorder');
                 this.router.navigate(['tabs/dashboard']);
               }
               else if (urlWithoutParams == "tabs/dashboard"){
+                localStorage.removeItem('category_id');
+                    localStorage.removeItem('subcategory_id');
+                    localStorage.removeItem('subcategoryname');
+                    localStorage.removeItem('singleid');
+                    localStorage.removeItem('status');
+                    localStorage.removeItem('fromorder');
                 this.menu.close();
                 this.presentAlert("Exit App");
               }
               else if(urlWithoutParams == "tabs/checkout"){
+                localStorage.removeItem('category_id');
+                    localStorage.removeItem('subcategory_id');
+                    localStorage.removeItem('subcategoryname');
+                    localStorage.removeItem('singleid');
+                    localStorage.removeItem('status');
+                    localStorage.removeItem('fromorder');
                 this.router.navigate(['tabs/dashboard']);
               }
               else if(urlWithoutParams == "tabs/profile"){
+                localStorage.removeItem('category_id');
+                    localStorage.removeItem('subcategory_id');
+                    localStorage.removeItem('subcategoryname');
+                    localStorage.removeItem('singleid');
+                    localStorage.removeItem('status');
+                    localStorage.removeItem('fromorder');
                 this.router.navigate(['tabs/dashboard']);
               }
               else if(urlWithoutParams == "tabs/category"){
+                localStorage.removeItem('category_id');
+                    localStorage.removeItem('subcategory_id');
+                    localStorage.removeItem('subcategoryname');
+                    localStorage.removeItem('singleid');
+                    localStorage.removeItem('status');
+                    localStorage.removeItem('fromorder');
                 this.router.navigate(['tabs/dashboard']);
               }
               else{
@@ -232,6 +268,14 @@ export class AppComponent {
                   this.router.navigate(['tabs/dashboard']);
                 }
                 else{
+                  if(urlWithoutParams == "tabs/category" || urlWithoutParams == "tabs/dashboard"){
+                    localStorage.removeItem('category_id');
+                    localStorage.removeItem('subcategory_id');
+                    localStorage.removeItem('subcategoryname');
+                    localStorage.removeItem('singleid');
+                    localStorage.removeItem('status');
+                    localStorage.removeItem('fromorder');
+                  }
                   this.routerOutlet.pop();
                   this.menu.close();
                 }
@@ -242,6 +286,12 @@ export class AppComponent {
             this.menu.close();
           } else if (this.router.url === 'tabs/dashboard') {
             console.log(urlWithoutParams);
+            localStorage.removeItem('category_id');
+            localStorage.removeItem('subcategory_id');
+            localStorage.removeItem('subcategoryname');
+            localStorage.removeItem('singleid');
+            localStorage.removeItem('status');
+            localStorage.removeItem('fromorder');
             this.menu.close();
             // or if that doesn't work, try
             navigator['app'].exitApp();
@@ -262,6 +312,12 @@ export class AppComponent {
               this.router.navigate(['tabs/dashboard']);
             }
             else{
+              localStorage.removeItem('category_id');
+              localStorage.removeItem('subcategory_id');
+              localStorage.removeItem('subcategoryname');
+              localStorage.removeItem('singleid');
+              localStorage.removeItem('status');
+              localStorage.removeItem('fromorder');
             this.menu.close();
             this.presentAlert("Exit App");
             }

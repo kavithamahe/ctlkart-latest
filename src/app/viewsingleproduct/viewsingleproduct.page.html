@@ -29,6 +29,9 @@
             <button clear (click)="decrementQty()"><ion-icon name="remove" ></ion-icon></button><span>{{item_qty}}</span>
             <button clear (click)="incrementQty()"><ion-icon name="add" ></ion-icon></button>
         </ion-item>
+        <ion-card-content style = "color: red;" *ngIf = "existingtotalQty">
+            Only {{single.existing_quantity}} available,hurry up.
+        </ion-card-content>
         <ion-card-content>
             {{single.product_description}}
         </ion-card-content>

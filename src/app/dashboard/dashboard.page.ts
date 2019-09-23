@@ -50,6 +50,12 @@ export class DashboardPage implements OnInit  {
   }
 
   ngOnInit() {
+    localStorage.removeItem('category_id');
+    localStorage.removeItem('subcategory_id');
+    localStorage.removeItem('subcategoryname');
+    localStorage.removeItem('singleid');
+    localStorage.removeItem('status');
+    localStorage.removeItem('fromorder');
   //  this.router.events.subscribe((e: any) => {
   //     // If it is a NavigationEnd event re-initalise the component
   //     if (e instanceof NavigationEnd) {
@@ -110,12 +116,15 @@ export class DashboardPage implements OnInit  {
    })
   }
   filterbyCategory(id){
+    this.toggled = false;
     this.router.navigate(['/subcategorylist',{"id":id}],{skipLocationChange: true});
   }
   seecategory(){
+    this.toggled = false;
     this.router.navigate(['tabs/category']);
   }
   doRefresh(event){
+    this.toggled = false;
     this.getproductList();
     setTimeout(() => {
       console.log('Async operation has ended');
@@ -158,9 +167,11 @@ export class DashboardPage implements OnInit  {
   //   }
   // }
   viewsingleproduct(id){
+    this.toggled = false;
     this.router.navigate(['/viewsingleproduct',{"id":id}]);
   }
   viewcart(){
-    this.router.navigate(['/viewcartproduct']);
+    this.toggled = false;
+    this.router.navigate(['tabs/viewcartproduct']);
   }
 }

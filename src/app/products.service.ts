@@ -31,6 +31,10 @@ export class ProductsService {
         return null;
     };
   }
+  quantityavailcheck(quantity,singleid): Observable<any> {
+    const body= {"quantity":quantity,"id":singleid};
+    return this.http.post(this.apiUrl + 'quantityavailcheck',body,this.headers);
+  }
    getproductlist(id,subcategory_id,search,searchText,subsubcategory_id): Observable<any> {
     const body= {"category_id":id,"subcategory_id":subcategory_id,"price":search,"subsubcategory_id":subsubcategory_id};
     return this.http.post(this.apiUrl + 'getproductlist',body,this.headers);
@@ -206,6 +210,14 @@ export class ProductsService {
     this.headers= this.headers.append("Authorization", "Bearer " + this.token);
     const body= {"user_id":user_id};
     return this.http.post(this.apiUrl + 'getprofile',body,{ headers:this.headers });
+  }
+  getcurrency(currencyvalue): Observable<any> { 
+    this.token=localStorage.getItem("token");
+    this.headers = new HttpHeaders();
+    this.headers = this.headers.append('Content-Type', 'application/json');
+    this.headers= this.headers.append("Authorization", "Bearer " + this.token);
+    const body= {"currencyvalue":currencyvalue};
+    return this.http.post(this.apiUrl + 'getcurrency',body,{ headers:this.headers });
   }
   editprofile(user_id,profileForm,base64_image): Observable<any> { 
     this.token=localStorage.getItem("token");

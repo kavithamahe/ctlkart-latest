@@ -12,7 +12,7 @@
     <ion-list>
         <ion-grid *ngFor="let order of getsingleorder">
             <ion-row>
-                <ion-col size="6"><b>Order No_ {{order.order_id}}</b></ion-col>
+                <ion-col size="6"><b>Order No: {{order.order_id}}</b></ion-col>
                 <!-- <ion-col size="6" class="date" *ngIf="order.status == '1'">{{order.ordered_date | date: 'dd/MM/yyyy'}}</ion-col>
                 <ion-col size="6" class="date" *ngIf="order.status == '2'">{{order.Shipped_date | date: 'dd/MM/yyyy'}}</ion-col>
                 <ion-col size="6" class="date" *ngIf="order.status == '3'">{{order.delivered_date | date: 'dd/MM/yyyy'}}</ion-col>
@@ -81,7 +81,7 @@
                                     <h3>{{orderdetails.product_name}}</h3>
                                 </ion-col>
                                 <ion-col size="4">
-                                    <p color="warning"><i class="fa fa-inr"></i>{{orderdetails.amount | number : '1.2-2'}}</p>
+                                    <p color="warning"><i class="fa fa-inr"></i>{{orderdetails.priceperproduct | number : '1.2-2'}}</p>
                                 </ion-col>
                             </ion-row>
                             <ion-row>
@@ -125,16 +125,16 @@
                         <ion-label>Total Cost:</ion-label>
                     </ion-col>
                     <ion-col size="7">
-                        <p><i class="fa fa-inr"></i>{{totalamount | number : '1.2-2'}}</p>
+                        <p><i class="fa fa-inr"></i>{{order.totalamount | number : '1.2-2'}}</p>
                     </ion-col>
                 </ion-row>
             </ion-grid>
 
-<!-- 
-            <div class="titleLabelsec">
+            <div *ngIf="order.status == 3">
+            <div class="titleLabelsec" (click)="ordereview()">
                 <h3>Order Review</h3>
             </div>
-            <ion-grid class="orderInfrom">
+            <ion-grid class="orderInfrom" *ngIf = "closerating">
                  <ion-item lines="none">
                     <ion-label  position="stacked">Rate this item </ion-label>
                       <rating
@@ -149,7 +149,8 @@
                  <ion-item lines="none">
                     <ion-button (click)="reviewsent(order.product_id)">Save</ion-button>
                  </ion-item>
-            </ion-grid> -->
+            </ion-grid>
+        </div>
         </ion-grid>
     </ion-list>
 

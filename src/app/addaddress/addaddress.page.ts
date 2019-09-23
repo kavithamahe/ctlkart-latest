@@ -19,6 +19,7 @@ export class AddaddressPage implements OnInit {
   user_id: string;
   checkoutForm: FormGroup;
   submitAttempt: boolean = false;
+  fromorder:any;
 
   constructor(private location:Location,public formBuilder: FormBuilder,private router: Router,private route: ActivatedRoute,public productservice:ProductsService,) {
     this.user_id = localStorage.getItem("user_id");
@@ -27,6 +28,7 @@ export class AddaddressPage implements OnInit {
     this.quantity = this.route.snapshot.paramMap.get('quantity');
     this.fromcart = this.route.snapshot.paramMap.get('fromcart');
     this.totalpricecart = this.route.snapshot.paramMap.get('totalamount');
+    this.fromorder = route.snapshot.paramMap.get('fromorder');
     this.initForm();
    }
 
@@ -74,7 +76,7 @@ export class AddaddressPage implements OnInit {
         this.router.navigate(['getaddress']);
       }
       else{
-        this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart}]);
+        this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,'fromorder':this.fromorder}]);
       }
 
       
@@ -90,7 +92,7 @@ export class AddaddressPage implements OnInit {
         this.router.navigate(['getaddress']);
       }
       else{
-      this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart}]);
+      this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,'fromorder':this.fromorder}]);
     }
   }
 }

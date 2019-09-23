@@ -28,20 +28,9 @@ export class OtpverificationPage implements OnInit {
   onboard:any;
   userid:any;
   refreshToken:any;
+  fromorder:any;
   constructor(private location:Location,public router: Router,public events: Events,public firebaseAuthentication:FirebaseAuthentication,private route: ActivatedRoute,public productservice:ProductsService) { 
-    this.mobilenumber = route.snapshot.paramMap.get('mobile');
-    this.verificationId = route.snapshot.paramMap.get('verificationId');
-    this.singleid = route.snapshot.paramMap.get('id');
-    this.subcategory_id = route.snapshot.paramMap.get('subcategory_id');
-    this.category_id = route.snapshot.paramMap.get('category_id');
-    this.subcategory_name = route.snapshot.paramMap.get('subcategoryname');
-    this.quantity = route.snapshot.paramMap.get('quantity');
-    this.fromcart = route.snapshot.paramMap.get('fromcart');
-    this.totalpricecart = route.snapshot.paramMap.get('totalamount');
-    this.fromlogin = route.snapshot.paramMap.get('fromlogin');
-    this.onboard = route.snapshot.paramMap.get('onboard');
-    this.refreshToken = route.snapshot.paramMap.get('refreshToken');
-    this.userid = route.snapshot.paramMap.get('userid');
+  
 
   }
 
@@ -56,6 +45,10 @@ export class OtpverificationPage implements OnInit {
     this.fromcart = this.route.snapshot.paramMap.get('fromcart');
     this.totalpricecart = this.route.snapshot.paramMap.get('totalamount');
     this.fromlogin = this.route.snapshot.paramMap.get('fromlogin');
+    this.onboard = this.route.snapshot.paramMap.get('onboard');
+    this.refreshToken = this.route.snapshot.paramMap.get('refreshToken');
+    this.userid = this.route.snapshot.paramMap.get('userid');
+    this.fromorder = this.route.snapshot.paramMap.get('fromorder');
     this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
     if(this.cartDetails){
       this.cartcount = this.cartDetails.length;
@@ -83,9 +76,11 @@ export class OtpverificationPage implements OnInit {
       this.productservice.onetimepassword(this.mobilenumber,otp).subscribe(otpdata =>{
       
         console.log(otpdata);
+        
         localStorage.setItem("token", this.refreshToken);
         localStorage.setItem("user_id", this.userid);
         this.events.publish('loggedin');
+        this.productservice.presentToast("Mobile Verified Successfully");
         this.productservice.loadingdismiss();
         if(this.fromlogin == "1"){
           console.log(this.fromcart);
@@ -102,7 +97,7 @@ export class OtpverificationPage implements OnInit {
           }
           
           else if(this.fromcart || this.singleid && this.onboard != 1){
-            this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id}]);
+            this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,'fromorder':this.fromorder}]);
           }
           else{
             this.router.navigate(['']);
@@ -116,7 +111,7 @@ export class OtpverificationPage implements OnInit {
         }
         else if(this.fromlogin == null){
           console.log(this.fromlogin);
-          this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalpricecart":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,"onboard":this.onboard}]);
+          this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalpricecart":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,"onboard":this.onboard,'fromorder':this.fromorder}]);
         }
         // this.productservice.loadingdismiss();
       },
@@ -134,6 +129,6 @@ export class OtpverificationPage implements OnInit {
       console.error(error)});
   }
   back(){
-    this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalpricecart":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,"onboard":this.onboard}]);
+    this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalpricecart":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,"onboard":this.onboard,'fromorder':this.fromorder}]);
   }
 }

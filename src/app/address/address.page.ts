@@ -26,6 +26,7 @@ export class AddressPage implements OnInit {
   totalpricecart: string;
   submitAttempt: boolean = false;
   public selectedAsset;
+  fromorder:any;
   constructor(private location: Location, private router: Router, private route: ActivatedRoute, public productservice: ProductsService, public formBuilder: FormBuilder) {
     this.user_id = localStorage.getItem("user_id");
     this.allgetAddress(this.user_id);
@@ -38,6 +39,7 @@ export class AddressPage implements OnInit {
     this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
     this.totalpricecart = this.route.snapshot.paramMap.get('totalamount');
     this.type = this.route.snapshot.paramMap.get('type');
+    this.fromorder = route.snapshot.paramMap.get('fromorder');
 
     this.initForm();
   }

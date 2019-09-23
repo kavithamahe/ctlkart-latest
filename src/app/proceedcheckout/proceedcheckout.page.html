@@ -103,7 +103,7 @@
                             <ion-col size="8">
                                 <div class="quantity">
                                     <button clear (click)="decrementQty()"><ion-icon name="remove" ></ion-icon></button><span>{{item_qty}}</span>
-                                    <button clear (click)="incrementQty()"><ion-icon name="add" ></ion-icon></button>
+                                    <button clear (click)="incrementQty(single.quantity)"><ion-icon name="add" ></ion-icon></button>
                                 </div>
                             </ion-col>
 
@@ -134,7 +134,7 @@
         </div> -->
     </div>
     <!-- ------------------------------------cart---------------------------------- -->
-    <div class="proceedToPay" *ngIf="fromcart != 'null'">
+    <div class="proceedToPay" *ngIf="fromcart == '1'">
         <h3 class="deliveryLabel">Order Summary</h3>
         <div class="subtoatalValue">
             <ion-grid>

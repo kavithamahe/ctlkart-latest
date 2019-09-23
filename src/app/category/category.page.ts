@@ -21,6 +21,7 @@ export class CategoryPage implements OnInit {
   public toggled: boolean = false;
   constructor(private location:Location,private router: Router,public events: Events,public productservice:ProductsService) {
     this.getCategory();
+    this.toggled = false;
    }
 
   ngOnInit() {
@@ -52,6 +53,7 @@ export class CategoryPage implements OnInit {
    })
   }
   back(){
+    this.toggled = false;
     this.router.navigate(['']);
     
   }
@@ -64,10 +66,12 @@ export class CategoryPage implements OnInit {
    this.term.searchText = "";
  }
   viewcart(){
+    this.toggled = false;
     this.router.navigate(['/viewcartproduct']);
   }
-  getsubcategory(id){
-      this.router.navigate(['/subcategorylist',{"id":id}],{skipLocationChange: true});
+  getsubcategory(id,category_name){
+    this.toggled = false;
+      this.router.navigate(['/subcategorylist',{"id":id,"category_name":category_name}],{skipLocationChange: true});
   }
   getItems(searchItem) {
     this.productservice.getcategorylistsearch(this.term.searchText)

@@ -71,6 +71,7 @@ export class ProductbycategoryPage implements OnInit {
       this.product_name = "Products";
     }
     this.getproductbysubcategory(this.subcategory_id,this.subsubcategory_id);
+    this.toggled = false;
   }
 
   ngOnInit() {
@@ -185,6 +186,7 @@ export class ProductbycategoryPage implements OnInit {
   //  })
   // }
   viewsingleproduct(id){
+    this.toggled = false;
     this.router.navigate(['/viewsingleproduct',{"id":id,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,"subsubcategory_id":this.subsubcategory_id,"subsubcategory_name":this.subsubcategory_name}]);
   }
   sorybyvalue(val){
@@ -192,9 +194,11 @@ export class ProductbycategoryPage implements OnInit {
     this.filterbyCategory('',this.subcategory_id,val);
   }
   viewcart(){
+    this.toggled = false;
     this.router.navigate(['tabs/viewcartproduct']);
   }
   back(){
+    this.toggled = false;
     if(this.category_id && !this.subsubcategory_id){
       this.router.navigate(['subcategorylist',{"id":this.category_id}]);
     }

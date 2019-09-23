@@ -21,12 +21,19 @@ export class ProfilePage implements OnInit {
   getprofile:any=[];
   getaddresslist:any=[];
   public imageUrl = environment.imageUrl;
+  public currency={"currencyvalue":''};
   constructor(private location:Location,public alertController: AlertController,public events: Events,private route: ActivatedRoute,private router: Router,public productservice:ProductsService) { 
     this.user_id = localStorage.getItem("user_id");
     this.getprofileDetail(this.user_id);
   }
 
   ngOnInit() {
+    localStorage.removeItem('category_id');
+    localStorage.removeItem('subcategory_id');
+    localStorage.removeItem('subcategoryname');
+    localStorage.removeItem('singleid');
+    localStorage.removeItem('status');
+    localStorage.removeItem('fromorder');
     this.events.subscribe('profileedit', ()=>{
       this.user_id = localStorage.getItem("user_id");
       this.getprofileDetail(this.user_id);
@@ -35,6 +42,18 @@ export class ProfilePage implements OnInit {
   ionViewWillEnter(){
     this.user_id = localStorage.getItem("user_id");
     this.getprofileDetail(this.user_id);
+  }
+  currencychange(){
+    this.productservice.presentLoading();
+    this.productservice.getcurrency(this.currency.currencyvalue)
+    .subscribe(profile =>{ 
+      this.productservice.loadingdismiss();
+      // this.getprofile = profile.data;
+    },
+    err =>{
+      this.productservice.loadingdismiss();
+      this.productservice.presentToast(err.error.message);
+   })
   }
   getprofileDetail(user_id){
     this.productservice.presentLoading();

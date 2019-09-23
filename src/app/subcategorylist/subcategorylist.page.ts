@@ -22,9 +22,19 @@ export class SubcategorylistPage implements OnInit {
   term = { searchText: ''};
   public toggled: boolean = false;
   getallsubsubcategory:any=[];
+  category_name:any;
+  title:any;
   constructor(private location:Location,private router: Router,public events: Events,public productservice:ProductsService,private route: ActivatedRoute) {
     this.category_id = route.snapshot.paramMap.get('id');
+    this.category_name = route.snapshot.paramMap.get('category_name');
     this.getsubCategory(this.category_id);
+    this.toggled = false;
+    if(this.category_name){
+      this.title = this.category_name;
+    }
+    else{
+      this.title = "Sub Category";
+    }
    }
 
   ngOnInit() {
@@ -65,9 +75,11 @@ export class SubcategorylistPage implements OnInit {
    this.term.searchText = "";
  }
   viewcart(){
-    this.router.navigate(['/viewcartproduct']);
+    this.toggled = false;
+    this.router.navigate(['tabs/viewcartproduct']);
   }
   getsubcategory(id,subcategory_name){
+    this.toggled = false;
     this.productservice.getsubsubcategory(id)
     .subscribe(category =>{ 
       this.getallsubsubcategory = category.data;
@@ -86,6 +98,7 @@ export class SubcategorylistPage implements OnInit {
     
   }
   back(){
+    this.toggled = false;
     this.router.navigate(['tabs/category']);
   }
   getItems(searchItem) {

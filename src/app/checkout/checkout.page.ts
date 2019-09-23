@@ -29,6 +29,7 @@ export class CheckoutPage implements OnInit {
   numberverify:boolean = false;
   verify = { mobile: ''};
   onboard:any;
+  fromorder:any;
 
   constructor(public firebaseAuthentication:FirebaseAuthentication,private _location: Location ,public events: Events,private route: ActivatedRoute,private alertCtrl: AlertController,private router: Router,public formBuilder: FormBuilder,public productservice:ProductsService,public toastController: ToastController) { 
     this.singleid = route.snapshot.paramMap.get('id');
@@ -37,9 +38,9 @@ export class CheckoutPage implements OnInit {
     this.subcategory_name = route.snapshot.paramMap.get('subcategoryname');
     this.quantity = route.snapshot.paramMap.get('quantity');
     this.fromcart = route.snapshot.paramMap.get('fromcart');
-    this.fromcart = route.snapshot.paramMap.get('fromcart');
     this.totalpricecart = route.snapshot.paramMap.get('totalamount');
     this.onboard = route.snapshot.paramMap.get('onboard');
+    this.fromorder = route.snapshot.paramMap.get('fromorder');
     console.log(this.onboard)
     this.events.subscribe('cart', ()=>{
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
@@ -104,6 +105,12 @@ export class CheckoutPage implements OnInit {
         localStorage.setItem("user_id", data['userid']);
         this.events.publish('loggedin');
         console.log(this.fromcart)
+        if(this.fromcart == null || this.fromcart == "null"){
+          this.fromcart = "";
+        }
+        if(this.singleid == null || this.singleid == "null"){
+          this.singleid = "";
+        }
         if(this.onboard == 1){
           this.router.navigate(['']);
         }
@@ -125,7 +132,7 @@ export class CheckoutPage implements OnInit {
             if(this.verificationId){
               this.router.navigate(['otpverification',{"mobile":err.error.mobile,"refreshToken":err.error.refreshToken,"userid":err.error.userid,
               "verificationId":this.verificationId,"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,
-            "fromlogin":"1","onboard":this.onboard}]);
+            "fromlogin":"1","onboard":this.onboard,'fromorder':this.fromorder}]);
             // this.alert(this.verificationId,err.error.mobile);
             }
             

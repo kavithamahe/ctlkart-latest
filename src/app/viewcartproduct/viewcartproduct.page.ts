@@ -26,11 +26,20 @@ export class ViewcartproductPage implements OnInit {
   getProductLists:any;
   data: any;
   item_qty :any=1;
+  item_qtycheck :any=1;
+  totalQty:any;
+  qtycheck:any;
 
   constructor(private location:Location,public events: Events,public productservice:ProductsService,private route: ActivatedRoute,public router:Router,private alertCtrl: AlertController) { 
     this.getproductList();
   }
   ngOnInit() {
+    localStorage.removeItem('category_id');
+    localStorage.removeItem('subcategory_id');
+    localStorage.removeItem('subcategoryname');
+    localStorage.removeItem('singleid');
+    localStorage.removeItem('status');
+    localStorage.removeItem('fromorder');
     this.events.subscribe('loggedout', ()=>{
       this.token = localStorage.removeItem('token');
       this.cartDetails = localStorage.removeItem('cart_items');
@@ -121,41 +130,56 @@ export class ViewcartproductPage implements OnInit {
     this.getproductList();
  
   }
-  incrementQty(quantityperproduct,id){
-    quantityperproduct = +quantityperproduct;
-    quantityperproduct += 1;
-    var existingEntries = JSON.parse(localStorage.getItem("cart_items"));
-    let isInCart = false;
-    if (existingEntries) {
-      isInCart = existingEntries.some(item => item.id == id);
-     
-    } else {
-      existingEntries = [];
-    }
-    if (isInCart) {
-        existingEntries.map(item => {
-          if (item.id == id) {
-            item.quantityperproduct = quantityperproduct;
-          }
-          return item;
+  incrementQty(quantityperproduct,id,quantity){
+    var qnty = +(quantityperproduct);
+    var qty = qnty += 1;
+    this.productservice.quantityavailcheck(qty,id)
+    .subscribe(qtny =>{ 
+      this.qtycheck = qtny.message;
+      if(this.qtycheck == "true"){
+        quantityperproduct = +quantityperproduct;
+        quantityperproduct += 1;
+        var existingEntries = JSON.parse(localStorage.getItem("cart_items"));
+        let isInCart = false;
+        if (existingEntries) {
+          isInCart = existingEntries.some(item => item.id == id);
          
-        });  
-   
-
-    } else {
-      existingEntries.push(quantityperproduct);
-  
-    }
-    localStorage.setItem('cart_items', JSON.stringify(existingEntries)); 
-    this.getcartProductList = (JSON.parse(localStorage.getItem('cart_items')));
-    let total = 0;
-    for (var i = 0; i < this.getcartProductList.length; i++) {
-        if (this.getcartProductList[i].totalproductprice) {
-            total += (this.getcartProductList[i].price * this.getcartProductList[i].quantityperproduct);
-            this.totalamount = total;
+        } else {
+          existingEntries = [];
         }
-    }
-    return total;
+        if (isInCart) {
+            existingEntries.map(item => {
+              if (item.id == id) {
+                item.quantityperproduct = quantityperproduct;
+              }
+              return item;
+             
+            });  
+       
+    
+        } else {
+          existingEntries.push(quantityperproduct);
+      
+        }
+        localStorage.setItem('cart_items', JSON.stringify(existingEntries)); 
+        this.getcartProductList = (JSON.parse(localStorage.getItem('cart_items')));
+        let total = 0;
+        for (var i = 0; i < this.getcartProductList.length; i++) {
+            if (this.getcartProductList[i].totalproductprice) {
+                total += (this.getcartProductList[i].price * this.getcartProductList[i].quantityperproduct);
+                this.totalamount = total;
+            }
+        }
+        return total;
+        }
+        else{
+          this.productservice.presentToast( this.qtycheck)
+        }
+    },
+    err =>{
+      this.productservice.presentToast(err.error.message);
+   })
+
     }
     
    

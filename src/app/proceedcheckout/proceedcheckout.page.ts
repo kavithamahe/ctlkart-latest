@@ -38,6 +38,10 @@ export class ProceedcheckoutPage implements OnInit {
   getalladdress:any =[];
   address = { addvalue: ''};
   getaddress:any=[];
+  fromorder:any;
+  item_qtycheck :any=1;
+  totalQty:any;
+  qtycheck:any;
 
   constructor(private location:Location,public alertController: AlertController,public events: Events,public formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,public productservice:ProductsService) {
     
@@ -47,6 +51,7 @@ export class ProceedcheckoutPage implements OnInit {
     this.totalpricecart = route.snapshot.paramMap.get('totalamount');
     this.customer_id = route.snapshot.paramMap.get('customer_id');
     this.quantityperproduct = {"quantityperproduct":this.quantity};
+    this.fromorder = route.snapshot.paramMap.get('fromorder');
     this.getsingleaddress(this.customer_id);
     if(this.fromcart != "1"){
       this.getsingleproductlist(this.singleid);
@@ -118,10 +123,10 @@ export class ProceedcheckoutPage implements OnInit {
   }
   changeaddress(){
     if(this.fromcart == "1"){
-    this.router.navigate(['address',{"fromcart":"1","productLists":this.cartDetails,"totalamount":this.totalamount}]);
+    this.router.navigate(['address',{"fromcart":"1","productLists":this.cartDetails,"totalamount":this.totalamount,'fromorder':this.fromorder}]);
     }
     else{
-      this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity}]);
+      this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,'fromorder':this.fromorder}]);
     }
   
   }
@@ -152,9 +157,32 @@ export class ProceedcheckoutPage implements OnInit {
       this.productservice.presentToast(err.error.message);
    })
   }
-  incrementQty(){
-    this.item_qty += 1;
-    this.totalprice = (this.price * this.item_qty);
+  incrementQty(quantity){
+
+    var qty = this.item_qty;
+    var qnty = qty +=1;
+    this.productservice.quantityavailcheck(qnty,this.singleid)
+    .subscribe(qtny =>{ 
+      this.qtycheck = qtny.message;
+      if(this.qtycheck == "true"){
+        this.item_qty += 1;
+        this.totalprice = (this.price * this.item_qty);
+        }
+        else{
+          this.productservice.presentToast( this.qtycheck)
+        }
+    },
+    err =>{
+      this.productservice.presentToast(err.error.message);
+   })
+    // if(quantity > this.item_qty){
+    //   this.item_qty += 1;
+    //   this.totalprice = (this.price * this.item_qty);
+    //   }
+    //   else{
+    //     this.productservice.presentToast('Only available this quatity only., Sorry !!')
+    //   }
+
     }
     
    
