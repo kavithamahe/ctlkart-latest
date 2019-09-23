@@ -35,6 +35,7 @@ export class ViewsingleproductPage implements OnInit {
   totalQty:any;
   qtycheck:any;
   existingtotalQty:boolean = false;
+  existingQty:any;
   constructor(public events: Events,private _location: Location, public productservice:ProductsService,private route: ActivatedRoute,public router:Router,public toastController: ToastController) { 
     this.singleid = route.snapshot.paramMap.get('id');
     this.fromorder = route.snapshot.paramMap.get('fromorder');
@@ -132,6 +133,7 @@ export class ViewsingleproductPage implements OnInit {
     .subscribe(product =>{ 
       this.getsingleProductList = product.data;
       this.totalQty = product['data'][0]['quantity'];
+      this.existingQty = product['data'][0]['existing_quantity'];
       if(product['data'][0]['existing_quantity'] <= 10){
         this.existingtotalQty = true;
       }
@@ -144,6 +146,7 @@ export class ViewsingleproductPage implements OnInit {
    })
   }
   addproductTocart(id,item_qty,price){
+    if(this.existingQty != 0){
     var item_qtystr = item_qty.toString();
     let toatlprice = (item_qtystr * price);
     if(item_qtystr == ""){
@@ -180,6 +183,10 @@ if(this.cartDetails){
     this.presentToast("One item is added to cart");
   }
   }
+}
+else{
+  this.presentToast("Youe selected product(s) are not available");
+}
   }
   gotocartpage(){
     this.events.publish('cartview');
@@ -194,6 +201,7 @@ if(this.cartDetails){
     toast.present();
   }
   buyNow(id,item_qty){
+    if(this.existingQty != 0){
     this.token = localStorage.getItem('token');
     this.events.subscribe('loggedin',() => {
       this.token = localStorage.getItem('token');
@@ -209,6 +217,10 @@ if(this.cartDetails){
     this.router.navigate(['checkout',{"id":id,"quantity":item_qty,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,"subsubcategory_id":this.subsubcategory_id,"subsubcategory_name":this.subsubcategory_name,'fromorder':this.fromorder}]);
       }
     }
+  }
+  else{
+    this.presentToast("Youe selected product(s) are not available");
+  }
     }
 
 
