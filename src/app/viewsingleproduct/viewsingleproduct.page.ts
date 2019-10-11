@@ -172,7 +172,7 @@ if(this.cartDetails){
       this.presentToast("One item is added to cart");
     }else{
       // or tell user it's already there
-      this.presentToast("item already exists");
+      this.presentToast("Item already exists,Go to cart and add quantity to this product");
     }
   }
   else{
@@ -185,7 +185,7 @@ if(this.cartDetails){
   }
 }
 else{
-  this.presentToast("Youe selected product(s) are not available");
+  this.presentToast("Your selected product(s) are not available");
 }
   }
   gotocartpage(){
@@ -227,7 +227,6 @@ else{
     back(){
       var orderidlocal= localStorage.getItem("singleid");
       var orderstatuslocal=  localStorage.getItem("status");
-      console.log(this.fromorder)
       if(this.category_id != "null" && this.category_id){
         this.router.navigate(['productbycategory',{"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,"subsubcategory_id":this.subsubcategory_id,"subsubcategory_name":this.subsubcategory_name}]);
       }

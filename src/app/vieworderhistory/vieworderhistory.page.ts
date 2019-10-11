@@ -21,6 +21,10 @@ export class VieworderhistoryPage implements OnInit {
   user_id:any;
   review = { rating: '',ratingcomments:''};
   closerating:boolean = false;
+  number: number;
+  color: string;
+  orderstatus:any;
+  saturation:any;
 
   constructor(public actionSheetController: ActionSheetController,private location:Location,private router: Router,private alertCtrl: AlertController,public productservice:ProductsService,private route: ActivatedRoute) {
     this.singleid = route.snapshot.paramMap.get('orderid');
@@ -35,11 +39,41 @@ export class VieworderhistoryPage implements OnInit {
     this.user_id = localStorage.getItem("user_id");
     this.getsingleorderdetails(this.singleid,this.status);
   }
+  
+  onRangeChangeHandler() {
+
+    if (this.number > 0 && this.number < 26) {
+        this.color = 'dark';
+    }
+    else if (this.number > 25 && this.number < 51) {
+      this.color = 'primary';
+    }
+    else if (this.number > 50 && this.number < 76) {
+      this.color = 'secondary';
+    }
+    else {
+      this.color = 'danger';
+    }
+  }
   getsingleorderdetails(id,status){
     this.productservice.presentLoading();
     this.productservice.getsingleorderdetailsservice(id,status)
     .subscribe(product =>{ 
       this.getsingleorder = product.data;
+      this.orderstatus = this.getsingleorder[0].status;
+      
+    //   if(this.orderstatus == "0"){
+    //     this.saturation = "1";
+    //     this.color = 'dark';
+    // }
+    // if(this.orderstatus == "1"){
+    //   this.saturation = "2";
+    //   this.color = 'primary';
+    // }
+    // if(this.orderstatus == "2"){
+    //   this.saturation = "3";
+    //   this.color = 'secondary';
+    // }
       if(product.data){
       this.getsingleorderprice = product.data[0].items;
       if(this.getsingleorderprice){
@@ -109,14 +143,15 @@ export class VieworderhistoryPage implements OnInit {
       this.productservice.presentToast(err.error.message);
    })
   }
-  reviewsent(id){
+  reviewsent(id,order_id){
     this.productservice.presentLoading();
-    this.productservice.reviewsentuser(id,this.user_id,this.review.rating,this.review.ratingcomments)
+    this.productservice.reviewsentuser(id,this.user_id,this.review.rating,this.review.ratingcomments,order_id)
     .subscribe(product =>{ 
       this.productservice.presentToast(product.data);
       this.review.rating = "";
       this.review.ratingcomments = "";
       this.closerating = false;
+      this.getsingleorderdetails(this.singleid,this.status);
       this.productservice.loadingdismiss();
     },
     err =>{

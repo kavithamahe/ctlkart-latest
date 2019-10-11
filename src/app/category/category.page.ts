@@ -4,6 +4,7 @@ import { Events } from '@ionic/angular';
 import { environment } from '../../environments/environment';
 import { ProductsService } from '../products.service';
 import { Location } from '@angular/common';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 @Component({
   selector: 'app-category',
@@ -19,7 +20,7 @@ export class CategoryPage implements OnInit {
   getallcategories:any=[];
   term = { searchText: ''};
   public toggled: boolean = false;
-  constructor(private location:Location,private router: Router,public events: Events,public productservice:ProductsService) {
+  constructor(private location:Location,private router: Router,public events: Events,public keyboard: Keyboard,public productservice:ProductsService) {
     this.getCategory();
     this.toggled = false;
    }
@@ -58,6 +59,7 @@ export class CategoryPage implements OnInit {
     
   }
   public toggle(): void {
+    this.keyboard.show();
     this.toggled = !this.toggled;
  }
  cancelSearch(event){
@@ -81,5 +83,6 @@ export class CategoryPage implements OnInit {
     err =>{
       this.productservice.presentToast(err.error.message);
    })
+   this.keyboard.hide();
   }
 }

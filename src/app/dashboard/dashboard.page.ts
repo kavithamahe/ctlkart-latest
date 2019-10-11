@@ -3,6 +3,7 @@ import { Router,ActivatedRoute, NavigationEnd, } from '@angular/router';
 import { ProductsService } from 'src/app/products.service';
 import { environment } from '../../environments/environment';
 import { Events } from '@ionic/angular';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 
 @Component({
@@ -21,13 +22,14 @@ export class DashboardPage implements OnInit  {
     slidesPerView: 3,
     spaceBetween: 6,
     autoplay:true,
-    loop:true
+    // loop:true,
+    touchStartPreventDefault: false
   };
   sliderConfigProduct = {
     slidesPerView: 2,
     spaceBetween: 6,
     autoplay:true,
-    loop:true
+    // loop:true
   };
   sliderConfigimage = {
     spaceBetween: 6,
@@ -35,7 +37,7 @@ export class DashboardPage implements OnInit  {
   }
   imgURl:any;
   term = { searchText: ''};
-  constructor(public productservice:ProductsService,public router: Router,public events: Events) { 
+  constructor(public productservice:ProductsService,public router: Router,public events: Events,public keyboard: Keyboard) { 
     this.toggled = false;
     this.events.subscribe('cart', ()=>{
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
@@ -48,7 +50,6 @@ export class DashboardPage implements OnInit  {
     this.getproductList();
     this.getCategory();
   }
-
   ngOnInit() {
     localStorage.removeItem('category_id');
     localStorage.removeItem('subcategory_id');
@@ -73,11 +74,14 @@ export class DashboardPage implements OnInit  {
     
   }
   public toggle(): void {
+    this.keyboard.show();
     this.toggled = !this.toggled;
+    
  }
  cancelSearch(event){
    this.toggle();
    this.getproductList();
+   this.getCategory();
    this.term.searchText = "";
  }
   ionViewWillEnter(){
@@ -139,6 +143,14 @@ export class DashboardPage implements OnInit  {
     err =>{
       this.productservice.presentToast(err.error.message);
    })
+   this.productservice.getcategorylistsearch(this.term.searchText)
+   .subscribe(category =>{ 
+     this.getallcategories = category.data;
+   },
+   err =>{
+     this.productservice.presentToast(err.error.message);
+  })
+  this.keyboard.hide();
   }
   triggerInput( ev: any ) {
     // Reset items back to all of the items

@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Events } from '@ionic/angular';
 import { ProductsService } from '../products.service';
 import { Location } from '@angular/common';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 @Component({
   selector: 'app-subcategorylist',
@@ -24,7 +25,7 @@ export class SubcategorylistPage implements OnInit {
   getallsubsubcategory:any=[];
   category_name:any;
   title:any;
-  constructor(private location:Location,private router: Router,public events: Events,public productservice:ProductsService,private route: ActivatedRoute) {
+  constructor(private location:Location,public keyboard: Keyboard,private router: Router,public events: Events,public productservice:ProductsService,private route: ActivatedRoute) {
     this.category_id = route.snapshot.paramMap.get('id');
     this.category_name = route.snapshot.paramMap.get('category_name');
     this.getsubCategory(this.category_id);
@@ -67,6 +68,7 @@ export class SubcategorylistPage implements OnInit {
    })
   }
   public toggle(): void {
+    this.keyboard.show();
     this.toggled = !this.toggled;
  }
  cancelSearch(event){
@@ -109,5 +111,6 @@ export class SubcategorylistPage implements OnInit {
     err =>{
       this.productservice.presentToast(err.error.message);
    })
+   this.keyboard.hide();
   }
 }

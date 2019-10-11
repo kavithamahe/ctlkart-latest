@@ -48,6 +48,13 @@ ion-content {
 .inner-scroll {
     background: #efeff1 !important;
 }
+.required:after {
+    content: " *";
+    color: red;
+}
+.err-reds {
+    color: red;
+}
 
 ion-header {
     padding: 0px 0px 0 0;

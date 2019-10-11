@@ -4,6 +4,7 @@ import { Router,ActivatedRoute } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { Events,ActionSheetController } from '@ionic/angular';
 import { Location } from '@angular/common';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 @Component({
   selector: 'app-productbycategory',
@@ -34,7 +35,7 @@ export class ProductbycategoryPage implements OnInit {
   subsubcategory_id:any;
   product_name:any;
 
-  constructor(private location:Location,public actionSheetController: ActionSheetController,public events: Events,public productservice:ProductsService,public router: Router,private route: ActivatedRoute) { 
+  constructor(private location:Location,public keyboard: Keyboard,public actionSheetController: ActionSheetController,public events: Events,public productservice:ProductsService,public router: Router,private route: ActivatedRoute) { 
     this.subcategory_id = route.snapshot.paramMap.get('subcategory_id');
     this.subsubcategory_id = route.snapshot.paramMap.get('subsubcategory_id');
     this.category_id = route.snapshot.paramMap.get('category_id');
@@ -82,6 +83,7 @@ export class ProductbycategoryPage implements OnInit {
     this.imgURl = this.imageUrl;
   }
   public toggle(): void {
+    this.keyboard.show();
     this.toggled = !this.toggled;
  }
  cancelSearch(event){
@@ -159,6 +161,7 @@ export class ProductbycategoryPage implements OnInit {
     err =>{
       this.productservice.presentToast(err.error.message);
    })
+   this.keyboard.hide();
   }
   filterbyCategory(id,subcategory_id,val){
     this.productservice.presentLoading();

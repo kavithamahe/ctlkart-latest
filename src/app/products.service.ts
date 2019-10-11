@@ -39,6 +39,14 @@ export class ProductsService {
     const body= {"category_id":id,"subcategory_id":subcategory_id,"price":search,"subsubcategory_id":subsubcategory_id};
     return this.http.post(this.apiUrl + 'getproductlist',body,this.headers);
   }
+  getreviewlist(): Observable<any> {
+    this.token=localStorage.getItem("token");
+    this.headers = new HttpHeaders();
+    this.headers = this.headers.append('Content-Type', 'application/json');
+    this.headers= this.headers.append("Authorization", "Bearer " + this.token);
+    const body= {};
+    return this.http.post(this.apiUrl + 'getproductreview',body,{ headers:this.headers });
+  }
   getproductlistsearch(search): Observable<any> {
     const body= {"search":search};
     return this.http.post(this.apiUrl + 'getproductlistsearch',body,this.headers);
@@ -182,12 +190,12 @@ export class ProductsService {
     const body= {"id":id};
     return this.http.post(this.apiUrl + 'ordercancelbyuser',body,{ headers:this.headers });
   }
-  reviewsentuser(id,user_id,rating,ratingcomments): Observable<any> {
+  reviewsentuser(id,user_id,rating,ratingcomments,order_id): Observable<any> {
     this.token=localStorage.getItem("token");
     this.headers = new HttpHeaders();
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers= this.headers.append("Authorization", "Bearer " + this.token);
-    const body= {"product_id":id,"user_id":user_id,"rating":rating,"ratingcomments":ratingcomments};
+    const body= {"product_id":id,"user_id":user_id,"rating":rating,"ratingcomments":ratingcomments,'order_id':order_id};
     return this.http.post(this.apiUrl + 'productreview',body,{ headers:this.headers });
   }
   changepassword(password): Observable<any> {
@@ -196,7 +204,7 @@ export class ProductsService {
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers= this.headers.append("Authorization", "Bearer " + this.token);
    
-    const body= {"current_password":password.currentpassword,"new_password":password.newpassword,"confirm_password":password.confirmpassword};
+    const body= {"current_password":password.current_password,"new_password":password.new_password,"confirm_password":password.confirm_password};
     return this.http.post(this.apiUrl + 'password/change',body,{ headers:this.headers });
   }
   forgetpassword(email): Observable<any> { 

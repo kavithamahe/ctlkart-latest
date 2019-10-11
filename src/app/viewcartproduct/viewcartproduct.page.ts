@@ -298,14 +298,14 @@ export class ViewcartproductPage implements OnInit {
       message: 'Are you sure want to delete this item from your cart?',
       buttons: [
         {
-          text: 'Cancel',
+          text: 'No',
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
           }
         }, {
-          text: 'Okay',
+          text: 'Yes',
           handler: () => {
             this.removeproductTocart(id);
           }

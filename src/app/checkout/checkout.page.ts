@@ -161,7 +161,7 @@ export class CheckoutPage implements OnInit {
       if(this.fromcart == '1'){
         this.router.navigate(['tabs/viewcartproduct']);
       }
-      else if(this.singleid){
+      else if(this.singleid && this.singleid != "null"){
         this.router.navigate(['viewsingleproduct',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id}]);
       }
       else{

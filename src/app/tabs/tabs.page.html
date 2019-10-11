@@ -24,11 +24,11 @@
         <p class="tab-list">Profile</p>
     </ion-tab-button>
     <ion-tab-button tab="myorders" *ngIf="token">
-        <ion-icon name="person"></ion-icon>
+        <ion-icon name="bookmarks"></ion-icon>
         <p class="tab-list">Orders</p>
     </ion-tab-button>
     <ion-tab-button>
-        <ion-menu-button autoHide="false"></ion-menu-button>
+        <ion-menu-button autoHide="false" menu-toggle="left"></ion-menu-button>
         <p class="tab-list">More</p>
     </ion-tab-button>
 </ion-tab-bar>

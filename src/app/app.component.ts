@@ -9,7 +9,8 @@ import { Router, ActivatedRoute,RouterStateSnapshot,RoutesRecognized,RouterState
 import { IonRouterOutlet } from '@ionic/angular';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
-
+declare var cordova:any;
+declare var window:any;
 
 @Component({
   selector: 'app-root',
@@ -86,21 +87,32 @@ export class AppComponent {
     //   this.splashScreen.hide();
     // });
 
-
       this.platform.ready().then(() => {
-        this.statusBar.styleDefault();
-         if (this.platform.is('android')) {
-          this.statusBar.overlaysWebView(false);
-          this.statusBar.backgroundColorByHexString('#000000');
-              }
-              if (this.platform.is('ios')) {
-                 // StatusBar.overlaysWebView(false);
-                 //  StatusBar.styleLightContent();
-                 this.statusBar.hide();
-              }
-         setTimeout(() => {
-          this.statusBar.hide();
-        }, 100);
+          this.statusBar.styleDefault();
+          this.splashScreen.hide();
+          // Okay, so the platform is ready and our plugins are available.
+          // Here you can do any higher level native things you might need.
+    
+          if (window.cordova && window.cordova.plugins.Keyboard) {
+            console.log("dfsdfgf")
+            // This requires installation of https://github.com/driftyco/ionic-plugin-keyboard
+            // and can only affect native compiled Ionic2 apps (not webserved).
+            cordova.plugins.Keyboard.disableScroll(false);
+          }
+        // this.statusBar.styleDefault();
+        //  if (this.platform.is('android')) {
+        //   // this.statusBar.overlaysWebView(false);
+        //   // this.statusBar.backgroundColorByHexString('#ffffff');
+        //       }
+        //       if (this.platform.is('ios')) {
+        //          // StatusBar.overlaysWebView(false);
+        //          //  StatusBar.styleLightContent();
+        //          this.statusBar.hide();
+        //       }
+        //  setTimeout(() => {
+        //   this.splashScreen.hide();
+        //   this.statusBar.hide();
+        // }, 100);
         
         this.platform.backButton.subscribeWithPriority(0, () => {
       
@@ -354,9 +366,10 @@ export class AppComponent {
   //   this.menu.open('first');
   // }
   logout() {
-    this.events.publish('loggedout');
     localStorage.removeItem('token');
     localStorage.removeItem('cart_items');
+    localStorage.removeItem('user_id');
+    this.events.publish('loggedout');
     this.menu.close();
     this.router.navigate(['']);
     this.login_status = true;
@@ -364,6 +377,7 @@ export class AppComponent {
 }
 login(){
   this.menu.close();
+  this.menu.enable(true);
   this.router.navigate(['checkout']);
 }
 changepassword(){

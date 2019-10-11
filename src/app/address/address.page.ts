@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../products.service';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
+import { CheckzipcodeService } from '../checkzipcode.service';
 
 @Component({
   selector: 'app-address',
@@ -10,6 +11,9 @@ import { Location } from '@angular/common';
   styleUrls: ['./address.page.scss'],
 })
 export class AddressPage implements OnInit {
+  zipcode: any;
+  getaddress: any =[];
+  checkzipcode: any;
   subcategory_name: any;
   category_id: any;
   subcategory_id: any;
@@ -27,7 +31,9 @@ export class AddressPage implements OnInit {
   submitAttempt: boolean = false;
   public selectedAsset;
   fromorder:any;
-  constructor(private location: Location, private router: Router, private route: ActivatedRoute, public productservice: ProductsService, public formBuilder: FormBuilder) {
+  gelallcheckcodedetails:any=[];
+  
+  constructor(private location: Location, private router: Router, public check:CheckzipcodeService,private route: ActivatedRoute, public productservice: ProductsService, public formBuilder: FormBuilder) {
     this.user_id = localStorage.getItem("user_id");
     this.allgetAddress(this.user_id);
     this.subcategory_id = route.snapshot.paramMap.get('subcategory_id');
@@ -45,6 +51,7 @@ export class AddressPage implements OnInit {
   }
 
   ngOnInit() {
+    this.getzipcode();
     this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
     if (this.cartDetails) {
       this.cartcount = this.cartDetails.length;
@@ -68,6 +75,14 @@ export class AddressPage implements OnInit {
     this.allgetAddress(this.user_id);
 
   }
+  getzipcode(){
+    this.check.getallzipcode().subscribe(data =>{
+     this.gelallcheckcodedetails = data.data;
+    }, 
+     err =>{
+      this.productservice.presentToast(err.error.message);
+   })
+  }
   addAddress() {
     this.router.navigate(['addaddress', { "id": this.singleid, "quantity": this.quantity, "fromcart": this.fromcart, "customer_id": this.customer_id, "totalamount": this.totalpricecart }])
   }
@@ -83,8 +98,19 @@ export class AddressPage implements OnInit {
     });
   }
   radioSelects(event, id) {
-    console.log(id)
+    console.log(event)
     this.customer_id = id;
+      this.productservice.presentLoading();
+      this.productservice.viewsingleaddress(id)
+      .subscribe(getsinaddress =>{ 
+        this.getaddress = getsinaddress.data;
+        this.zipcode = this.getaddress.zipcode
+        this.productservice.loadingdismiss();
+      },
+      err =>{
+        this.productservice.loadingdismiss();
+        this.productservice.presentToast(err.error.message);
+     })
   }
   allgetAddress(user_id) {
     this.productservice.presentLoading();
@@ -98,13 +124,34 @@ export class AddressPage implements OnInit {
           this.productservice.presentToast(err.error.message);
         })
   }
-  next() {
-    if (this.customer_id) {
-      this.router.navigate(['proceedcheckout', { "id": this.singleid, "quantity": this.quantity, "fromcart": this.fromcart, "customer_id": this.customer_id, "totalamount": this.totalpricecart }]);
-    }
-    else {
-      this.productservice.presentToast("Please Select the delivery address");
-    }
+  next(id) {
+    this.customer_id = id;
+    this.productservice.presentLoading();
+    this.productservice.viewsingleaddress(id)
+    .subscribe(getsinaddress =>{ 
+      this.getaddress = getsinaddress.data;
+      this.zipcode = this.getaddress.zipcode
+      this.productservice.loadingdismiss();
+      this.checkzipcode = this.gelallcheckcodedetails.find(p => this.zipcode == p.zipcode);
+      console.log(this.checkzipcode)
+      if(this.checkzipcode == undefined){
+        this.productservice.presentToast("your zipcode is not availble,please select another address");
+      }
+      else{
+        if (this.customer_id) {
+          this.router.navigate(['proceedcheckout', { "id": this.singleid, "quantity": this.quantity, "fromcart": this.fromcart, "customer_id": this.customer_id, "totalamount": this.totalpricecart }]);
+        }
+        else {
+          this.productservice.presentToast("Please Select the delivery address");
+        }
+      }
+    },
+    err =>{
+      this.productservice.loadingdismiss();
+      this.productservice.presentToast(err.error.message);
+   })
+   
+ 
   }
   editaddress(id) {
     this.router.navigate(['editprofile', {

@@ -3,11 +3,11 @@
         <ion-buttons slot="start">
             <ion-icon name="arrow-back" (click)="back()"></ion-icon>
         </ion-buttons>
-        <ion-title>Changepassword</ion-title>
+        <ion-title>Change Password</ion-title>
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<!-- <ion-content>
     <div class="ion-padding border-input">
         <ion-item>
             <ion-input class="currentpassword" type="text" placeholder="Current Password" [(ngModel)]="password.currentpassword"></ion-input>
@@ -23,4 +23,60 @@
     <div padding>
         <ion-text class="loginBtn" color="cart" (click)="changePassword()">Submit</ion-text>
     </div>
-</ion-content>
+</ion-content> -->
+
+
+<ion-content class="changePassword">
+    <ion-card class="changePassword-card">
+      <form [formGroup]="changepasswordForm">
+        <ion-label class="required">Current password</ion-label>
+        <ion-item>
+          <ion-input type="{{mytype}}" formControlName="currentPassword" placeholder="Current password"></ion-input>
+        </ion-item>
+        <small *ngIf="!changepasswordForm.controls.currentPassword.valid  && (changepasswordForm.controls.currentPassword.dirty || submitAttempt)">
+          <p class="err-reds">Please enter the current password</p>
+        </small><br>
+        <ion-label class="required">New password</ion-label>
+        <ion-item>
+          <ion-input type="{{mytype}}" formControlName="newPassword" [(ngModel)]="newPassword" placeholder="New password">
+          </ion-input>
+        </ion-item>
+         <small *ngIf="!changepasswordForm.controls.newPassword.valid  && (changepasswordForm.controls.newPassword.dirty || submitAttempt)">
+                <p class="err-reds">Please enter the new password</p>
+          </small>
+        <br>
+        <ion-label class="required">Re-enter password</ion-label>
+        <ion-item>
+          <ion-input type="{{mytype}}" (focus)="reEnter()" formControlName="re_enterPassword" placeholder="Re-enter password"></ion-input>
+        </ion-item>
+        <small *ngIf="!changepasswordForm.controls.re_enterPassword.valid  && (changepasswordForm.controls.re_enterPassword.dirty || submitAttempt)">
+          <p class="err-reds">Please re-enter the new password</p>
+        </small>
+        <div *ngIf="password_submit">
+          <p class="err-reds">Did not match the new password</p>
+        </div><br>
+      </form>    
+      
+      <span class="showPassword">
+        <ion-checkbox [(ngModel)]="show_password" (ionChange)="showPassword()"></ion-checkbox>&nbsp; Show password
+      </span>
+      
+      <div padding>
+        <ion-text class="loginBtn" color="cart" (click)="changePassword()">Submit</ion-text>
+    </div>  
+  
+  
+  
+    </ion-card>
+  </ion-content>
+  <style>
+    .gly-rotate-180 {
+      filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=0.5);
+      -webkit-transform: rotate(180deg);
+      -moz-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+      -o-transform: rotate(180deg);
+      transform: rotate(180deg);
+      display: inline-block;
+    }
+  </style>

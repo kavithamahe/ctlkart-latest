@@ -25,7 +25,7 @@
                 </ion-label>
                 <ion-input formControlName="mobile" required type="text"></ion-input>
             </div>
-            <p *ngIf="!checkoutForm.controls.mobile.valid && (checkoutForm.controls.mobile.dirty || submitAttempt)" class="err-reds shake">Please enter mobile.</p>
+            <p *ngIf="!checkoutForm.controls.mobile.valid && (checkoutForm.controls.mobile.dirty || submitAttempt)" class="err-reds shake">Please enter mobile number</p>
 
             <div class="formList">
                 <ion-label position="floating">Flat No / Area / Street
@@ -38,7 +38,7 @@
             <div class="formList">
                 <ion-label position="floating">Landmark
                 </ion-label>
-                <ion-input required type="text" formControlName="landmark"></ion-input>
+                <ion-input type="text" formControlName="landmark"></ion-input>
             </div>
             <div class="formList">
                 <ion-label position="floating">City

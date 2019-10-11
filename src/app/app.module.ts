@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { FormsModule,ReactiveFormsModule  } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -21,6 +22,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { ProductPipeModule } from './pipes/productPipe.module';
 import { ProductfilterPipe } from './pipes/productfilter.pipe';
 import { custumePipeModule } from './pipes/custumepipe.module';
+
+
 
 export const firebaseConfig = {
   apikey:"AIzaSyDVF3cXrQr7t7Ab9eTJ0QTtOOUecZVIZvw",
@@ -51,7 +54,7 @@ export const firebaseConfig = {
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    FirebaseAuthentication,AngularFireAuth,Camera,File
+    FirebaseAuthentication,AngularFireAuth,Camera,File,Keyboard
   ],
   bootstrap: [AppComponent]
 })

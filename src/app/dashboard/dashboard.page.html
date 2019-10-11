@@ -9,7 +9,7 @@
         <ion-buttons slot="end">
             <ion-icon class="searchIcOn" *ngIf="!toggled" (click)="toggle()" name="search"></ion-icon>
         </ion-buttons>
-        <ion-searchbar *ngIf="toggled" [(ngModel)]="term.searchText" (ionInput)="getItems(term.searchText)" (ionCancel)="cancelSearch($event)" (ionClear)="cancelSearch($event)" [showCancelButton]="true">
+        <ion-searchbar *ngIf="toggled" [(ngModel)]="term.searchText" (keyup.enter)="getItems(term.searchText)" (ionCancel)="cancelSearch($event)" (ionClear)="cancelSearch($event)" [showCancelButton]="true">
         </ion-searchbar>
     </ion-toolbar>
     <!-- <ion-toolbar class="ion-searchbar">
@@ -40,12 +40,12 @@
                     <h3>Category</h3>
                 </ion-col>
                 <ion-col size="6">
-                    <a href="Javascript:" (click)="seecategory()">See All</a>
+                    <!-- <a href="Javascript:" (click)="seecategory()">See All</a> -->
                 </ion-col>
             </ion-row>
         </ion-grid>
         <ion-slides [options]="sliderConfig">
-            <ion-slide *ngFor="let cat of getallcategories">
+            <ion-slide *ngFor="let cat of getallcategories" (click)="filterbyCategory(cat.category_id)">
                 <div class="categorydash">
                     <div class="categoryImage">
                         <img (click)="filterbyCategory(cat.category_id)" [src]="imgURl + cat.category_image" />
@@ -62,12 +62,12 @@
                     <h3>Latest Products</h3>
                 </ion-col>
                 <ion-col size="6">
-                    <a href="Javascript:" (click)="seecategory()">See All</a>
+                    <!-- <a href="Javascript:" (click)="seecategory()">See All</a> -->
                 </ion-col>
             </ion-row>
         </ion-grid>
         <ion-slides [options]="sliderConfigProduct">
-            <ion-slide *ngFor="let product of getProductLists">
+            <ion-slide *ngFor="let product of getProductLists" (click)="viewsingleproduct(product.id)">
                 <div class="categorysliderdash">
                     <img [src]="imgURl + product.product_image" (click)="viewsingleproduct(product.id)" />
                     <ion-label (click)="viewsingleproduct(product.id)">{{product.product_name}}</ion-label>

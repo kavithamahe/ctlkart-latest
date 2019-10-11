@@ -203,7 +203,7 @@ export class EditprofilePage implements OnInit {
             this.router.navigate(['address', { "id": this.singleid, "quantity": this.quantity, "fromcart": this.fromcart, "totalamount": this.totalpricecart,'fromorder':this.fromorder }]);
           }
           else {
-            this.router.navigate(['tabs/profile']);
+            this.router.navigate(['getaddress']);
           }
 
         },

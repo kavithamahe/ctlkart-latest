@@ -3,6 +3,7 @@ import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../products.service';
 import { Location } from '@angular/common';
+import { CheckzipcodeService } from '../checkzipcode.service';
 
 @Component({
   selector: 'app-addaddress',
@@ -10,6 +11,8 @@ import { Location } from '@angular/common';
   styleUrls: ['./addaddress.page.scss'],
 })
 export class AddaddressPage implements OnInit {
+  checkzipcode: any;
+  gelallcheckcodedetails:any=[];
   totalpricecart: string;
   address_type: any;
   fromcart: string;
@@ -21,7 +24,7 @@ export class AddaddressPage implements OnInit {
   submitAttempt: boolean = false;
   fromorder:any;
 
-  constructor(private location:Location,public formBuilder: FormBuilder,private router: Router,private route: ActivatedRoute,public productservice:ProductsService,) {
+  constructor(private location:Location,public formBuilder: FormBuilder,public check:CheckzipcodeService,private router: Router,private route: ActivatedRoute,public productservice:ProductsService,) {
     this.user_id = localStorage.getItem("user_id");
     this.type = this.route.snapshot.paramMap.get('type');
     this.singleid = this.route.snapshot.paramMap.get('id');
@@ -33,6 +36,7 @@ export class AddaddressPage implements OnInit {
    }
 
   ngOnInit() {
+     this.getzipcode();
     this.type = this.route.snapshot.paramMap.get('type');
     this.singleid = this.route.snapshot.paramMap.get('id');
     this.quantity = this.route.snapshot.paramMap.get('quantity');
@@ -42,6 +46,14 @@ export class AddaddressPage implements OnInit {
   ionViewWillEnter(){
     this.type = this.route.snapshot.paramMap.get('type');
    
+  }
+   getzipcode(){
+    this.check.getallzipcode().subscribe(data =>{
+     this.gelallcheckcodedetails = data.data;
+    }, 
+     err =>{
+      this.productservice.presentToast(err.error.message);
+   })
   }
   initForm(){
     this.checkoutForm = this.formBuilder.group({
@@ -60,6 +72,10 @@ export class AddaddressPage implements OnInit {
   this.address_type = ev.detail.value;
   }
   submitaddress(){
+        this.checkzipcode = this.gelallcheckcodedetails.find(p => this.checkoutForm.value.zipcode == p.zipcode);
+    if(this.checkzipcode == undefined){
+      this.productservice.presentAlert("your zipcode is not availble");
+    }
     this.checkoutForm.value.address_type = this.address_type;
     let user_id = {"user_id":this.user_id};
     let obj = Object.assign(this.checkoutForm.value,user_id);
