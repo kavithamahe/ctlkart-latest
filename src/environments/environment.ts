@@ -4,10 +4,10 @@
 
 export const environment = {
   production: false,
-  // apiUrl : 'http://15.206.15.223:5003/api/',
-  // imageUrl:'http://15.206.15.223:5003/',
-  apiUrl : 'http://192.168.1.27:3000/api/',
-  imageUrl:'http://192.168.1.27:3000/',
+  apiUrl : 'http://15.206.15.223:5003/api/',
+  imageUrl:'http://15.206.15.223:5003/',
+  // apiUrl : 'http://192.168.1.27:3000/api/',
+  // imageUrl:'http://192.168.1.27:3000/',
   firebaseConfig : {
     apikey:"AIzaSyDVF3cXrQr7t7Ab9eTJ0QTtOOUecZVIZvw",
     authDomain: "313104804796-2n9i4k22k3d0voqnrljsurf9paqlgmnc.apps.googleusercontent.com",
