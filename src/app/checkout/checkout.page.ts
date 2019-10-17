@@ -103,6 +103,9 @@ export class CheckoutPage implements OnInit {
         localStorage.setItem("token", data['refreshToken']);
         let token = localStorage.setItem("token", data['refreshToken']);
         localStorage.setItem("user_id", data['userid']);
+        localStorage.setItem("email", data['email']);
+        localStorage.setItem("username", data['username']);
+        localStorage.setItem("mobile", data['mobile']);
         this.events.publish('loggedin');
         console.log(this.fromcart)
         if(this.fromcart == null || this.fromcart == "null"){

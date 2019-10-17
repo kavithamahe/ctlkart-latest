@@ -6,6 +6,8 @@ import { environment } from '../../environments/environment';
 import { Events, AlertController } from '@ionic/angular';
 import { Location } from '@angular/common';
 
+declare var RazorpayCheckout: any;
+
 
 @Component({
   selector: 'app-proceedcheckout',
@@ -16,7 +18,7 @@ import { Location } from '@angular/common';
 export class ProceedcheckoutPage implements OnInit {
   totalamount: number;
   selectedlength: any;
-  totalpricecart: string;
+  totalpricecart: any;
   productListsfromcart: string;
   cartcount: any;
   cartDetails: any;
@@ -64,13 +66,13 @@ export class ProceedcheckoutPage implements OnInit {
  
   ngOnInit() {
     this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
+    // localStorage.setItem('cartDetails',(JSON.parse(localStorage.getItem('cart_items'))));
     if(this.cartDetails){
       this.cartcount = this.cartDetails.length;
     }
     this.user_id = localStorage.getItem("user_id");
 
   }
-
   editaddress(){
 
   }
@@ -205,6 +207,7 @@ export class ProceedcheckoutPage implements OnInit {
     }
   }
     async proceedtobuycart() {
+      localStorage.setItem('totalcostsingleproductcart', this.totalpricecart);
       if(this.customer_id == "" || this.customer_id == undefined){
         this.productservice.presentToast("Please Select The Delivery Address");
       }
@@ -234,14 +237,72 @@ export class ProceedcheckoutPage implements OnInit {
     }
     }
     proceedtobuycartconfirm(){
+     console.log(JSON.parse(localStorage.getItem('cart_items')));
         this.productservice.presentLoading();
         this.productservice.checkoutcart(this.user_id,this.customer_id,this.cartDetails,this.totalpricecart)
         .subscribe(product =>{ 
           this.productservice.loadingdismiss();
+          var options = {
+            description: 'CTLKART',
+            currency: 'INR',
+            key: 'rzp_test_cGa8WOh98HS217',
+            amount: (this.totalpricecart * 100),
+            prefill: {
+              email: localStorage.getItem('email'),
+              contact: localStorage.getItem('mobile'),
+              name: localStorage.getItem('username')
+            },
+            "notes": {
+              "email": localStorage.getItem('email'),
+              "service_cost":(this.totalpricecart * 100),
+            },
+            // theme: {
+            //   color: '#F37254'
+            // }
+          }
+              
+           
+          var successCallback = function(success) {
+            // alert(success.razorpay_payment_id)
+            // var orderId = success.razorpay_order_id;
+            // var signature = success.razorpay_signature;
+            var url  = localStorage.getItem("rootUrl")+"razorPaymentResponse";
+            var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+         xmlhttp.open("POST", url,true);
+         
+         xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+         xmlhttp.setRequestHeader("Authorization", "Bearer "+ localStorage.getItem("token"));
+         xmlhttp.send(JSON.stringify({ "razorpay_payment_id": success.razorpay_payment_id,"product_cost": localStorage.getItem('totalcostsingleproductcart'),"user_id": localStorage.getItem("user_id"),"productListsfromcart": JSON.parse(localStorage.getItem('cart_items'))}));
+         
+         xmlhttp.onload = function () {
+           var users = JSON.parse(xmlhttp.responseText);
+           var error = users.error;
+          var result=users.result;
+          localStorage.removeItem('cart_items');
+          // localStorage.removeItem('cart_items');
+        
+           // if(result){
+           //    nav.presentConfirm(result);
+           // }
+           //  if(error){
+           //    nav.presentConfirm(error);
+           // }
+           }
+          }
+           
+          var cancelCallback = function(error) {
+            alert(error.description + ' (Error '+error.code+')')
+          }
+           
+          RazorpayCheckout.on('payment.success', successCallback)
+          RazorpayCheckout.on('payment.cancel', cancelCallback)
+          RazorpayCheckout.open(options)
+
+
           this.productservice.presentToast(product.message);
           this.router.navigate(['checkoutsuccess']);
-          localStorage.removeItem('cart_items');
-          this.events.publish('cart');
+        
+          
         },
         err =>{
           this.productservice.loadingdismiss();
@@ -251,6 +312,8 @@ export class ProceedcheckoutPage implements OnInit {
       
     }
     async proceedtobuy(product_id) {
+      localStorage.setItem('totalcostsingleproduct', this.totalprice);
+      localStorage.setItem('product_id', product_id);
       if(this.customer_id == "" || this.customer_id == undefined){
         this.productservice.presentToast("Please Select The Delivery Address");
       }
@@ -280,11 +343,64 @@ export class ProceedcheckoutPage implements OnInit {
     }
     }
     proceedtobuyconfirm(product_id){
-     
         this.productservice.presentLoading();
         this.productservice.checkout(this.user_id,this.customer_id,product_id,this.totalprice,this.item_qty)
         .subscribe(product =>{ 
           this.productservice.loadingdismiss();
+          var options = {
+            description: 'CTLKART',
+            currency: 'INR',
+            key: 'rzp_test_cGa8WOh98HS217',
+            amount: (this.totalprice * 100),
+            prefill: {
+              email: localStorage.getItem('email'),
+              contact: localStorage.getItem('mobile'),
+              name: localStorage.getItem('username')
+            },
+            "notes": {
+              "email": localStorage.getItem('email'),
+              "service_cost":(this.totalprice * 100),
+            },
+            // theme: {
+            //   color: '#F37254'
+            // }
+          }
+              
+           
+          var successCallback = function(success) {
+            // alert(success.razorpay_payment_id)
+            // var orderId = success.razorpay_order_id;
+            // var signature = success.razorpay_signature;
+            var url  = localStorage.getItem("rootUrl")+"razorPaymentResponse";
+            var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+         xmlhttp.open("POST", url,true);
+         
+         xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+         xmlhttp.setRequestHeader("Authorization", "Bearer "+ localStorage.getItem("token"));
+         xmlhttp.send(JSON.stringify({ "razorpay_payment_id": success.razorpay_payment_id,"product_cost":  localStorage.getItem('totalcostsingleproduct'),"user_id": localStorage.getItem("user_id"),"product_id":  localStorage.getItem('product_id')}));
+         
+         xmlhttp.onload = function () {
+           var users = JSON.parse(xmlhttp.responseText);
+           var error = users.error;
+          var result=users.result;
+         
+           // if(result){
+           //    nav.presentConfirm(result);
+           // }
+           //  if(error){
+           //    nav.presentConfirm(error);
+           // }
+           }
+          }
+           
+          var cancelCallback = function(error) {
+            alert(error.description + ' (Error '+error.code+')')
+          }
+           
+          RazorpayCheckout.on('payment.success', successCallback)
+          RazorpayCheckout.on('payment.cancel', cancelCallback)
+          RazorpayCheckout.open(options)
+          
           this.productservice.presentToast(product.message);
           this.router.navigate(['checkoutsuccess']);
          

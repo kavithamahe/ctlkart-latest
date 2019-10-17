@@ -4,7 +4,7 @@ import { ProductsService } from 'src/app/products.service';
 import { environment } from '../../environments/environment';
 import { Events } from '@ionic/angular';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
-// declare var RazorpayCheckout: any;
+
 
 @Component({
   selector: 'app-dashboard',
@@ -76,62 +76,7 @@ export class DashboardPage implements OnInit  {
     
     
   }
-  // getrazorpay(){
-  //   var options = {
-  //     description: 'CTLKART',
-  //     currency: 'INR',
-  //     key: 'rzp_test_cGa8WOh98HS217',
-  //     amount: '5000',
-  //     prefill: {
-  //       email: 'pranav@razorpay.com',
-  //       contact: '8879524924',
-  //       name: 'Pranav Gupta'
-  //     },
-  //     "notes": {
-  //       "email": "kavithamahe2@gmail.com",
-  //       "product_name":"oppo f5",
-  //       "service_cost":"5000",
-  //     },
-  //     // theme: {
-  //     //   color: '#F37254'
-  //     // }
-  //   }
-        
-     
-  //   var successCallback = function(success) {
-  //     alert(success.razorpay_payment_id)
-  //     // var orderId = success.razorpay_order_id;
-  //     // var signature = success.razorpay_signature;
-  //     var url  = localStorage.getItem("rootUrl")+"razorPaymentResponse";
-  //     var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
-  //  xmlhttp.open("POST", url,true);
-   
-  //  xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-  //  xmlhttp.setRequestHeader("Authorization", "Bearer "+ localStorage.getItem("token"));
-  //  xmlhttp.send(JSON.stringify({ "razorpay_payment_id": success.razorpay_payment_id,"product_cost": "5000","user_id": localStorage.getItem("user_id"),"product_id": "1"}));
-   
-  //  xmlhttp.onload = function () {
-  //    var users = JSON.parse(xmlhttp.responseText);
-  //    var error = users.error;
-  //   var result=users.result;
-   
-  //    // if(result){
-  //    //    nav.presentConfirm(result);
-  //    // }
-  //    //  if(error){
-  //    //    nav.presentConfirm(error);
-  //    // }
-  //    }
-  //   }
-     
-  //   var cancelCallback = function(error) {
-  //     alert(error.description + ' (Error '+error.code+')')
-  //   }
-     
-  //   RazorpayCheckout.on('payment.success', successCallback)
-  //   RazorpayCheckout.on('payment.cancel', cancelCallback)
-  //   RazorpayCheckout.open(options)
-  // }
+  
   public toggle(): void {
     this.keyboard.show();
     this.toggled = !this.toggled;
