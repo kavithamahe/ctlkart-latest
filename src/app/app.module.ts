@@ -47,15 +47,15 @@ export const firebaseConfig = {
      IonicModule.forRoot(), 
      AngularFireModule.initializeApp(firebaseConfig),
      AppRoutingModule,
-     IonicRatingModule
+     IonicRatingModule,
+     
      
     ],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    FirebaseAuthentication,AngularFireAuth,Camera,File,Keyboard
-  ],
+    FirebaseAuthentication,AngularFireAuth,Camera,File,Keyboard  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

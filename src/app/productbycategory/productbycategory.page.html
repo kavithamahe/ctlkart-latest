@@ -6,7 +6,8 @@
         </ion-buttons>
         <ion-title *ngIf="!toggled">{{product_name}}</ion-title>
         <ion-buttons slot="end" (click)="viewcart()" *ngIf="!toggled">
-            <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+            <!-- <i class="fa fa-shopping-basket" aria-hidden="true"></i> -->
+            <ion-icon name="basket"></ion-icon>
             <ion-badge id="cart-badge" color="danger">{{cartcount}}</ion-badge>
         </ion-buttons>
         <ion-buttons slot="end">

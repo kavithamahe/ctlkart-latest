@@ -20,7 +20,7 @@ export class CheckoutsuccessPage implements OnInit {
                     localStorage.removeItem('status');
                     localStorage.removeItem('fromorder');
                     // localStorage.removeItem('cart_items');
-                    this.events.publish('cart');
+                    // this.events.publish('cart');
   }
   continueshopping(){
     this.router.navigate(['']);

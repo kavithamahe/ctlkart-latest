@@ -72,10 +72,7 @@ export class AddaddressPage implements OnInit {
   this.address_type = ev.detail.value;
   }
   submitaddress(){
-        this.checkzipcode = this.gelallcheckcodedetails.find(p => this.checkoutForm.value.zipcode == p.zipcode);
-    if(this.checkzipcode == undefined){
-      this.productservice.presentAlert("your zipcode is not availble");
-    }
+       
     this.checkoutForm.value.address_type = this.address_type;
     let user_id = {"user_id":this.user_id};
     let obj = Object.assign(this.checkoutForm.value,user_id);
@@ -83,6 +80,10 @@ export class AddaddressPage implements OnInit {
       this.submitAttempt = true;
     }else{
       this.submitAttempt = false;
+      this.checkzipcode = this.gelallcheckcodedetails.find(p => this.checkoutForm.value.zipcode == p.zipcode);
+      if(this.checkzipcode == undefined){
+        this.productservice.presentAlert("your zipcode is not availble");
+      }
     this.productservice.presentLoading();
       this.productservice.addaddress(obj)
     .subscribe(product =>{ 

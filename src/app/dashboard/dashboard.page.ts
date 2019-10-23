@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router,ActivatedRoute, NavigationEnd, } from '@angular/router';
 import { ProductsService } from 'src/app/products.service';
-import { environment } from '../../environments/environment';
 import { Events } from '@ionic/angular';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
+import { environment } from '../../environments/environment.prod';
 
 
 @Component({
@@ -12,11 +12,11 @@ import { Keyboard } from '@ionic-native/keyboard/ngx';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit  {
-  private apiUrl = environment.apiUrl;
+  public apiUrl = environment.apiUrl;
   public toggled: boolean = false;
   cartDetails: any;
   cartcount: any;
-  private imageUrl = environment.imageUrl;
+  public imageUrl = environment.imageUrl;
   getProductLists:any=[];
   getallcategories:any=[];
   sliderConfig = {
@@ -38,6 +38,7 @@ export class DashboardPage implements OnInit  {
   }
   imgURl:any;
   term = { searchText: ''};
+  getallcategorieslist:any=[];
   constructor(public productservice:ProductsService,public router: Router,public events: Events,public keyboard: Keyboard) { 
     this.toggled = false;
     this.events.subscribe('cart', ()=>{
@@ -113,12 +114,13 @@ export class DashboardPage implements OnInit  {
   
   getCategory(){
     this.productservice.presentLoading();
-    this.productservice.getCategoryList()
-    .subscribe(category =>{ 
+    this.productservice.getCategoryList().subscribe(category =>{ 
+      // this.productservice.presentAlert("succ"); 
       this.getallcategories = category.data;
       this.productservice.loadingdismiss();
     },
     err =>{
+      // this.productservice.presentAlert(err); 
       this.productservice.loadingdismiss();
       this.productservice.presentToast(err.error.message); 
    })

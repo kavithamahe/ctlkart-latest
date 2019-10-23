@@ -8,8 +8,8 @@
 
 <ion-content>
     <div style="padding: 0px 15px;">
-        <h3>Enter the code to verify your phone</h3>
-        <p class="bellowText">We have sent an SMS with a code us your mobile number</p>
+        <h3>Verify Mobile Number</h3>
+        <p class="bellowText">A text with <b>One Time Password(OTP)</b> has been sent to your mobile number.</p>
         <div style="padding: 30px 15px 5px;">
             <ion-list lines="full" class="ion-no-margin ion-no-padding">
                 <div class="formList">
@@ -17,6 +17,10 @@
                 </div>
             </ion-list>
         </div>
+        <div style = "padding-left: 225px;">
+                <ion-text (click)="resendotp()" class="delBtn">Resend</ion-text>
+        </div>
+        <br>
         <div>
             <ion-text class="loginBtn" color="cart" (click)="otpsubmit()">Verify</ion-text>
         </div>

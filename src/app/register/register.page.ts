@@ -13,6 +13,9 @@ import { CheckzipcodeService } from '../checkzipcode.service';
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit {
+  checkavailusersmobile: any;
+  checkavailusersemail: any;
+  checkavailusers: any;
   checkzipcode: any;
   subcategory_name: any;
   category_id: any;
@@ -27,6 +30,7 @@ export class RegisterPage implements OnInit {
   verificationId: any;
   fromorder:any;
   gelallcheckcodedetails:any=[];
+  getallusers:any=[];
   constructor(public firebaseAuthentication:FirebaseAuthentication,private route: ActivatedRoute,public events: Events,private _location: Location, private alertCtrl: AlertController,private router: Router,public formBuilder: FormBuilder,public productservice:ProductsService) { 
     this.singleid = route.snapshot.paramMap.get('id');
     console.log(this.singleid);
@@ -42,7 +46,7 @@ export class RegisterPage implements OnInit {
 
   ngOnInit() {
     this.initForm();
-   
+    this.getUsers();
   }
 
   initForm(){
@@ -55,10 +59,29 @@ export class RegisterPage implements OnInit {
      
        });
   }
- 
+  getUsers(){
+    this.productservice.getusersservice().subscribe(data =>{
+      this.getallusers = data.data;
+    }, 
+     err =>{
+      this.productservice.loadingdismiss();
+      this.productservice.presentToast(err.error.message);
+   })
+  }
   submit(){
+ 
+    this.checkavailusersmobile = this.getallusers.find(p => this.registerForm.value.mobile == p.mobile);
+    this.checkavailusersemail = this.getallusers.find(p => this.registerForm.value.email == p.email);
 
-    let mobileapp = {"mobileapp":""};
+    if(this.checkavailusersmobile){
+      this.productservice.presentAlert("your mobile number is already registered");
+    }
+    else{
+        if(this.checkavailusersemail){
+      this.productservice.presentAlert("your email id is already registered");
+        }
+        else{
+      let mobileapp = {"mobileapp":""};
     let obj = Object.assign(this.registerForm.value,mobileapp);
     if(!this.registerForm.valid){
       this.submitAttempt = true;
@@ -80,7 +103,7 @@ export class RegisterPage implements OnInit {
         // this.firebase(phoneNumberString);
         this.productservice.presentToast(data.message);
         this.router.navigate(['otpverification',{"mobile":this.registerForm.value.mobile,"verificationId":this.verificationId,"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,"onboard":this.onboard,'fromorder':this.fromorder}]);
-       
+       this.registerForm.reset();
       }, 
        err =>{
         this.productservice.loadingdismiss();
@@ -88,7 +111,7 @@ export class RegisterPage implements OnInit {
      })
     
     }
-    this.registerForm.reset();
+    
     
   })
 .catch((error) => {
@@ -101,9 +124,10 @@ export class RegisterPage implements OnInit {
    
     }
   }
-// firebase(phoneNumberString){
+    }
   
-// }
+  
+  }
   back(){
     if(this.onboard == "1"){
       this.router.navigate(['onboard']);

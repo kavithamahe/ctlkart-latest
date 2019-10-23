@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders  } from '@angular/common/http';
-import { environment } from '../environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ToastController,LoadingController, AlertController } from '@ionic/angular';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { environment } from '../environments/environment.prod';
+
 
 
 @Injectable({
@@ -12,11 +13,11 @@ import { AbstractControl, ValidatorFn } from '@angular/forms';
 })
 export class ProductsService {
   token: string;
-  private apiUrl = environment.apiUrl;
+  public apiUrl = environment.apiUrl;
   headers: any;
   options: any;
   isLoading = false;
-  constructor(private http : HttpClient,public toastController: ToastController,public alertController: AlertController,public loadingController: LoadingController) {
+  constructor(public http : HttpClient,public toastController: ToastController,public alertController: AlertController,public loadingController: LoadingController) {
     this.token=localStorage.getItem("token");
     this.headers = new HttpHeaders();
     this.headers = this.headers.append('Content-Type', 'application/json');
@@ -52,9 +53,19 @@ export class ProductsService {
     return this.http.post(this.apiUrl + 'getproductlistsearch',body,this.headers);
   }
   getCategoryList(): Observable<any> {
-    const body= { };
-    return this.http.post(this.apiUrl + 'getcategory',body,this.headers);
+    
+    this.token=localStorage.getItem("token");
+    this.headers = new HttpHeaders();
+    this.headers = this.headers.append('Content-Type', 'application/json');
+    this.headers= this.headers.append("Authorization", "Bearer " + this.token);
+    // this.presentAlert(this.headers);
+    const body= {};
+    console.log(this.headers)
+      return this.http.post(this.apiUrl + 'getcategory',body,{ headers:this.headers } );
+      
   }
+
+ 
   getcategorylistsearch(search): Observable<any> {
     const body= {"search":search};
     return this.http.post(this.apiUrl + 'getcategorysearch',body,this.headers);
@@ -81,6 +92,10 @@ export class ProductsService {
   }
   userregister(formvalue): Observable<any>{
     return this.http.post(this.apiUrl + 'register',formvalue,this.headers);
+  }
+  getusersservice(): Observable<any>{
+    const body= {};
+    return this.http.post(this.apiUrl + 'getusers',body,this.headers);
   }
   login(formvalue): Observable<any>{
     return this.http.post(this.apiUrl + 'login',formvalue,this.headers);

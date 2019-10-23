@@ -12,14 +12,14 @@
 </ion-header>
 
 <ion-content class="Myprofile">
-    <div class="profile-edit">
+    <div class="profile-edit" (click) = "editProfile()">
         <span class="profile-img">
                 <img *ngIf = "profile_image" [src]="imageUrl + profile_image"/>
                   <img *ngIf = "!profile_image" src="../../assets/img/icon.png"/>
                 </span>
         <p class="name" text-capitalize>{{name}} {{lastname}}</p>
         <p class="mail">{{email}}</p>
-        <p class="mobile">+91 {{mobile}}</p>
+        <p class="mobile">{{mobile}}</p>
 
     </div>
     <div class="profile-view">

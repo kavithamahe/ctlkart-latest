@@ -30,7 +30,8 @@ export class OtpverificationPage implements OnInit {
   refreshToken:any;
   fromorder:any;
   constructor(private location:Location,public router: Router,public events: Events,public firebaseAuthentication:FirebaseAuthentication,private route: ActivatedRoute,public productservice:ProductsService) { 
-  
+    this.mobilenumber = this.route.snapshot.paramMap.get('mobile');
+    console.log(this.mobilenumber)
 
   }
 
@@ -65,6 +66,21 @@ export class OtpverificationPage implements OnInit {
     this.fromcart = this.route.snapshot.paramMap.get('fromcart');
     this.totalpricecart = this.route.snapshot.paramMap.get('totalamount');
     this.fromlogin = this.route.snapshot.paramMap.get('fromlogin');
+  }
+  resendotp(){
+    const phoneNumberString = "+91" + this.mobilenumber;
+    console.log(phoneNumberString)
+    this.firebaseAuthentication.verifyPhoneNumber(phoneNumberString, 30000)
+    .then( confirmationResult => {
+      console.log(confirmationResult)
+      this.verificationId = confirmationResult;
+      
+      
+    })
+  .catch((error) => {
+    this.productservice.presentAlert(error);
+    console.error(error)
+  });
   }
   otpsubmit(){
     // this.productservice.presentLoading();
