@@ -29,7 +29,8 @@ export class VieworderhistoryPage implements OnInit {
   constructor(public actionSheetController: ActionSheetController,private location:Location,private router: Router,private alertCtrl: AlertController,public productservice:ProductsService,private route: ActivatedRoute) {
     this.singleid = route.snapshot.paramMap.get('orderid');
     this.status = route.snapshot.paramMap.get('status');
-    this.getsingleorderdetails(this.singleid,this.status);
+    this.user_id = localStorage.getItem("user_id");
+    this.getsingleorderdetails(this.singleid,this.status,this.user_id);
    }
 
   ngOnInit() {
@@ -37,7 +38,7 @@ export class VieworderhistoryPage implements OnInit {
     this.singleid = this.route.snapshot.paramMap.get('orderid');
     this.status = this.route.snapshot.paramMap.get('status');
     this.user_id = localStorage.getItem("user_id");
-    this.getsingleorderdetails(this.singleid,this.status);
+    this.getsingleorderdetails(this.singleid,this.status,this.user_id);
   }
   
   onRangeChangeHandler() {
@@ -55,9 +56,9 @@ export class VieworderhistoryPage implements OnInit {
       this.color = 'danger';
     }
   }
-  getsingleorderdetails(id,status){
+  getsingleorderdetails(id,status,user_id){
     this.productservice.presentLoading();
-    this.productservice.getsingleorderdetailsservice(id,status)
+    this.productservice.getsingleorderdetailsservice(id,status,user_id)
     .subscribe(product =>{ 
       this.getsingleorder = product.data;
       this.orderstatus = this.getsingleorder[0].status;
@@ -135,7 +136,7 @@ export class VieworderhistoryPage implements OnInit {
     this.productservice.cancelorderbyuser(id)
     .subscribe(product =>{ 
       this.productservice.presentToast(product.message);
-      this.getsingleorderdetails(this.singleid,this.status);
+      this.getsingleorderdetails(this.singleid,this.status,this.user_id);
       this.productservice.loadingdismiss();
     },
     err =>{
@@ -151,7 +152,7 @@ export class VieworderhistoryPage implements OnInit {
       this.review.rating = "";
       this.review.ratingcomments = "";
       this.closerating = false;
-      this.getsingleorderdetails(this.singleid,this.status);
+      this.getsingleorderdetails(this.singleid,this.status,this.user_id);
       this.productservice.loadingdismiss();
     },
     err =>{

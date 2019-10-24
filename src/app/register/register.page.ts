@@ -65,7 +65,7 @@ export class RegisterPage implements OnInit {
     }, 
      err =>{
       this.productservice.loadingdismiss();
-      this.productservice.presentToast(err.error.message);
+      // this.productservice.presentToast(err.error.message);
    })
   }
   submit(){

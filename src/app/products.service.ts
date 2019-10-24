@@ -4,7 +4,8 @@ import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ToastController,LoadingController, AlertController } from '@ionic/angular';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
-import { environment } from '../environments/environment.prod';
+import { environment } from '../environments/environment';
+// import { environment } from '../environments/environment.prod';
 
 
 
@@ -251,13 +252,13 @@ export class ProductsService {
     const body= {"id":user_id,"firstname":profileForm.firstname,"lastname":profileForm.lastname,"email":profileForm.email,"mobile":profileForm.mobile,"base64Image":base64_image};
     return this.http.post(this.apiUrl + 'editprofile',body,{ headers:this.headers });
   }
-  getsingleorderdetailsservice(id,status): Observable<any> { 
+  getsingleorderdetailsservice(id,status,user_id): Observable<any> { 
     this.token=localStorage.getItem("token");
     this.headers = new HttpHeaders();
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers= this.headers.append("Authorization", "Bearer " + this.token);
     
-    const body= {"order_id":id,"status":status};
+    const body= {"order_id":id,"status":status,"user_id":user_id};
     return this.http.post(this.apiUrl + 'viewsingleorder',body,{ headers:this.headers });
   }
   viewsingleaddress(id): Observable<any> { 
