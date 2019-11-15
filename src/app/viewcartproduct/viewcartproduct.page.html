@@ -10,7 +10,43 @@
 <ion-content>
     <div class="mar-bt140">
         <div class="cartProduct" *ngFor="let single of getcartProductList">
-            <div class="mycartProduct" *ngIf="cartcount != 0 || cartDetails != null">
+                <div class="mycartProduct" *ngIf="(cartcount != 0 || cartDetails != null) && !single.unittype">
+                        <div class="productImage">
+                            <ion-thumbnail slot="start">
+                                <img [src]="imgURl + single.product_image">
+                            </ion-thumbnail>
+                        </div>
+                        <div class="productContent">
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col size="8">
+                                        <h3>{{single.product_name}}</h3>
+                                    </ion-col>
+                                    <ion-col size="4">
+                                        <p color="warning"><i class="fa fa-inr"></i>{{single.price | number : '1.2-2'}}</p>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col size="8">
+                                        <div class="quantity">
+                                            <button clear (click)="decrementQty(single.quantityperproduct,single.id,'',single.price)"><ion-icon name="remove" ></ion-icon></button><span>{{single.quantityperproduct}}</span>
+                                            <button clear (click)="incrementQty(single.quantityperproduct,single.id,single.quantity,'',single.price,'')"><ion-icon name="add" ></ion-icon></button>
+                                        </div>
+                                    </ion-col>
+                                    <ion-col size="4">
+                                        <span (click)="presentAlertConfirm(single.id)" class="closeBtn"><ion-icon name="close"></ion-icon></span>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                        <ion-col>
+                                                <p color="warning" style= "float:left;">Total: <i class="fa fa-inr"></i>{{single.totalproductprice | number : '1.2-2'}}</p>
+                                        </ion-col>
+                                    </ion-row>
+                            </ion-grid>
+                        </div>
+                    </div>
+
+            <div class="mycartProduct" *ngIf="(cartcount != 0 || cartDetails != null) && single.unittype">
                 <div class="productImage">
                     <ion-thumbnail slot="start">
                         <img [src]="imgURl + single.product_image">
@@ -20,21 +56,27 @@
                     <ion-grid>
                         <ion-row>
                             <ion-col size="8">
-                                <h3>{{single.product_name}}</h3>
+                                <h3>{{single.product_name}} - {{single.quantityperunit}} {{single.unittype}}</h3>
+                                <p color="warning" style= "float:left;">{{single.quantityperproduct}} * {{single.costperquantity  | number : '1.2-2'}}</p>
                             </ion-col>
                             <ion-col size="4">
-                                <p color="warning"><i class="fa fa-inr"></i>{{single.price | number : '1.2-2'}}</p>
+                                <p color="warning"><i class="fa fa-inr"></i>{{single.costperquantity | number : '1.2-2'}}</p>
                             </ion-col>
                         </ion-row>
                         <ion-row>
                             <ion-col size="8">
                                 <div class="quantity">
-                                    <button clear (click)="decrementQty(single.quantityperproduct,single.id)"><ion-icon name="remove" ></ion-icon></button><span>{{single.quantityperproduct}}</span>
-                                    <button clear (click)="incrementQty(single.quantityperproduct,single.id,single.quantity)"><ion-icon name="add" ></ion-icon></button>
+                                    <button clear (click)="decrementQty(single.quantityperproduct,single.id,single.totalproductprice,single.costperquantity)"><ion-icon name="remove" ></ion-icon></button><span>{{single.quantityperproduct}}</span>
+                                    <button clear (click)="incrementQty(single.quantityperproduct,single.id,single.quantity,single.totalproductprice,single.costperquantity,single.unitcostid)"><ion-icon name="add" ></ion-icon></button>
                                 </div>
                             </ion-col>
                             <ion-col size="4">
                                 <span (click)="presentAlertConfirm(single.id)" class="closeBtn"><ion-icon name="close"></ion-icon></span>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col>
+                                <p color="warning" style= "float:left;">Total: <i class="fa fa-inr"></i>{{single.totalproductprice | number : '1.2-2'}}</p>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
@@ -42,12 +84,14 @@
             </div>
         </div>
     </div>
+
+    
     <div class="bottom-card" *ngIf="cartDetails && cartcount != '0'">
         <ion-grid>
             <ion-row class="final-total">
                 <ion-col size="7">
                     <ion-label>
-                        <h3>Subtotal ( {{selectedlength}} items)</h3>
+                        <h3>SubTotal ( {{selectedlength}} items)</h3>
                         <!-- <h3>Subtotal ({{selectedlength}} items): <b><i class="fa fa-inr"></i> {{totalamount | number : '1.2-2'}}</b></h3> -->
                     </ion-label>
                 </ion-col>

@@ -84,7 +84,7 @@ ion-buttons {
 
 .statusLabel {
     text-align: end;
-    float: right;
+    float: left;
     font-weight: 600;
     font-size: 17px;
     &.warningPend {
@@ -202,7 +202,7 @@ ion-buttons {
             }
         }
     }
-
+ 
 // ion-rating {
 //     --color: gray;
 //     --color-filled: green;

@@ -23,7 +23,7 @@
                 <ion-label position="floating">Mobile Number
                     <ion-text color="danger" type="number">*</ion-text>
                 </ion-label>
-                <ion-input formControlName="mobile" required type="text"></ion-input>
+                <ion-input formControlName="mobile" required [maxlength]="12" type="tel"></ion-input>
             </div>
             <p *ngIf="!checkoutForm.controls.mobile.valid && (checkoutForm.controls.mobile.dirty || submitAttempt)" class="err-reds shake">Please enter mobile number</p>
 
@@ -60,9 +60,9 @@
                 <ion-label position="floating">Zipcode
                     <ion-text color="danger">*</ion-text>
                 </ion-label>
-                <ion-input required type="number" formControlName="zipcode"></ion-input>
+                <ion-input required type="text" formControlName="zipcode"></ion-input>
             </div>
-            <p *ngIf="!checkoutForm.controls.zipcode.valid && (checkoutForm.controls.zipcode.dirty || submitAttempt)" class="err-reds shake">Please enter zipcode.</p>
+            <p *ngIf="!checkoutForm.controls.zipcode.valid && (checkoutForm.controls.zipcode.dirty || submitAttempt)" class="err-reds shake">Please enter valid zipcode.</p>
 
         </ion-list>
 

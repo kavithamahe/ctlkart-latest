@@ -71,7 +71,7 @@
                 <div class="categorysliderdash">
                     <img [src]="imgURl + product.product_image" (click)="viewsingleproduct(product.id)" />
                     <ion-label (click)="viewsingleproduct(product.id)">{{product.product_name}}</ion-label>
-                    <ion-text>{{product.price | currency : "INR"}}</ion-text>
+                    <!-- <ion-text>{{product.price | currency : "INR"}}</ion-text> -->
                 </div>
             </ion-slide>
         </ion-slides>

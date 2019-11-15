@@ -62,7 +62,7 @@
                 <ion-col size="9">
                     <p class="TrackingNo">Tracking Number : <b>IW3475433455</b> </p>
                 </ion-col>
-                <ion-col size="3" *ngIf="order.status == 1">
+                <!-- <ion-col size="3" *ngIf="order.status == 1">
                     <ion-text class="statusLabel" color="success">Processing</ion-text>
                 </ion-col>
                 <ion-col size="3" *ngIf="order.status == 2">
@@ -72,11 +72,11 @@
                     <ion-text class="statusLabel warningPend">Pending</ion-text>
                 </ion-col>
                 <ion-col size="3" *ngIf="order.status == 3">
-                    <ion-text class="statusLabel" color="danger">Delivered</ion-text>
+                    <ion-text class="statusLabel" color="success">Delivered</ion-text>
                 </ion-col>
                 <ion-col size="3" *ngIf="order.status == 4">
                     <ion-text class="statusLabel" color="danger">Cancelled</ion-text>
-                </ion-col>
+                </ion-col> -->
             </ion-row>
 
             <div class="titleLabel">
@@ -102,11 +102,28 @@
                             <ion-row>
                                 <ion-col size="8">
                                     <div class="quantity">
-                                        <p><span>Quantity:</span> {{orderdetails.quantity}}</p>
+                                        <p><span>Quantity:</span> {{orderdetails.quantity}} ({{orderdetails.unitvisecost.quantityperunit}} {{orderdetails.unitvisecost.unittype}})</p>
                                     </div>
                                 </ion-col>
                                 <ion-col size="4" *ngIf="order.status == 0 || order.status == 1 || order.status == 2">
                                     <span (click)="presentAlertConfirm(orderdetails.id)" class="closeBtn"><ion-icon name="close"></ion-icon></span>
+                                </ion-col>
+                            </ion-row>
+                            <ion-row>
+                                <ion-col size="6" *ngIf="orderdetails.status == 1">
+                                    <ion-text class="statusLabel" color="success">Processing</ion-text>
+                                </ion-col>
+                                <ion-col size="6" *ngIf="orderdetails.status == 2">
+                                    <ion-text class="statusLabel" color="success">Shipped</ion-text>
+                                </ion-col>
+                                <ion-col size="6" *ngIf="orderdetails.status == 0">
+                                    <ion-text class="statusLabel warningPend">Pending</ion-text>
+                                </ion-col>
+                                <ion-col size="6" *ngIf="orderdetails.status == 3">
+                                    <ion-text class="statusLabel" color="success">Delivered</ion-text>
+                                </ion-col>
+                                <ion-col size="6" *ngIf="orderdetails.status == 4">
+                                    <ion-text class="statusLabel" color="danger">Cancelled</ion-text>
                                 </ion-col>
                             </ion-row>
                         </ion-grid>

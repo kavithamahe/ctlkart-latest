@@ -83,7 +83,6 @@ export class OtpverificationPage implements OnInit {
   });
   }
   otpsubmit(){
-    // this.productservice.presentLoading();
     this.data = this.mobileotp.firebasemobileotp;
     let otp = "1";
     this.firebaseAuthentication.signInWithVerificationId(this.verificationId,this.data).then((user) => {

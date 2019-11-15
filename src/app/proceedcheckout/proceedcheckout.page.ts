@@ -16,6 +16,7 @@ import { Location } from '@angular/common';
   
 })
 export class ProceedcheckoutPage implements OnInit {
+  totalsingleproductamount: any;
   totalamount: number;
   selectedlength: any;
   totalpricecart: any;
@@ -44,7 +45,8 @@ export class ProceedcheckoutPage implements OnInit {
   item_qtycheck :any=1;
   totalQty:any;
   qtycheck:any;
-
+  costperquantity:any;
+  costperunits:any=[];
   constructor(private location:Location,public alertController: AlertController,public events: Events,public formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,public productservice:ProductsService) {
     
     this.singleid = route.snapshot.paramMap.get('id');
@@ -66,7 +68,6 @@ export class ProceedcheckoutPage implements OnInit {
  
   ngOnInit() {
     this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
-    // localStorage.setItem('cartDetails',(JSON.parse(localStorage.getItem('cart_items'))));
     if(this.cartDetails){
       this.cartcount = this.cartDetails.length;
     }
@@ -90,7 +91,7 @@ export class ProceedcheckoutPage implements OnInit {
       let total = 0;
       for (var i = 0; i < this.cartDetails.length; i++) {
           if (this.cartDetails[i].totalproductprice) {
-              total += (this.cartDetails[i].price * this.cartDetails[i].quantityperproduct);
+              total += (this.cartDetails[i].costperquantity * this.cartDetails[i].quantityperproduct);
               this.totalamount = total;
           }
       }
@@ -150,9 +151,17 @@ export class ProceedcheckoutPage implements OnInit {
     .subscribe(product =>{ 
       this.productservice.loadingdismiss();
       this.getsingleProductList = product.data;
+      this.costperunits = product['data'][0]['costperunits'];
+      this.totalsingleproductamount = localStorage.getItem('totalsingleproductamount');
+      this.costperquantity = localStorage.getItem('costperquantity');
+      var totalsingleproductamounts = {'totalsingleproductamounts':this.totalsingleproductamount,'costperquantity':this.costperquantity};
+      Object.assign(product.data[0], totalsingleproductamounts);
       this.price = product.data[0].price;
       this.obj = Object.assign(product.data[0], this.quantityperproduct);
       this.totalprice = (product.data[0].price * this.item_qty);
+      if(this.costperquantity != undefined){
+        this.totalprice = (this.costperquantity * this.item_qty);
+      }
     },
     err =>{
       this.productservice.loadingdismiss();
@@ -169,6 +178,10 @@ export class ProceedcheckoutPage implements OnInit {
       if(this.qtycheck == "true"){
         this.item_qty += 1;
         this.totalprice = (this.price * this.item_qty);
+        if(this.costperquantity != undefined){
+          this.totalprice = (this.costperquantity * this.item_qty);
+        }
+       
         }
         else{
           this.productservice.presentToast( this.qtycheck)
@@ -192,10 +205,16 @@ export class ProceedcheckoutPage implements OnInit {
     if(this.item_qty-1 < 1){
       this.item_qty = 1;
       this.totalprice = (this.price * this.item_qty);
+      if(this.costperquantity != undefined){
+        this.totalprice = (this.costperquantity * this.item_qty);
+      }
     }
     else{
       this.item_qty -= 1;
       this.totalprice = (this.price * this.item_qty);
+      if(this.costperquantity != undefined){
+        this.totalprice = (this.costperquantity * this.item_qty);
+      }
     }
     }
   proceedtobuyitems(){
@@ -347,6 +366,8 @@ export class ProceedcheckoutPage implements OnInit {
         this.productservice.presentLoading();
         this.productservice.checkout(this.user_id,this.customer_id,product_id,this.totalprice,this.item_qty)
         .subscribe(product =>{ 
+          localStorage.removeItem('totalsingleproductamount');
+          localStorage.removeItem('costperquantity');
           this.productservice.loadingdismiss();
         //   var options = {
         //     description: 'CTLKART',

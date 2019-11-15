@@ -48,7 +48,7 @@ export class ViewcartproductPage implements OnInit {
       }
     })
     this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
-    // console.log(this.cartDetails)
+    console.log(this.cartDetails)
     if(this.cartDetails){
       this.cartcount = this.cartDetails.length;
       // console.log(this.cartcount)
@@ -96,12 +96,13 @@ export class ViewcartproductPage implements OnInit {
     })
     this.events.subscribe('cartview', ()=>{
       this.getcartProductList = (JSON.parse(localStorage.getItem('cart_items')));
+      console.log(this.getcartProductList)
       if(this.getcartProductList){
       this.selectedlength = this.getcartProductList.length;
       let total = 0;
       for (var i = 0; i < this.getcartProductList.length; i++) {
           if (this.getcartProductList[i].totalproductprice) {
-              total += (this.getcartProductList[i].price * this.getcartProductList[i].quantityperproduct);
+              total += (this.getcartProductList[i].costperquantity * this.getcartProductList[i].quantityperproduct);
               this.totalamount = total;
           }
       }
@@ -114,7 +115,7 @@ export class ViewcartproductPage implements OnInit {
     let total = 0;
     for (var i = 0; i < this.getcartProductList.length; i++) {
         if (this.getcartProductList[i].totalproductprice) {
-            total += (this.getcartProductList[i].price * this.getcartProductList[i].quantityperproduct);
+            total += (this.getcartProductList[i].costperquantity * this.getcartProductList[i].quantityperproduct);
             this.totalamount = total;
         }
     }
@@ -130,10 +131,11 @@ export class ViewcartproductPage implements OnInit {
     this.getproductList();
  
   }
-  incrementQty(quantityperproduct,id,quantity){
+  incrementQty(quantityperproduct,id,quantity,totalproductprice,costperquantity,unitcostid){
+    console.log(unitcostid)
     var qnty = +(quantityperproduct);
     var qty = qnty += 1;
-    this.productservice.quantityavailcheck(qty,id)
+    this.productservice.quantityavailcheck(qty,unitcostid)
     .subscribe(qtny =>{ 
       this.qtycheck = qtny.message;
       if(this.qtycheck == "true"){
@@ -151,6 +153,7 @@ export class ViewcartproductPage implements OnInit {
             existingEntries.map(item => {
               if (item.id == id) {
                 item.quantityperproduct = quantityperproduct;
+                item.totalproductprice =(quantityperproduct * costperquantity);
               }
               return item;
              
@@ -166,7 +169,7 @@ export class ViewcartproductPage implements OnInit {
         let total = 0;
         for (var i = 0; i < this.getcartProductList.length; i++) {
             if (this.getcartProductList[i].totalproductprice) {
-                total += (this.getcartProductList[i].price * this.getcartProductList[i].quantityperproduct);
+                total += (this.getcartProductList[i].costperquantity * this.getcartProductList[i].quantityperproduct);
                 this.totalamount = total;
             }
         }
@@ -183,7 +186,7 @@ export class ViewcartproductPage implements OnInit {
     }
     
    
-    decrementQty(quantityperproduct,id){
+    decrementQty(quantityperproduct,id,totalproductprice,price){
     if(quantityperproduct-1 < 1){
       quantityperproduct = 1;
       var existingEntries = JSON.parse(localStorage.getItem("cart_items"));
@@ -198,6 +201,7 @@ export class ViewcartproductPage implements OnInit {
           existingEntries.map(item => {
             if (item.id == id) {
               item.quantityperproduct = quantityperproduct;
+              item.totalproductprice =(quantityperproduct * price);
             }
             return item;
            
@@ -213,7 +217,7 @@ export class ViewcartproductPage implements OnInit {
       let total = 0;
       for (var i = 0; i < this.getcartProductList.length; i++) {
           if (this.getcartProductList[i].totalproductprice) {
-              total += (this.getcartProductList[i].price * this.getcartProductList[i].quantityperproduct);
+              total += (this.getcartProductList[i].costperquantity * this.getcartProductList[i].quantityperproduct);
               this.totalamount = total;
           }
       }
@@ -233,6 +237,7 @@ export class ViewcartproductPage implements OnInit {
           existingEntries.map(item => {
             if (item.id == id) {
               item.quantityperproduct = quantityperproduct;
+              item.totalproductprice =(quantityperproduct * price);
             }
             return item;
            
@@ -248,7 +253,7 @@ export class ViewcartproductPage implements OnInit {
       let total = 0;
       for (var i = 0; i < this.getcartProductList.length; i++) {
           if (this.getcartProductList[i].totalproductprice) {
-              total += (this.getcartProductList[i].price * this.getcartProductList[i].quantityperproduct);
+              total += (this.getcartProductList[i].costperquantity * this.getcartProductList[i].quantityperproduct);
               this.totalamount = total;
           }
       }

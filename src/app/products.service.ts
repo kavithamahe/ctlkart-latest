@@ -4,8 +4,8 @@ import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ToastController,LoadingController, AlertController } from '@ionic/angular';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
-import { environment } from '../environments/environment';
-// import { environment } from '../environments/environment.prod';
+// import { environment } from '../environments/environment';
+import { environment } from '../environments/environment.prod';
 
 
 
@@ -61,7 +61,6 @@ export class ProductsService {
     this.headers= this.headers.append("Authorization", "Bearer " + this.token);
     // this.presentAlert(this.headers);
     const body= {};
-    console.log(this.headers)
       return this.http.post(this.apiUrl + 'getcategory',body,{ headers:this.headers } );
       
   }

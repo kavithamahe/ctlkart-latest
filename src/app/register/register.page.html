@@ -37,7 +37,7 @@
                 <ion-label position="floating">Mobile Number
                     <ion-text color="danger">*</ion-text>
                 </ion-label>
-                <ion-input required type="number" formControlName="mobile" minlength=10 maxlength=10 autofocus></ion-input>
+                <ion-input required  formControlName="mobile" [maxlength]="12" type="tel" autofocus></ion-input>
             </div>
             <p *ngIf="!registerForm.controls.mobile.valid && (registerForm.controls.mobile.dirty || submitAttempt)" class="err-reds shake">Please enter mobile number.</p>
 

@@ -96,7 +96,8 @@
                                 <h3>{{single.product_name}}</h3>
                             </ion-col>
                             <ion-col size="4">
-                                <p color="warning"><i class="fa fa-inr"></i>{{single.price | number : '1.2-2'}}</p>
+                                <p color="warning" *ngIf = "costperunits != ''"><i class="fa fa-inr"></i>{{single.costperquantity | number : '1.2-2'}}</p>
+                                <p color="warning" *ngIf = "costperunits == ''"><i class="fa fa-inr"></i>{{single.price | number : '1.2-2'}}</p>
                             </ion-col>
                         </ion-row>
                         <ion-row>
@@ -193,7 +194,7 @@
                                         <h3>{{single.product_name}}</h3>
                                     </ion-col>
                                     <ion-col size="6">
-                                        <p color="warning"><i class="fa fa-inr"></i>{{single.price | number : '1.2-2'}}</p>
+                                        <p color="warning"><i class="fa fa-inr"></i>{{single.totalproductprice | number : '1.2-2'}}</p>
                                     </ion-col>
                                 </ion-row>
                                 <ion-row>

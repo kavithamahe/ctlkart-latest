@@ -11,6 +11,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./viewsingleproduct.page.scss'],
 })
 export class ViewsingleproductPage implements OnInit {
+  availablequantityperunits: any;
   subcategory_id: any;
   category_id: any;
   subcategory_name:any;
@@ -36,6 +37,15 @@ export class ViewsingleproductPage implements OnInit {
   qtycheck:any;
   existingtotalQty:boolean = false;
   existingQty:any;
+  costperunits:any=[];
+  unitscost:any;
+  unitscostproduct:any;
+  costperquantity:any;
+  unittype:any;
+  quantityperunit:any;
+  totalsingleproductamount:any;
+  unitcostid:any;
+
   constructor(public events: Events,private _location: Location, public productservice:ProductsService,private route: ActivatedRoute,public router:Router,public toastController: ToastController) { 
     this.singleid = route.snapshot.paramMap.get('id');
     this.fromorder = route.snapshot.paramMap.get('fromorder');
@@ -83,24 +93,38 @@ export class ViewsingleproductPage implements OnInit {
       this.quantities.push(i)
     }
   }
+  onChange(unitscostid){
+    this.unitscostproduct = this.costperunits.find(p => unitscostid == p.id);
+    this.costperquantity = this.unitscostproduct.costperquantity;
+    this.quantityperunit = this.unitscostproduct.quantityperunit;
+    this.unittype = this.unitscostproduct.unittype;
+    this.unitcostid = this.unitscostproduct.id;
+    this.availablequantityperunits = this.unitscostproduct.availablequantityperunits;
+    if(this.availablequantityperunits == 0){
+      this.productservice.presentAlert("Your selected quantity is not available,kindle select another units.");
+    }
+    // console.log(this.unitscostproduct)
+  }
   incrementQty(){
     var qty = this.item_qtycheck += 1;
-    this.productservice.quantityavailcheck(qty,this.singleid)
+    if(this.unitcostid){
+    this.productservice.quantityavailcheck(qty,this.unitcostid)
     .subscribe(qtny =>{ 
       this.qtycheck = qtny.message;
       if(this.qtycheck == "true"){
         this.item_qty += 1;
         }
         else{
-          this.productservice.presentToast( this.qtycheck)
+          this.productservice.presentToast(this.qtycheck);
         }
     },
     err =>{
       this.productservice.presentToast(err.error.message);
    })
-
-  
-   
+  }
+  else{
+    this.productservice.presentToast("Please Select units you to want to buy");
+  }
     }
     
    
@@ -129,9 +153,21 @@ export class ViewsingleproductPage implements OnInit {
   }
   getsingleproductlist(id){
     this.productservice.presentLoading();
-    this.productservice.getproductlistsingle(id)
+    this.productservice.getproductlistsingle(id,)
     .subscribe(product =>{ 
       this.getsingleProductList = product.data;
+      if(product['data'][0]['unitvisecosts'] != ""){
+      this.costperunits = product['data'][0]['unitvisecosts'];
+      this.costperquantity = product['data'][0]['unitvisecosts'][0].costperquantity;
+      let defaultunit = 1;
+      let setdefaultvalue = this.costperunits.find(p => defaultunit == p.defaultunit);
+      this.unitscost = (setdefaultvalue.id).toString();
+      this.costperquantity = setdefaultvalue.costperquantity;
+      this.quantityperunit = setdefaultvalue.quantityperunit;
+      this.unittype = setdefaultvalue.unittype;
+      this.unitcostid = setdefaultvalue.id;
+      this.availablequantityperunits = setdefaultvalue.availablequantityperunits;
+      }
       this.totalQty = product['data'][0]['quantity'];
       this.existingQty = product['data'][0]['existing_quantity'];
       if(product['data'][0]['existing_quantity'] <= 10){
@@ -146,16 +182,19 @@ export class ViewsingleproductPage implements OnInit {
    })
   }
   addproductTocart(id,item_qty,price){
-    if(this.existingQty != 0){
+    if(this.costperquantity == undefined){
+      this.costperquantity = price;
+    }
+    if(this.availablequantityperunits != 0){
     var item_qtystr = item_qty.toString();
-    let toatlprice = (item_qtystr * price);
-    if(item_qtystr == ""){
-      this.presentToast("Please Select The Quantity");
+    let toatlprice = (item_qtystr * this.costperquantity);
+    if(this.costperunits != "" && (this.unittype == undefined || this.unittype == null)){
+      this.presentToast("Please Select The units");
     }
     else{
     this.data = this.getProductLists.find(x => x.id == id)
     let total_price = {"totalproductprice":toatlprice};
-    let quantityperproduct = {"quantityperproduct":item_qtystr};
+    let quantityperproduct = {"quantityperproduct":item_qtystr,"costperquantity":this.costperquantity,"quantityperunit":this.quantityperunit,"unittype":this.unittype,'unitcostid':this.unitcostid};
     var obj = Object.assign(this.data, quantityperproduct,total_price);
     // console.log(obj)
     var existingEntries = JSON.parse(localStorage.getItem("cart_items") || '[]');
@@ -172,7 +211,7 @@ if(this.cartDetails){
       this.presentToast("One item is added to cart");
     }else{
       // or tell user it's already there
-      this.presentToast("Item already exists,Go to cart and add quantity to this product");
+      this.presentToast("Item already exists, Go to cart and add quantity to this product");
     }
   }
   else{
@@ -185,7 +224,7 @@ if(this.cartDetails){
   }
 }
 else{
-  this.presentToast("Your selected product(s) are not available");
+  this.presentToast("Your selected product(s) units are not available");
 }
   }
   gotocartpage(){
@@ -206,10 +245,13 @@ else{
     this.events.subscribe('loggedin',() => {
       this.token = localStorage.getItem('token');
     })
-    if(item_qty == ""){
-      this.presentToast("Please Select The Quantity");
+    if(this.costperunits != "" && (this.unittype == undefined || this.unittype == null)){
+      this.presentToast("Please Select The units");
     }
     else{
+      this.totalsingleproductamount = (item_qty * this.costperquantity);
+      localStorage.setItem('totalsingleproductamount',this.totalsingleproductamount);
+      localStorage.setItem('costperquantity',this.costperquantity);
       if(this.token){
         this.router.navigate(['address',{"id":id,"quantity":item_qty,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,"subsubcategory_id":this.subsubcategory_id,"subsubcategory_name":this.subsubcategory_name,'fromorder':this.fromorder}]);
       }
@@ -219,7 +261,7 @@ else{
     }
   }
   else{
-    this.presentToast("Youe selected product(s) are not available");
+    this.presentToast("Your selected product(s) are not available");
   }
     }
 

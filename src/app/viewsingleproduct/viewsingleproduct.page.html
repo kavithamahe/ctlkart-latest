@@ -5,8 +5,8 @@
             <ion-icon name="arrow-back" (click)="back()"></ion-icon>
         </ion-buttons>
         <ion-buttons slot="end" (click)="viewcart()">
-            <!-- <i class="fa fa-shopping-basket" aria-hidden="true"></i> -->
-            <ion-icon name="basket"></ion-icon>
+            <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+            <!-- <ion-icon name="basket"></ion-icon> -->
             <ion-badge id="cart-badge" color="danger">{{cartcount}}</ion-badge>
         </ion-buttons>
     </ion-toolbar>
@@ -24,18 +24,26 @@
 
         <ion-card-header>
             <ion-card-title>{{single.product_name}}</ion-card-title>
-            <ion-card-subtitle style="font-weight:800;"><i class="fa fa-inr"></i> {{single.price | number : '1.2-2'}}</ion-card-subtitle>
+            <ion-card-subtitle *ngIf = "costperquantity" style="font-weight:800;"><i class="fa fa-inr"></i> {{costperquantity | number : '1.2-2'}}</ion-card-subtitle>
+            <ion-card-subtitle *ngIf = "!costperquantity" style="font-weight:800;"><i class="fa fa-inr"></i> {{single.price | number : '1.2-2'}}</ion-card-subtitle>
         </ion-card-header>
-        <ion-item>
-            <button clear (click)="decrementQty()"><ion-icon name="remove" ></ion-icon></button><span>{{item_qty}}</span>
-            <button clear (click)="incrementQty()"><ion-icon name="add" ></ion-icon></button>
-        </ion-item>
-        <ion-card-content style = "color: red;" *ngIf = "existingtotalQty && existingQty != '0'">
+                <ion-item>
+                    <button clear (click)="decrementQty()"><ion-icon name="remove" ></ion-icon></button><span>{{item_qty}}</span>
+                    <button clear (click)="incrementQty()"><ion-icon name="add" ></ion-icon></button>
+                </ion-item>
+
+                <ion-item *ngIf = "costperunits != ''">
+                        <ion-label>Units</ion-label>
+                        <ion-select [(ngModel)]="unitscost" (ionChange)="onChange(unitscost)">
+                          <ion-select-option value = {{units.id}} *ngFor = "let units of costperunits">{{units.quantityperunit}} {{units.unittype}} = Rs. {{units.costperquantity | number : '1.2-2'}}</ion-select-option>
+                        </ion-select>
+                </ion-item>
+        <!-- <ion-card-content style = "color: red;" *ngIf = "existingtotalQty && existingQty != '0'">
             Only {{single.existing_quantity}} available,hurry up.
         </ion-card-content>
         <ion-card-content style = "color: red;" *ngIf = "existingQty == '0'">
             Not Available
-        </ion-card-content>
+        </ion-card-content> -->
         <ion-card-content>
             {{single.product_description}}
         </ion-card-content>
@@ -44,7 +52,7 @@
 <ion-toolbar>
     <ion-segment *ngFor="let single of getsingleProductList">
         <ion-segment-button *ngIf="!gotocart" value="all" (click)="addproductTocart(single.id,item_qty,single.price)">
-            Add TO Cart
+            Add To Cart
         </ion-segment-button>
         <ion-segment-button *ngIf="gotocart" value="all" (click)="gotocartpage()">
             Go To Cart
