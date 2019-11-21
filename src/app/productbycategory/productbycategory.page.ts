@@ -34,6 +34,9 @@ export class ProductbycategoryPage implements OnInit {
   subsubcategory_name:any;
   subsubcategory_id:any;
   product_name:any;
+  stock_status: any;
+  currency_icon: any;
+  unitvisecost:any;
 
   constructor(private location:Location,public keyboard: Keyboard,public actionSheetController: ActionSheetController,public events: Events,public productservice:ProductsService,public router: Router,private route: ActivatedRoute) { 
     this.subcategory_id = route.snapshot.paramMap.get('subcategory_id');
@@ -76,6 +79,8 @@ export class ProductbycategoryPage implements OnInit {
   }
 
   ngOnInit() {
+    this.currency_icon = localStorage.getItem('currency_icon');
+    this.stock_status = localStorage.getItem('stock_status');
     this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
     if(this.cartDetails){
       this.cartcount = this.cartDetails.length;
@@ -145,7 +150,33 @@ export class ProductbycategoryPage implements OnInit {
     this.productservice.presentLoading();
     this.productservice.getproductlist("",subcategory_id,"","",subsubcategory_id)
     .subscribe(product =>{ 
+      var values = [];
       this.getProductLists = product.data;
+      if(this.stock_status != 1){
+      if(this.getProductLists){
+        for(var i=0;i< this.getProductLists.length;i++){
+          this.unitvisecost = this.getProductLists[i].unitvisecosts;
+          var newArray = this.unitvisecost.filter(function (el) {
+            return el.availablequantityperunits == "0";
+          });
+        if(newArray.length == this.unitvisecost.length){
+          for(var j=0;j< newArray.length;j++){
+            values.push(newArray[j]);
+          }
+        }
+         
+        }
+        var uniquevalues = this.getUnique(values,'product_id');
+       
+        this.getProductLists = this.getProductLists.filter(function(cv){
+          return !uniquevalues.find(function(e){
+              return e.product_id == cv.id;
+          });
+      });
+   
+      
+      }
+    }
       this.productservice.loadingdismiss();
     },
     err =>{
@@ -156,7 +187,32 @@ export class ProductbycategoryPage implements OnInit {
   getItems(searchItem) {
     this.productservice.getproductlistsearch(this.term.searchText)
     .subscribe(product =>{ 
+      var values = [];
       this.getProductLists = product.data;
+      if(this.stock_status != 1){
+      if(this.getProductLists){
+        for(var i=0;i< this.getProductLists.length;i++){
+          this.unitvisecost = this.getProductLists[i].unitvisecosts;
+          var newArray = this.unitvisecost.filter(function (el) {
+            return el.availablequantityperunits == "0";
+          });
+        if(newArray.length == this.unitvisecost.length){
+          for(var j=0;j< newArray.length;j++){
+            values.push(newArray[j]);
+          }
+        }
+         
+        }
+        var uniquevalues = this.getUnique(values,'product_id');
+        this.getProductLists = this.getProductLists.filter(function(cv){
+          return !uniquevalues.find(function(e){
+              return e.product_id == cv.id;
+          });
+      });
+      
+      }
+   
+    }
     },
     err =>{
       this.productservice.presentToast(err.error.message);
@@ -167,13 +223,51 @@ export class ProductbycategoryPage implements OnInit {
     this.productservice.presentLoading();
     this.productservice.getproductlist("",subcategory_id,val,'','')
     .subscribe(product =>{ 
+      var values = [];
       this.getProductLists = product.data;
+      if(this.stock_status != 1){
+      if(this.getProductLists){
+        for(var i=0;i< this.getProductLists.length;i++){
+          this.unitvisecost = this.getProductLists[i].unitvisecosts;
+          var newArray = this.unitvisecost.filter(function (el) {
+            return el.availablequantityperunits == "0";
+          });
+        if(newArray.length == this.unitvisecost.length){
+          for(var j=0;j< newArray.length;j++){
+            values.push(newArray[j]);
+          }
+        }
+         
+        }
+        var uniquevalues = this.getUnique(values,'product_id');
+        this.getProductLists = this.getProductLists.filter(function(cv){
+          return !uniquevalues.find(function(e){
+              return e.product_id == cv.id;
+          });
+      });
+      
+      }
+ 
       this.productservice.loadingdismiss();
+    }
     },
     err =>{
       this.productservice.loadingdismiss();
       this.productservice.presentToast(err.error.message);
    })
+  }
+  getUnique(arr, comp) {
+
+    const unique = arr
+         .map(e => e[comp])
+  
+       // store the keys of the unique objects
+      .map((e, i, final) => final.indexOf(e) === i && i)
+  
+      // eliminate the dead keys & store unique objects
+      .filter(e => arr[e]).map(e => arr[e]);
+  
+     return unique;
   }
   // filterbySubategory(subcategory_id){
   //   localStorage.setItem('key',subcategory_id);

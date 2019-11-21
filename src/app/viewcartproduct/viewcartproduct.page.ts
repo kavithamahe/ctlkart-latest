@@ -29,11 +29,15 @@ export class ViewcartproductPage implements OnInit {
   item_qtycheck :any=1;
   totalQty:any;
   qtycheck:any;
+  stock_status: any;
+  currency_icon: any;
 
   constructor(private location:Location,public events: Events,public productservice:ProductsService,private route: ActivatedRoute,public router:Router,private alertCtrl: AlertController) { 
     this.getproductList();
   }
   ngOnInit() {
+    this.currency_icon = localStorage.getItem('currency_icon');
+    this.stock_status = localStorage.getItem('stock_status');
     localStorage.removeItem('category_id');
     localStorage.removeItem('subcategory_id');
     localStorage.removeItem('subcategoryname');

@@ -128,7 +128,7 @@ export class CheckoutPage implements OnInit {
       err =>{
         if(err.status == 401){
           if(err.error.mobile){
-          const phoneNumberString = "+91" + err.error.mobile;
+          const phoneNumberString = err.error.mobile;
           this.firebaseAuthentication.verifyPhoneNumber(phoneNumberString, 30000)
           .then( confirmationResult => {
             this.verificationId = confirmationResult;

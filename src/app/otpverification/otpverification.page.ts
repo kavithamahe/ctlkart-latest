@@ -68,7 +68,7 @@ export class OtpverificationPage implements OnInit {
     this.fromlogin = this.route.snapshot.paramMap.get('fromlogin');
   }
   resendotp(){
-    const phoneNumberString = "+91" + this.mobilenumber;
+    const phoneNumberString =this.mobilenumber;
     console.log(phoneNumberString)
     this.firebaseAuthentication.verifyPhoneNumber(phoneNumberString, 30000)
     .then( confirmationResult => {
@@ -84,64 +84,65 @@ export class OtpverificationPage implements OnInit {
   }
   otpsubmit(){
     this.data = this.mobileotp.firebasemobileotp;
-    let otp = "1";
+    // this.productservice.presentLoading();
     this.firebaseAuthentication.signInWithVerificationId(this.verificationId,this.data).then((user) => {
       console.log(user);
-      this.productservice.presentLoading();
-      this.productservice.onetimepassword(this.mobilenumber,otp).subscribe(otpdata =>{
-      
-        console.log(otpdata);
-        
-        localStorage.setItem("token", this.refreshToken);
-        localStorage.setItem("user_id", this.userid);
-        this.events.publish('loggedin');
-        this.productservice.presentToast("Mobile Verified Successfully");
-        this.productservice.loadingdismiss();
-        if(this.fromlogin == "1"){
-          console.log(this.fromcart);
-          if(this.fromcart == null || this.fromcart == "null"){
-            this.fromcart = "";
-          }
-          if(this.singleid == null || this.singleid == "null"){
-            this.singleid = "";
-          }
-          console.log(this.fromlogin);
-          if(this.onboard == 1){
-            
-            this.router.navigate(['']);
-          }
-          
-          else if(this.fromcart || this.singleid && this.onboard != 1){
-            this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,'fromorder':this.fromorder}]);
-          }
-          else{
-            this.router.navigate(['']);
-          }
-          // if(this.fromcart || this.singleid){
-          //   this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,"onboard":this.onboard}]);
-          // }
-          // else{
-          //   this.router.navigate(['']);
-          // }
-        }
-        else if(this.fromlogin == null){
-          console.log(this.fromlogin);
-          this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalpricecart":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,"onboard":this.onboard,'fromorder':this.fromorder}]);
-        }
-        // this.productservice.loadingdismiss();
-      },
-      err =>{
-        this.productservice.loadingdismiss();
-        this.productservice.presentToast(err.error.message);
-     })
-    console.log(user);
-    
+      // this.productservice.loadingdismiss();   
     })
     .catch((error) => {
       // this.alert(error);
       // this.productservice.loadingdismiss();
-      this.productservice.presentAlert(error);
+    
+      if(error == "This credential is already associated with a different user account."){
+        this.otpsend();
+      }
+      else if(error == "The sms verification code used to create the phone auth credential is invalid. Please resend the verification code sms and be sure use the verification code provided by the user."){
+        this.productservice.presentAlert(error);
+      }
+      else{
+        this.otpsend();
+      }
       console.error(error)});
+  }
+  otpsend(){
+    let otp = "1";
+    this.productservice.presentLoading();
+    this.productservice.onetimepassword(this.mobilenumber,otp).subscribe(otpdata =>{
+      
+      
+      localStorage.setItem("token", this.refreshToken);
+      localStorage.setItem("user_id", this.userid);
+      this.events.publish('loggedin');
+      this.productservice.presentToast("Mobile Verified Successfully");
+      this.productservice.loadingdismiss();
+      if(this.fromlogin == "1"){
+        if(this.fromcart == null || this.fromcart == "null"){
+          this.fromcart = "";
+        }
+        if(this.singleid == null || this.singleid == "null"){
+          this.singleid = "";
+        }
+        if(this.onboard == 1){
+          
+          this.router.navigate(['']);
+        }
+        
+        else if(this.fromcart || this.singleid && this.onboard != 1){
+          this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,'fromorder':this.fromorder}]);
+        }
+        else{
+          this.router.navigate(['']);
+        }
+      }
+      else if(this.fromlogin == null){
+        console.log(this.fromlogin);
+        this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalpricecart":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,"onboard":this.onboard,'fromorder':this.fromorder}]);
+      }
+    },
+    err =>{
+      this.productservice.loadingdismiss();
+      this.productservice.presentToast(err.error.message);
+   })
   }
   back(){
     this.router.navigate(['checkout',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalpricecart":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,"onboard":this.onboard,'fromorder':this.fromorder}]);

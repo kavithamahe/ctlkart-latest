@@ -54,7 +54,7 @@
                         </ion-label>
                     </ion-col>
                     <ion-col size="5">
-                        <p><i class="fa fa-inr"></i> {{totalprice | number : '1.2-2'}}</p>
+                        <p><i class="{{currency_icon}}"></i> {{totalprice | number : '1.2-2'}}</p>
                     </ion-col>
                 </ion-row>
                 <ion-row>
@@ -74,7 +74,7 @@
                         </ion-label>
                     </ion-col>
                     <ion-col size="5" color="warning">
-                        <p><i class="fa fa-inr"></i> {{totalprice | number : '1.2-2'}}</p>
+                        <p><i class="{{currency_icon}}"></i> {{totalprice | number : '1.2-2'}}</p>
                     </ion-col>
                 </ion-row>
             </ion-grid>
@@ -96,8 +96,8 @@
                                 <h3>{{single.product_name}}</h3>
                             </ion-col>
                             <ion-col size="4">
-                                <p color="warning" *ngIf = "costperunits != ''"><i class="fa fa-inr"></i>{{single.costperquantity | number : '1.2-2'}}</p>
-                                <p color="warning" *ngIf = "costperunits == ''"><i class="fa fa-inr"></i>{{single.price | number : '1.2-2'}}</p>
+                                <p color="warning" *ngIf = "costperunits != ''"><i class="{{currency_icon}}"></i>{{single.costperquantity | number : '1.2-2'}}</p>
+                                <p color="warning" *ngIf = "costperunits == ''"><i class="{{currency_icon}}"></i>{{single.price | number : '1.2-2'}}</p>
                             </ion-col>
                         </ion-row>
                         <ion-row>
@@ -146,7 +146,7 @@
                         </ion-label>
                     </ion-col>
                     <ion-col size="5">
-                        <p><i class="fa fa-inr"></i> {{totalamount | number : '1.2-2'}}</p>
+                        <p><i class="{{currency_icon}}"></i> {{totalamount | number : '1.2-2'}}</p>
                     </ion-col>
                 </ion-row>
                 <ion-row>
@@ -166,7 +166,7 @@
                         </ion-label>
                     </ion-col>
                     <ion-col size="5" color="warning">
-                        <p><i class="fa fa-inr"></i> {{totalamount | number : '1.2-2'}}</p>
+                        <p><i class="{{currency_icon}}"></i> {{totalamount | number : '1.2-2'}}</p>
                     </ion-col>
                 </ion-row>
             </ion-grid>
@@ -190,17 +190,17 @@
                         <div class="productContent">
                             <ion-grid>
                                 <ion-row>
-                                    <ion-col size="6">
-                                        <h3>{{single.product_name}}</h3>
+                                    <ion-col size="8">
+                                        <h3>{{single.product_name}} - {{single.quantityperunit}} {{single.unittype}}</h3>
                                     </ion-col>
-                                    <ion-col size="6">
-                                        <p color="warning"><i class="fa fa-inr"></i>{{single.totalproductprice | number : '1.2-2'}}</p>
+                                    <ion-col size="4">
+                                        <p color="warning"><i class="{{currency_icon}}"></i>{{single.totalproductprice | number : '1.2-2'}}</p>
                                     </ion-col>
                                 </ion-row>
                                 <ion-row>
                                     <ion-col size="8">
                                         <div class="quantity newqty">
-                                            <p><span>Quantity:</span> {{single.quantityperproduct}}</p>
+                                            <p>{{single.quantityperproduct}} * <i class="{{currency_icon}}"></i> {{single.costperquantity  | number : '1.2-2'}}</p>
                                         </div>
                                     </ion-col>
                                 </ion-row>

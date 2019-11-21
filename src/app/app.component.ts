@@ -9,6 +9,8 @@ import { Router, ActivatedRoute,RouterStateSnapshot,RoutesRecognized,RouterState
 import { IonRouterOutlet } from '@ionic/angular';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ProductsService } from './products.service';
+
 declare var cordova:any;
 declare var window:any;
 
@@ -17,6 +19,7 @@ declare var window:any;
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
+  currency_name: any;
   subcategoryname: any;
   subcategory_id: any;
   category_id: any;
@@ -35,6 +38,8 @@ export class AppComponent {
   fromorder:any;
   status:any;
   orderid:any;
+  stock_status:any;
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -44,7 +49,8 @@ export class AppComponent {
     public firebaseAuthentication:FirebaseAuthentication,
     public events: Events,
     public alertController: AlertController,
-    public activatedRoute: ActivatedRoute
+    public activatedRoute: ActivatedRoute,
+    public productservice:ProductsService
   ) {
     this.token = localStorage.getItem('token');
     this.href = this.router.url;
@@ -337,6 +343,23 @@ export class AppComponent {
           }
         });
       });
+
+      this.getcurrencysettings();
+      this.getstocksettings();
+  }
+  getcurrencysettings(){
+    this.productservice.getcurrencysetting()
+    .subscribe(data =>{ 
+      this.currency_name = data['data'].currency_icon;
+      localStorage.setItem('currency_icon',this.currency_name);
+    })
+  }
+  getstocksettings(){
+    this.productservice.getstocksetting()
+    .subscribe(data =>{ 
+      this.stock_status = data['data'].stock_status;
+      localStorage.setItem('stock_status',this.stock_status);
+    })
   }
   async presentAlert(message) {
     let alert  = await this.alertController.create({

@@ -277,6 +277,14 @@ export class ProductsService {
     "state":addresss.state,"zipcode":addresss.zipcode,"address_type":addresss.address_type};
     return this.http.post(this.apiUrl + 'editaddress',body,{ headers:this.headers });
   }
+  getcurrencysetting(): Observable<any> {
+    let body={'name':'currencysetting'};
+    return this.http.post(this.apiUrl + 'getSettings',body,{ headers:this.headers });
+  }
+  getstocksetting(): Observable<any> {
+    let body={'name':'stocksetting'};
+    return this.http.post(this.apiUrl + 'getSettings',body,{ headers:this.headers });
+  }
   async presentToast(datamessage) {
     const toast = await this.toastController.create({
       message: datamessage,
@@ -307,4 +315,5 @@ export class ProductsService {
 
     await alert.present();
   }
+
 }

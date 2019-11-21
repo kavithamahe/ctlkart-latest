@@ -28,7 +28,8 @@
                     <!-- <p *ngIf="!profileForm.controls.lastname.valid && (profileForm.controls.lastname.dirty || submitAttempt)" class="err-reds shake">Please enter lastname.</p> -->
                     <ion-input type="email" formControlName="email" readonly></ion-input>
                     <!-- <p *ngIf="!profileForm.controls.email.valid && (profileForm.controls.email.dirty || submitAttempt)" class="err-reds shake">Please enter email.</p> -->
-                    <ion-input type="number" formControlName="mobile" readonly></ion-input>
+                    <!-- <ion-input type="tel" hidden formControlName="country_code" readonly></ion-input> -->
+                    <ion-input type="tel" formControlName="mobile" readonly></ion-input>
                     <!-- <p *ngIf="!profileForm.controls.mobile.valid && (profileForm.controls.mobile.dirty || submitAttempt)" class="err-reds shake">Please enter mobile number.</p> -->
                 </ion-col>
             </ion-row>

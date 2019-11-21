@@ -4,6 +4,11 @@ import { RouteReuseStrategy } from '@angular/router';
 import { FormsModule,ReactiveFormsModule  } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -33,7 +38,7 @@ export const firebaseConfig = {
   storageBucket: "ctlkart.appspot.com",
   messagingSenderId: "313104804796"
   };
-
+  library.add(fas, far, fab);
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -48,6 +53,7 @@ export const firebaseConfig = {
      AngularFireModule.initializeApp(firebaseConfig),
      AppRoutingModule,
      IonicRatingModule,
+     FontAwesomeModule
      
      
     ],

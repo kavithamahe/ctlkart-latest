@@ -12,6 +12,7 @@ import { environment } from '../../environments/environment.prod';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit  {
+  user_id: string;
   public apiUrl = environment.apiUrl;
   public toggled: boolean = false;
   cartDetails: any;
@@ -39,6 +40,10 @@ export class DashboardPage implements OnInit  {
   imgURl:any;
   term = { searchText: ''};
   getallcategorieslist:any=[];
+  unitvisecost:any;
+  product_id:any;
+  stock_status: any;
+  currency_icon: any;
   constructor(public productservice:ProductsService,public router: Router,public events: Events,public keyboard: Keyboard) { 
     this.toggled = false;
     this.events.subscribe('cart', ()=>{
@@ -52,7 +57,10 @@ export class DashboardPage implements OnInit  {
     this.getproductList();
     this.getCategory();
   }
+ 
   ngOnInit() {
+    this.currency_icon = localStorage.getItem('currency_icon');
+    this.stock_status = localStorage.getItem('stock_status');
     // this.getrazorpay();
     localStorage.setItem('rootUrl', this.apiUrl);
     localStorage.removeItem('category_id');
@@ -103,7 +111,32 @@ export class DashboardPage implements OnInit  {
     this.productservice.presentLoading();
     this.productservice.getproductlist('','','',this.term.searchText,'')
     .subscribe(product =>{ 
+      var values = [];
       this.getProductLists = product.data;
+      if(this.stock_status != 1){
+      if(this.getProductLists){
+        for(var i=0;i< this.getProductLists.length;i++){
+          this.unitvisecost = this.getProductLists[i].unitvisecosts;
+          var newArray = this.unitvisecost.filter(function (el) {
+            return el.availablequantityperunits == "0";
+          });
+        if(newArray.length == this.unitvisecost.length){
+          for(var j=0;j< newArray.length;j++){
+            values.push(newArray[j]);
+          }
+        }
+         
+        }
+        var uniquevalues = this.getUnique(values,'product_id');
+        this.getProductLists = this.getProductLists.filter(function(cv){
+          return !uniquevalues.find(function(e){
+              return e.product_id == cv.id;
+          });
+      });
+      
+      }
+
+    }
       this.productservice.loadingdismiss();
     },
     err =>{
@@ -111,7 +144,19 @@ export class DashboardPage implements OnInit  {
       this.productservice.presentToast(err.error.message);
    })
   }
+  getUnique(arr, comp) {
+
+    const unique = arr
+         .map(e => e[comp])
   
+       // store the keys of the unique objects
+      .map((e, i, final) => final.indexOf(e) === i && i)
+  
+      // eliminate the dead keys & store unique objects
+      .filter(e => arr[e]).map(e => arr[e]);
+  
+     return unique;
+  }
   getCategory(){
     this.productservice.presentLoading();
     this.productservice.getCategoryList().subscribe(category =>{ 

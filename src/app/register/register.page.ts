@@ -31,6 +31,7 @@ export class RegisterPage implements OnInit {
   fromorder:any;
   gelallcheckcodedetails:any=[];
   getallusers:any=[];
+  phoneNumberString:any;
   constructor(public firebaseAuthentication:FirebaseAuthentication,private route: ActivatedRoute,public events: Events,private _location: Location, private alertCtrl: AlertController,private router: Router,public formBuilder: FormBuilder,public productservice:ProductsService) { 
     this.singleid = route.snapshot.paramMap.get('id');
     console.log(this.singleid);
@@ -54,6 +55,7 @@ export class RegisterPage implements OnInit {
       firstname: ['', Validators.compose([Validators.required])],
       lastname: ['', Validators.compose([Validators.required])],
       email: ['', Validators.compose([Validators.pattern(/^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i),Validators.required])],
+      country_code: ['', Validators.compose([Validators.required])],
       mobile: ['',  [Validators.required, this.productservice.checkLimit(1000000000,999999999999)]],
       password: ['', Validators.compose([Validators.required])],
      
@@ -69,10 +71,10 @@ export class RegisterPage implements OnInit {
    })
   }
   submit(){
- 
+    
     this.checkavailusersmobile = this.getallusers.find(p => this.registerForm.value.mobile == p.mobile);
     this.checkavailusersemail = this.getallusers.find(p => this.registerForm.value.email == p.email);
-
+    console.log(this.checkavailusersemail)
     if(this.checkavailusersmobile){
       this.productservice.presentAlert("your mobile number is already registered");
     }
@@ -83,14 +85,23 @@ export class RegisterPage implements OnInit {
         else{
       let mobileapp = {"mobileapp":""};
     let obj = Object.assign(this.registerForm.value,mobileapp);
+
     if(!this.registerForm.valid){
       this.submitAttempt = true;
     }else{
       this.productservice.presentLoading();
       this.submitAttempt = false;
       // console.log(phoneNumberString)
-      const phoneNumberString = "+91" + this.registerForm.value.mobile;
-  this.firebaseAuthentication.verifyPhoneNumber(phoneNumberString, 30000)
+      var str = this.registerForm.value.country_code;
+      var n = str.includes("+");
+      if(n == true){
+        this.phoneNumberString = this.registerForm.value.country_code + this.registerForm.value.mobile;
+      }
+      else{
+        this.phoneNumberString = "+" +this.registerForm.value.country_code + this.registerForm.value.mobile;
+      }
+  
+  this.firebaseAuthentication.verifyPhoneNumber(this.phoneNumberString, 30000)
   .then( confirmationResult => {
     // console.log("this.verificationId")
     // console.log(confirmationResult)
@@ -102,7 +113,7 @@ export class RegisterPage implements OnInit {
         
         // this.firebase(phoneNumberString);
         this.productservice.presentToast(data.message);
-        this.router.navigate(['otpverification',{"mobile":this.registerForm.value.mobile,"verificationId":this.verificationId,"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,"onboard":this.onboard,'fromorder':this.fromorder}]);
+        this.router.navigate(['otpverification',{"mobile":this.phoneNumberString,"verificationId":this.verificationId,"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id,"onboard":this.onboard,'fromorder':this.fromorder}]);
        this.registerForm.reset();
       }, 
        err =>{

@@ -83,13 +83,14 @@ export class EditprofilePage implements OnInit {
       firstname: ['', Validators.compose([Validators.required])],
       lastname: ['', Validators.compose([Validators.required])],
       email: ['', Validators.compose([Validators.pattern(/^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i), Validators.required])],
-      mobile: ['',  [Validators.required, this.productservice.checkLimit(1000000000,999999999999)]],
+      // country_code: ['', Validators.compose([Validators.required])],
+      mobile: ['',  [Validators.required]],
     });
   }
   initaddressForm() {
     this.addressForm = this.formBuilder.group({
       name: ['', Validators.compose([Validators.required])],
-      mobile: ['',  [Validators.required, this.productservice.checkLimit(1000000000,999999999999)]],
+      mobile: ['',  [Validators.required]],
       address: ['', Validators.compose([Validators.required])],
       landmark: [''],
       city: ['', Validators.compose([Validators.required])],
@@ -142,7 +143,9 @@ export class EditprofilePage implements OnInit {
         this.profileForm.controls['firstname'].setValue(this.name);
         this.profileForm.controls['lastname'].setValue(this.getprofile[0].lastname);
         this.profileForm.controls['email'].setValue(this.getprofile[0].email);
+        // this.profileForm.controls['country_code'].setValue(this.getprofile[0].country_code);
         this.profileForm.controls['mobile'].setValue(this.getprofile[0].mobile);
+        console.log()
         this.profile_image = this.getprofile[0].profile_image;
         this.productservice.loadingdismiss();
 

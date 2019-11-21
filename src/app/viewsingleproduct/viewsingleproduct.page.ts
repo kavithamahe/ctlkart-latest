@@ -11,6 +11,8 @@ import { Location } from '@angular/common';
   styleUrls: ['./viewsingleproduct.page.scss'],
 })
 export class ViewsingleproductPage implements OnInit {
+  stock_status: any;
+  currency_icon: any;
   availablequantityperunits: any;
   subcategory_id: any;
   category_id: any;
@@ -83,6 +85,8 @@ export class ViewsingleproductPage implements OnInit {
     this.getproductList();
   }
   ngOnInit() {
+    this.currency_icon = localStorage.getItem('currency_icon');
+    this.stock_status = localStorage.getItem('stock_status');
     this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
     if(this.cartDetails){
       this.cartcount = this.cartDetails.length;
@@ -159,8 +163,8 @@ export class ViewsingleproductPage implements OnInit {
       if(product['data'][0]['unitvisecosts'] != ""){
       this.costperunits = product['data'][0]['unitvisecosts'];
       this.costperquantity = product['data'][0]['unitvisecosts'][0].costperquantity;
-      let defaultunit = 1;
-      let setdefaultvalue = this.costperunits.find(p => defaultunit == p.defaultunit);
+      let defaultselection = 1;
+      let setdefaultvalue = this.costperunits.find(p => defaultselection == p.defaultselection);
       this.unitscost = (setdefaultvalue.id).toString();
       this.costperquantity = setdefaultvalue.costperquantity;
       this.quantityperunit = setdefaultvalue.quantityperunit;

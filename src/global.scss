@@ -240,9 +240,9 @@ app-viewsingleproduct {
             ion-segment-button {
                 &.ion-activatable {
                     color: #fff !important;
-                    background: #000 !important;
+                    background: #fca411 !important;
                     &.segment-button-checked {
-                        background: #fca411 !important;
+                        background: #000 !important;
                     }
                 }
             }

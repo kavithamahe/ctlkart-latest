@@ -25,6 +25,8 @@ export class VieworderhistoryPage implements OnInit {
   color: string;
   orderstatus:any;
   saturation:any;
+  stock_status: any;
+  currency_icon: any;
 
   constructor(public actionSheetController: ActionSheetController,private location:Location,private router: Router,private alertCtrl: AlertController,public productservice:ProductsService,private route: ActivatedRoute) {
     this.singleid = route.snapshot.paramMap.get('orderid');
@@ -34,6 +36,8 @@ export class VieworderhistoryPage implements OnInit {
    }
 
   ngOnInit() {
+    this.currency_icon = localStorage.getItem('currency_icon');
+    this.stock_status = localStorage.getItem('stock_status');
     this.imgURl = this.imageUrl;
     this.singleid = this.route.snapshot.paramMap.get('orderid');
     this.status = this.route.snapshot.paramMap.get('status');

@@ -47,6 +47,8 @@ export class ProceedcheckoutPage implements OnInit {
   qtycheck:any;
   costperquantity:any;
   costperunits:any=[];
+  stock_status: any;
+  currency_icon: any;
   constructor(private location:Location,public alertController: AlertController,public events: Events,public formBuilder: FormBuilder,private route: ActivatedRoute,private router: Router,public productservice:ProductsService) {
     
     this.singleid = route.snapshot.paramMap.get('id');
@@ -67,7 +69,10 @@ export class ProceedcheckoutPage implements OnInit {
    }
  
   ngOnInit() {
+    this.currency_icon = localStorage.getItem('currency_icon');
+    this.stock_status = localStorage.getItem('stock_status');
     this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
+    console.log(this.cartDetails)
     if(this.cartDetails){
       this.cartcount = this.cartDetails.length;
     }

@@ -39,7 +39,7 @@
                     <div class="getProducts">
                         <img [src]="imgURl + product.product_image" (click)="viewsingleproduct(product.id)" />
                         <ion-label (click)="viewsingleproduct(product.id)">{{product.product_name}}</ion-label>
-                        <p (click)="viewsingleproduct(product.id)"><i class="fa fa-inr"></i>&nbsp;{{product.price | number : '1.2-2'}}</p>
+                        <p (click)="viewsingleproduct(product.id)"><i class="{{currency_icon}}"></i>&nbsp;{{product.price | number : '1.2-2'}}</p>
                     </div>
                 </ion-col>
             </ion-row>

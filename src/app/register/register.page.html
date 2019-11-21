@@ -31,7 +31,15 @@
                 </ion-label>
                 <ion-input required type="email" formControlName="email" autofocus></ion-input>
             </div>
-            <p *ngIf="!registerForm.controls.email.valid && (registerForm.controls.email.dirty || submitAttempt)" class="err-reds shake">Please enter email.</p>
+            <p *ngIf="!registerForm.controls.email.valid && (registerForm.controls.email.dirty || submitAttempt)" class="err-reds shake">Please enter valid email.</p>
+            <div class="formList">
+                <ion-label position="floating">Country Code
+                    <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input required formControlName="country_code" type="tel" autofocus></ion-input>
+            </div>
+            <p *ngIf="!registerForm.controls.country_code.valid && (registerForm.controls.country_code.dirty || submitAttempt)" class="err-reds shake">Please enter country code.</p>
+
 
             <div class="formList">
                 <ion-label position="floating">Mobile Number
