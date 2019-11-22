@@ -3,7 +3,7 @@ import { environment } from '../../environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../products.service';
 import { Location } from '@angular/common';
-import { AlertController, ActionSheetController, BooleanValueAccessor } from '@ionic/angular';
+import { AlertController, ActionSheetController, BooleanValueAccessor, Events } from '@ionic/angular';
 
 @Component({
   selector: 'app-vieworderhistory',
@@ -28,7 +28,7 @@ export class VieworderhistoryPage implements OnInit {
   stock_status: any;
   currency_icon: any;
 
-  constructor(public actionSheetController: ActionSheetController,private location:Location,private router: Router,private alertCtrl: AlertController,public productservice:ProductsService,private route: ActivatedRoute) {
+  constructor(public actionSheetController: ActionSheetController,public events: Events,private location:Location,private router: Router,private alertCtrl: AlertController,public productservice:ProductsService,private route: ActivatedRoute) {
     this.singleid = route.snapshot.paramMap.get('orderid');
     this.status = route.snapshot.paramMap.get('status');
     this.user_id = localStorage.getItem("user_id");
@@ -115,7 +115,7 @@ export class VieworderhistoryPage implements OnInit {
   async presentAlertConfirm(id) {
     const alert = await this.alertCtrl.create({
       header: '',
-      message: 'Are you sure want to cancel this product?',
+      message: 'Are you sure want to cancel this order?',
       buttons: [
         {
           text: 'Cancel',
@@ -125,7 +125,7 @@ export class VieworderhistoryPage implements OnInit {
             console.log('Confirm Cancel: blah');
           }
         }, {
-          text: 'Okay',
+          text: 'Yes',
           handler: () => {
             this.cancelorders(id);
           }
@@ -141,6 +141,8 @@ export class VieworderhistoryPage implements OnInit {
     .subscribe(product =>{ 
       this.productservice.presentToast(product.message);
       this.getsingleorderdetails(this.singleid,this.status,this.user_id);
+      this.events.publish('cancelitems');
+      this.router.navigate(['tabs/myorders']);
       this.productservice.loadingdismiss();
     },
     err =>{

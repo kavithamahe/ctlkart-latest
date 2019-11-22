@@ -28,6 +28,8 @@ import { ProductPipeModule } from './pipes/productPipe.module';
 import { ProductfilterPipe } from './pipes/productfilter.pipe';
 import { custumePipeModule } from './pipes/custumepipe.module';
 
+import { IonicSelectableModule } from 'ionic-selectable';
+
 
 
 export const firebaseConfig = {
@@ -53,7 +55,8 @@ export const firebaseConfig = {
      AngularFireModule.initializeApp(firebaseConfig),
      AppRoutingModule,
      IonicRatingModule,
-     FontAwesomeModule
+     FontAwesomeModule,
+     IonicSelectableModule
      
      
     ],

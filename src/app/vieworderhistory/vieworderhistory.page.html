@@ -107,9 +107,9 @@
                                         <p><span>Quantity:</span> {{orderdetails.quantity}} ({{orderdetails.unitvisecost.quantityperunit}} {{orderdetails.unitvisecost.unittype}})</p>
                                     </div>
                                 </ion-col>
-                                <ion-col size="4" *ngIf="order.status == 0 || order.status == 1 || order.status == 2">
+                                <!-- <ion-col size="4" *ngIf="order.status == 0 || order.status == 1 || order.status == 2">
                                     <span (click)="presentAlertConfirm(orderdetails.id)" class="closeBtn"><ion-icon name="close"></ion-icon></span>
-                                </ion-col>
+                                </ion-col> -->
                             </ion-row>
                             <!-- <ion-row  (click)="viewProduct(orderdetails.product_id)">
                                 <ion-col size="6" *ngIf="orderdetails.status == 1">
@@ -133,7 +133,9 @@
                 </div>
             </div>
 
-
+            <div (click)="presentAlertConfirm(order.order_id)" class="titleLabelsec" *ngIf="order.status == 0 || order.status == 1 || order.status == 2">
+                <h3>Cancel Ordered Items</h3>
+            </div>
             <div class="titleLabelsec">
                 <h3>Order Information</h3>
             </div>

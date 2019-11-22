@@ -30,11 +30,7 @@ export class MyordersPage implements OnInit {
         this.cartcount = this.cartDetails.length;
       }
     })
-    this.user_id = localStorage.getItem("user_id");
-    this.getallmyorders(this.user_id);
-    this.getprocessingorders(this.user_id);
-    this.getdeliveredorders(this.user_id);
-    this.getcancelledorders(this.user_id);
+   
   }
 
   ngOnInit() {
@@ -42,6 +38,16 @@ export class MyordersPage implements OnInit {
     if(this.cartDetails){
       this.cartcount = this.cartDetails.length;
     }
+    this.user_id = localStorage.getItem("user_id");
+    this.getallmyorders(this.user_id);
+    this.getprocessingorders(this.user_id);
+    this.getdeliveredorders(this.user_id);
+    this.getcancelledorders(this.user_id);
+    this.events.subscribe('cancelitems', ()=>{
+      this.user_id = localStorage.getItem("user_id");
+      this.getcancelledorders(this.user_id);
+      this.getmyorders="cancelled";
+    })
   }
   ionViewWillEnter(){
     this.events.subscribe('cart', ()=>{
@@ -55,6 +61,7 @@ export class MyordersPage implements OnInit {
     this.getprocessingorders(this.user_id);
     this.getdeliveredorders(this.user_id);
     this.getcancelledorders(this.user_id);
+   
   }
   public toggle(): void {
     this.toggled = !this.toggled;

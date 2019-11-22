@@ -6,6 +6,14 @@ import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ng
 import { AlertController, Events } from '@ionic/angular';
 import {Location} from '@angular/common';
 import { CheckzipcodeService } from '../checkzipcode.service';
+import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { IonicSelectableComponent } from 'ionic-selectable';
+
+class Country {
+  public dial_code: number;
+  public name: string;
+}
 
 @Component({
   selector: 'app-register',
@@ -13,6 +21,7 @@ import { CheckzipcodeService } from '../checkzipcode.service';
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit {
+ 
   checkavailusersmobile: any;
   checkavailusersemail: any;
   checkavailusers: any;
@@ -32,7 +41,10 @@ export class RegisterPage implements OnInit {
   gelallcheckcodedetails:any=[];
   getallusers:any=[];
   phoneNumberString:any;
-  constructor(public firebaseAuthentication:FirebaseAuthentication,private route: ActivatedRoute,public events: Events,private _location: Location, private alertCtrl: AlertController,private router: Router,public formBuilder: FormBuilder,public productservice:ProductsService) { 
+  country_code:Country[];
+  country:Country[];
+  countrycode:any = "";
+  constructor(public http : HttpClient,public firebaseAuthentication:FirebaseAuthentication,private route: ActivatedRoute,public events: Events,private _location: Location, private alertCtrl: AlertController,private router: Router,public formBuilder: FormBuilder,public productservice:ProductsService) { 
     this.singleid = route.snapshot.paramMap.get('id');
     console.log(this.singleid);
     this.subcategory_id = route.snapshot.paramMap.get('subcategory_id');
@@ -44,12 +56,30 @@ export class RegisterPage implements OnInit {
     this.onboard = route.snapshot.paramMap.get('onboard');
     this.fromorder = route.snapshot.paramMap.get('fromorder');
   }
-
   ngOnInit() {
     this.initForm();
     this.getUsers();
+    this.getJSON().subscribe(data =>{
+      this.country_code = data;
+    });
   }
+  public getJSON(): Observable<any> {
+    return this.http.get("./assets/country_code.json");
 
+}
+portChange(event: {
+  component: IonicSelectableComponent,
+  value: any
+}) {
+  console.log('port:', event.value);
+  // this.country = event.value.dial_code;
+  this.countrycode = event.value.dial_code;
+ 
+}
+countryChange(event){
+  this.country = event.detail.value;
+  console.log(this.country);
+}
   initForm(){
     this.registerForm = this.formBuilder.group({
       firstname: ['', Validators.compose([Validators.required])],
@@ -71,16 +101,16 @@ export class RegisterPage implements OnInit {
    })
   }
   submit(){
-    
+    this.registerForm.value.country_code = this.countrycode;
+    console.log(this.registerForm.value.country_code);
     this.checkavailusersmobile = this.getallusers.find(p => this.registerForm.value.mobile == p.mobile);
     this.checkavailusersemail = this.getallusers.find(p => this.registerForm.value.email == p.email);
-    console.log(this.checkavailusersemail)
     if(this.checkavailusersmobile){
-      this.productservice.presentAlert("your mobile number is already registered");
+      this.productservice.presentAlert("Your mobile number was already registered,Please log in with your associated email.");
     }
     else{
         if(this.checkavailusersemail){
-      this.productservice.presentAlert("your email id is already registered");
+      this.productservice.presentAlert("Your email id was already registered,Please log in with your associated email.");
         }
         else{
       let mobileapp = {"mobileapp":""};
@@ -91,16 +121,16 @@ export class RegisterPage implements OnInit {
     }else{
       this.productservice.presentLoading();
       this.submitAttempt = false;
-      // console.log(phoneNumberString)
-      var str = this.registerForm.value.country_code;
-      var n = str.includes("+");
-      if(n == true){
+      // // console.log(phoneNumberString)
+      // var str = this.registerForm.value.country_code;
+      // var n = str.includes("+");
+      // if(n == true){
         this.phoneNumberString = this.registerForm.value.country_code + this.registerForm.value.mobile;
-      }
-      else{
-        this.phoneNumberString = "+" +this.registerForm.value.country_code + this.registerForm.value.mobile;
-      }
-  
+      // }
+      // else{
+      //   this.phoneNumberString = "+" +this.registerForm.value.country_code + this.registerForm.value.mobile;
+      // }
+      console.log(this.phoneNumberString)
   this.firebaseAuthentication.verifyPhoneNumber(this.phoneNumberString, 30000)
   .then( confirmationResult => {
     // console.log("this.verificationId")

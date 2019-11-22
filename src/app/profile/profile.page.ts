@@ -86,7 +86,7 @@ export class ProfilePage implements OnInit {
             console.log('Confirm Cancel: blah');
           }
         }, {
-          text: 'Okay',
+          text: 'Yes',
           handler: () => {
             this.logoutconfirm();
           }
@@ -117,7 +117,7 @@ async deleteaccount() {
           console.log('Confirm Cancel: blah');
         }
       }, {
-        text: 'Okay',
+        text: 'Yes',
         handler: () => {
           this.deleteaccountconfirm();
         }

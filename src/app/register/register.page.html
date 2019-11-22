@@ -33,23 +33,37 @@
             </div>
             <p *ngIf="!registerForm.controls.email.valid && (registerForm.controls.email.dirty || submitAttempt)" class="err-reds shake">Please enter valid email.</p>
             <div class="formList">
-                <ion-label position="floating">Country Code
-                    <ion-text color="danger">*</ion-text>
-                </ion-label>
-                <ion-input required formControlName="country_code" type="tel" autofocus></ion-input>
-            </div>
-            <p *ngIf="!registerForm.controls.country_code.valid && (registerForm.controls.country_code.dirty || submitAttempt)" class="err-reds shake">Please enter country code.</p>
+                    <ion-label position="floating">Country
+                            <ion-text color="danger">*</ion-text>
+                    </ion-label>
+                <!-- <ion-item> -->
+                    <ion-label></ion-label>
+                    <ionic-selectable style = "border-bottom: 1px solid #ccc;"
+                      [(ngModel)]="country"
+                      [items]="country_code"
+                      itemValueField="dial_code"
+                      itemTextField="name" 
+                      [canSearch]="true"
+                      (onChange)="portChange($event)" formControlName="country_code">
+                    </ionic-selectable>
+                  <!-- </ion-item>  -->
+               </div>
+               <p *ngIf="!registerForm.controls.country_code.valid && (registerForm.controls.country_code.dirty || submitAttempt)" class="err-reds shake">Please enter country code.</p>
+                <div class="formList">
+                    <ion-label position="floating">Mobile Number
+                            <ion-text color="danger">*</ion-text>
+                        </ion-label>
+                         <ion-row>
+                                <ion-col size="3">
+                                    <ion-input required [(ngModel)]="countrycode" [ngModelOptions]="{standalone: true}" readonly autofocus></ion-input>
+                                </ion-col>
+                                <ion-col size="9">   
+                                    <ion-input required  formControlName="mobile" [maxlength]="12" type="tel" autofocus></ion-input>
+                                </ion-col>
+                        </ion-row>
+                </div>
 
-
-            <div class="formList">
-                <ion-label position="floating">Mobile Number
-                    <ion-text color="danger">*</ion-text>
-                </ion-label>
-                <ion-input required  formControlName="mobile" [maxlength]="12" type="tel" autofocus></ion-input>
-            </div>
             <p *ngIf="!registerForm.controls.mobile.valid && (registerForm.controls.mobile.dirty || submitAttempt)" class="err-reds shake">Please enter mobile number.</p>
-
-
 
             <div class="formList">
                 <ion-label position="floating">Password
