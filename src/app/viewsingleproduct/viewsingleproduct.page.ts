@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { ToastController, Events } from '@ionic/angular';
 import { Location } from '@angular/common';
 
+
 @Component({
   selector: 'app-viewsingleproduct',
   templateUrl: './viewsingleproduct.page.html',
@@ -48,7 +49,7 @@ export class ViewsingleproductPage implements OnInit {
   totalsingleproductamount:any;
   unitcostid:any;
 
-  constructor(public events: Events,private _location: Location, public productservice:ProductsService,private route: ActivatedRoute,public router:Router,public toastController: ToastController) { 
+  constructor(public events: Events,private _location: Location,public productservice:ProductsService,private route: ActivatedRoute,public router:Router,public toastController: ToastController) { 
     this.singleid = route.snapshot.paramMap.get('id');
     this.fromorder = route.snapshot.paramMap.get('fromorder');
     this.orderid = route.snapshot.paramMap.get('singleid');

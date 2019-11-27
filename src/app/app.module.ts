@@ -9,6 +9,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
+import { FirebaseX } from "@ionic-native/firebase-x/ngx";
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -64,7 +65,7 @@ export const firebaseConfig = {
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    FirebaseAuthentication,AngularFireAuth,Camera,File,Keyboard  ],
+    FirebaseAuthentication,AngularFireAuth,Camera,File,Keyboard,FirebaseX ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

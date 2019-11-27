@@ -18,6 +18,7 @@ export class ProductsService {
   headers: any;
   options: any;
   isLoading = false;
+  device_id:any;
   constructor(public http : HttpClient,public toastController: ToastController,public alertController: AlertController,public loadingController: LoadingController) {
     this.token=localStorage.getItem("token");
     this.headers = new HttpHeaders();
@@ -98,7 +99,10 @@ export class ProductsService {
     return this.http.post(this.apiUrl + 'getusers',body,this.headers);
   }
   login(formvalue): Observable<any>{
-    return this.http.post(this.apiUrl + 'login',formvalue,this.headers);
+  // this.presentAlert(this.device_id);
+    let mobileapp = {"device_token":this.device_id};
+    let obj = Object.assign(formvalue,mobileapp);
+    return this.http.post(this.apiUrl + 'login',obj,this.headers);
   }
   onetimepassword(mobile,otp): Observable<any>{
     const body= {"mobile":mobile,"otp":otp,"email":""};
@@ -315,5 +319,8 @@ export class ProductsService {
 
     await alert.present();
   }
-
+  setDeviceID(deviceID:string){
+    console.log("deviceID logged:",deviceID);
+    this.device_id = deviceID;
+      }
 }

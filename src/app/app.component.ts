@@ -10,6 +10,7 @@ import { IonRouterOutlet } from '@ionic/angular';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ProductsService } from './products.service';
+import { FirebaseX } from "@ionic-native/firebase-x/ngx";
 
 declare var cordova:any;
 declare var window:any;
@@ -50,7 +51,8 @@ export class AppComponent {
     public events: Events,
     public alertController: AlertController,
     public activatedRoute: ActivatedRoute,
-    public productservice:ProductsService
+    public productservice:ProductsService,
+    private firebase: FirebaseX,
   ) {
     this.token = localStorage.getItem('token');
     this.href = this.router.url;
@@ -77,9 +79,52 @@ export class AppComponent {
       }
     })
    
+    this.firebase.getToken().then(token =>{
+      console.log(token);
+      // this.productservice.presentAlert(token);
+      this.productservice.setDeviceID(token);
+    })
+    this.firebase.onMessageReceived().subscribe(data => console.log(`FCM message: ${data}`));
+    platform.ready().then(() => {
+      this.firebase.onMessageReceived().subscribe(
+      (notification) => {
+        console.log(notification);
+          const redirect = notification.your_custom_data_key;
+          const tap = notification.tap;
+          let page = {component: " "};
+      if(tap) {
+          switch (redirect) {
+            case 'accepted_invitation':
+            // page.component = "InvitationPage";
+            if(notification.order_id){
+            this.openPage(notification.order_id,notification.status);
+            }
+            console.log("notification.body");
+            console.log(notification.body);
+            break;
+            default:
+           
+          }
+      }else {
+          switch (redirect) {
+              case 'accepted_invitation':
+              this.productservice.presentToast(notification.body);
+              console.log("notification.body");
+              console.log(notification.body);
+              break;
+              default:
+          }
+      }
+  }, (error) => {
+      console.error(error);
+  }
+);
+    })
     this.initializeApp();
   }
-
+  openPage(order_id,status){
+    this.router.navigate(['/vieworderhistory',{"orderid":order_id,"status":status}]);
+  }
   initializeApp() {
     this.events.subscribe('cart', ()=>{
       this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));

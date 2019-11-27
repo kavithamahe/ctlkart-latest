@@ -101,9 +101,10 @@ countryChange(event){
    })
   }
   submit(){
+    this.phoneNumberString = this.registerForm.value.country_code + this.registerForm.value.mobile;
     this.registerForm.value.country_code = this.countrycode;
-    console.log(this.registerForm.value.country_code);
-    this.checkavailusersmobile = this.getallusers.find(p => this.registerForm.value.mobile == p.mobile);
+    console.log(this.registerForm.value.mobile);
+    this.checkavailusersmobile = this.getallusers.find(p => this.phoneNumberString == p.mobile);
     this.checkavailusersemail = this.getallusers.find(p => this.registerForm.value.email == p.email);
     if(this.checkavailusersmobile){
       this.productservice.presentAlert("Your mobile number was already registered,Please log in with your associated email.");
