@@ -65,8 +65,7 @@ export class RegisterPage implements OnInit {
   }
   public getJSON(): Observable<any> {
     return this.http.get("./assets/country_code.json");
-
-}
+  }
 portChange(event: {
   component: IonicSelectableComponent,
   value: any
@@ -78,7 +77,6 @@ portChange(event: {
 }
 countryChange(event){
   this.country = event.detail.value;
-  console.log(this.country);
 }
   initForm(){
     this.registerForm = this.formBuilder.group({
@@ -167,8 +165,6 @@ countryChange(event){
     }
   }
     }
-  
-  
   }
   back(){
     if(this.onboard == "1"){

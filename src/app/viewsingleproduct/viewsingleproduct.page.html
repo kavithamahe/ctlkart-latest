@@ -27,9 +27,14 @@
 
                 <ion-item *ngIf = "costperunits != ''">
                         <ion-label>Units</ion-label>
+                     
                         <ion-select [(ngModel)]="unitscost" (ionChange)="onChange(unitscost)" style= "padding: inherit;">
-                          <ion-select-option value = {{units.id}} *ngFor = "let units of costperunits">{{units.quantityperunit}} {{units.unittype}} {{units.unitnotes}} - <i class="{{currency_icon}}"></i> {{units.costperquantity | number : '1.2-2'}}</ion-select-option>
+                            <ng-container *ngFor = "let units of costperunits">
+                                    <ion-icon name="remove"></ion-icon>
+                            <ion-select-option value = {{units.id}} *ngIf = "units.status != 1">{{units.quantityperunit}} {{units.unittype}} {{units.unitnotes}} - <i class="{{currency_icon}}"></i> {{units.costperquantity | number : '1.2-2'}}</ion-select-option>
+                        </ng-container>
                         </ion-select>
+                   
                 </ion-item>
         <ion-card-content>
             {{single.product_description}}

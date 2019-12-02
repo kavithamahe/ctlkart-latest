@@ -25,7 +25,9 @@ main.inner-scroll {
     --background: #f6f9ff !important;
     // transition: opacity 420ms ease-in-out;
 }
-
+.innerSlider[_ngcontent-mao-c3] {
+    padding: 0px 10px;
+}
 ion-badge#cart-badge {
     background: #000000;
     width: 22px;

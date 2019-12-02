@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Events } from '@ionic/angular';
 
 @Component({
@@ -9,7 +9,12 @@ import { Events } from '@ionic/angular';
 })
 export class CheckoutsuccessPage implements OnInit {
 
-  constructor(public router:Router,public events: Events,) { }
+  status: any;
+  order_id: any;
+  constructor(public router:Router,public events: Events,private route: ActivatedRoute,) {
+    this.order_id = route.snapshot.paramMap.get('order_id');
+    this.status = route.snapshot.paramMap.get('status');
+   }
 
   ngOnInit() {
                     
@@ -24,5 +29,8 @@ export class CheckoutsuccessPage implements OnInit {
   }
   continueshopping(){
     this.router.navigate(['']);
+  }
+  vieworder(){
+    this.router.navigate(['/vieworderhistory',{"orderid":this.order_id,"status":this.status}]);
   }
 }

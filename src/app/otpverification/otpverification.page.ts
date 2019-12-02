@@ -74,7 +74,9 @@ export class OtpverificationPage implements OnInit {
     .then( confirmationResult => {
       console.log(confirmationResult)
       this.verificationId = confirmationResult;
-      
+      if(this.verificationId){
+        this.productservice.presentAlert("The sms verification code is sent to your mobile number");
+      }
       
     })
   .catch((error) => {

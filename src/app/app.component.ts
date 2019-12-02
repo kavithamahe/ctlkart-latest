@@ -453,6 +453,7 @@ changepassword(){
   this.menu.close();
 }
 getmyorders(){
+  console.log("sdfsd")
   this.router.navigate(['tabs/myorders']);
   this.menu.close();
 }
