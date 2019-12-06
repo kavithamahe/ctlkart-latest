@@ -27,7 +27,7 @@ export class VieworderhistoryPage implements OnInit {
   saturation:any;
   stock_status: any;
   currency_icon: any;
-
+  getreview:any;
   constructor(public actionSheetController: ActionSheetController,public events: Events,private location:Location,private router: Router,private alertCtrl: AlertController,public productservice:ProductsService,private route: ActivatedRoute) {
     this.singleid = route.snapshot.paramMap.get('orderid');
     this.status = route.snapshot.paramMap.get('status');
@@ -43,6 +43,9 @@ export class VieworderhistoryPage implements OnInit {
     this.status = this.route.snapshot.paramMap.get('status');
     this.user_id = localStorage.getItem("user_id");
     this.getsingleorderdetails(this.singleid,this.status,this.user_id);
+    if(this.status == 3){
+    this.getproductreview(this.singleid);
+    }
   }
   
   onRangeChangeHandler() {
@@ -59,6 +62,12 @@ export class VieworderhistoryPage implements OnInit {
     else {
       this.color = 'danger';
     }
+  }
+  getproductreview(singleid){
+    this.productservice.getproductreviews(singleid)
+    .subscribe(product =>{ 
+      this.getreview = product.data;
+    })
   }
   getsingleorderdetails(id,status,user_id){
     this.productservice.presentLoading();
@@ -112,28 +121,45 @@ export class VieworderhistoryPage implements OnInit {
     this.router.navigate(['viewsingleproduct',{'id':id,'fromorder':'1','singleid':this.singleid,'status':this.status}]);
   }
 
-  async presentAlertConfirm(id) {
-    const alert = await this.alertCtrl.create({
-      header: '',
-      message: 'Are you sure want to cancel this order?',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
+  async presentAlertConfirm(id,status) {
+    if(status == "2"){
+      const alert = await this.alertCtrl.create({
+        header: '',
+        message: 'Your order is shipped,Please contact our store.',
+        buttons: [
+         {
+            text: 'ok',
+            handler: () => {
+            }
           }
-        }, {
-          text: 'Yes',
-          handler: () => {
-            this.cancelorders(id);
-          }
+        ]
+      });
+  
+      await alert.present();
+    }
+else{
+  const alert = await this.alertCtrl.create({
+    header: '',
+    message: 'Do you want to cancel this order?',
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: (blah) => {
+          console.log('Confirm Cancel: blah');
         }
-      ]
-    });
+      }, {
+        text: 'Yes',
+        handler: () => {
+          this.cancelorders(id);
+        }
+      }
+    ]
+  });
 
-    await alert.present();
+  await alert.present();
+}
   }
   cancelorders(id){
     this.productservice.presentLoading();
@@ -150,10 +176,11 @@ export class VieworderhistoryPage implements OnInit {
       this.productservice.presentToast(err.error.message);
    })
   }
-  reviewsent(id,order_id){
+  reviewsent(id,order_id,orderId){
     this.productservice.presentLoading();
-    this.productservice.reviewsentuser(id,this.user_id,this.review.rating,this.review.ratingcomments,order_id)
+    this.productservice.reviewsentuser(id,this.user_id,this.review.rating,this.review.ratingcomments,order_id,orderId)
     .subscribe(product =>{ 
+      this.getproductreview(this.singleid);
       this.productservice.presentToast(product.data);
       this.review.rating = "";
       this.review.ratingcomments = "";

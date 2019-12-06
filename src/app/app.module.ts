@@ -51,9 +51,7 @@ export const firebaseConfig = {
      AppRoutingModule,
      IonicRatingModule,
      IonicSelectableModule
-     
-     
-    ],
+     ],
   providers: [
     StatusBar,
     SplashScreen,

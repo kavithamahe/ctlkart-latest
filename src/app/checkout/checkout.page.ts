@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import {Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ProductsService } from '../products.service';
 import { ToastController, AlertController } from '@ionic/angular';
 import { Events } from '@ionic/angular';
@@ -13,6 +13,7 @@ import {Location} from '@angular/common';
   styleUrls: ['./checkout.page.scss'],
 })
 export class CheckoutPage implements OnInit {
+  countrycode: string;
   subcategory_name: any;
   category_id: any;
   subcategory_id: any;
@@ -86,15 +87,23 @@ export class CheckoutPage implements OnInit {
   }
   initForm(){
     this.loginForm = this.formBuilder.group({
-      email: ['',Validators.compose([Validators.pattern(/^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i),Validators.required])],
+      // email: ['',Validators.compose([Validators.pattern(/^(?:\d{10}|\w+@\w+\.\w{2,3})$/),Validators.required])],
+      email: ['',Validators.compose([Validators.pattern(/^([_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5}))|(\d{10})$/),Validators.required])],
       password: ['', Validators.compose([Validators.required])]
       });
   }
-  
   register(){
     this.router.navigate(['register',{"id":this.singleid,"quantity":this.quantity,"fromcart":this.fromcart,"totalamount":this.totalpricecart,"category_id":this.category_id,"subcategoryname":this.subcategory_name,"subcategory_id":this.subcategory_id}]);
   }
   login(){
+    console.log(this.loginForm.value);
+    this.countrycode = localStorage.getItem('countrycode');
+    var emailRegex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    var n = emailRegex.test(this.loginForm.value.email);
+    if(n == false){
+      this.loginForm.value.email = this.countrycode + this.loginForm.value.email;
+    }
+
     if(!this.loginForm.valid){
       this.submitAttempt = true;
     }else{
@@ -123,7 +132,7 @@ export class CheckoutPage implements OnInit {
         else{
           this.router.navigate(['']);
         }
-        
+        this.loginForm.reset();
       },
       err =>{
         if(err.status == 401){

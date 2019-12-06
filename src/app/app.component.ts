@@ -81,7 +81,7 @@ export class AppComponent {
    
     this.firebase.getToken().then(token =>{
       console.log(token);
-      // this.productservice.presentAlert(token);
+      this.productservice.presentAlert(token);
       this.productservice.setDeviceID(token);
     })
     this.firebase.onMessageReceived().subscribe(data => console.log(`FCM message: ${data}`));

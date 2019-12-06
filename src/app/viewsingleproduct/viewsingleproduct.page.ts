@@ -269,7 +269,9 @@ else{
     this.presentToast("Your selected product(s) are not available");
   }
     }
-
+    shopmore(){
+      this.router.navigate(['tabs/category']);
+    }
 
     back(){
       var orderidlocal= localStorage.getItem("singleid");

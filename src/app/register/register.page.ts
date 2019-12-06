@@ -70,9 +70,10 @@ portChange(event: {
   component: IonicSelectableComponent,
   value: any
 }) {
-  console.log('port:', event.value);
+  // console.log('port:', event.value);
   // this.country = event.value.dial_code;
   this.countrycode = event.value.dial_code;
+  localStorage.setItem('countrycode',this.countrycode);
  
 }
 countryChange(event){
@@ -101,7 +102,7 @@ countryChange(event){
   submit(){
     this.phoneNumberString = this.registerForm.value.country_code + this.registerForm.value.mobile;
     this.registerForm.value.country_code = this.countrycode;
-    console.log(this.registerForm.value.mobile);
+    // console.log(this.registerForm.value.mobile);
     this.checkavailusersmobile = this.getallusers.find(p => this.phoneNumberString == p.mobile);
     this.checkavailusersemail = this.getallusers.find(p => this.registerForm.value.email == p.email);
     if(this.checkavailusersmobile){
@@ -129,7 +130,7 @@ countryChange(event){
       // else{
       //   this.phoneNumberString = "+" +this.registerForm.value.country_code + this.registerForm.value.mobile;
       // }
-      console.log(this.phoneNumberString)
+      // console.log(this.phoneNumberString)
   this.firebaseAuthentication.verifyPhoneNumber(this.phoneNumberString, 30000)
   .then( confirmationResult => {
     // console.log("this.verificationId")

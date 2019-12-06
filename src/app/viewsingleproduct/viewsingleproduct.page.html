@@ -26,7 +26,7 @@
                 </ion-item>
 
                 <ion-item *ngIf = "costperunits != ''">
-                        <ion-label>Units</ion-label>
+                        <ion-label style = "font-weight: 800;">Units</ion-label>
                      
                         <ion-select [(ngModel)]="unitscost" (ionChange)="onChange(unitscost)" style= "padding: inherit;">
                             <ng-container *ngFor = "let units of costperunits">
@@ -43,14 +43,14 @@
 </ion-content>
 <ion-toolbar>
     <ion-segment *ngFor="let single of getsingleProductList">
+        <ion-segment-button value="favorites" checked (click)="shopmore()">
+            Shop More
+        </ion-segment-button>
         <ion-segment-button *ngIf="!gotocart" value="all" (click)="addproductTocart(single.id,item_qty,single.price)">
             Add To Cart
         </ion-segment-button>
         <ion-segment-button value="favorites" *ngIf="gotocart" value="all" (click)="gotocartpage()">
             Go To Cart
         </ion-segment-button>
-        <!-- <ion-segment-button value="favorites" checked (click)="buyNow(single.id,item_qty)">
-            Buy Now
-        </ion-segment-button> -->
     </ion-segment>
 </ion-toolbar>

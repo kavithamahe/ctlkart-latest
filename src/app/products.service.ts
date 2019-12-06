@@ -13,6 +13,7 @@ import { environment } from '../environments/environment.prod';
   providedIn: 'root'
 })
 export class ProductsService {
+  countrycode: string;
   token: string;
   public apiUrl = environment.apiUrl;
   headers: any;
@@ -99,7 +100,8 @@ export class ProductsService {
     return this.http.post(this.apiUrl + 'getusers',body,this.headers);
   }
   login(formvalue): Observable<any>{
-  // this.presentAlert(this.device_id);
+    this.countrycode = localStorage.getItem('countrycode');
+  this.presentAlert(this.device_id);
     let mobileapp = {"device_token":this.device_id};
     let obj = Object.assign(formvalue,mobileapp);
     return this.http.post(this.apiUrl + 'login',obj,this.headers);
@@ -209,12 +211,12 @@ export class ProductsService {
     const body= {"order_id":id};
     return this.http.post(this.apiUrl + 'ordercancelbyuser',body,{ headers:this.headers });
   }
-  reviewsentuser(id,user_id,rating,ratingcomments,order_id): Observable<any> {
+  reviewsentuser(id,user_id,rating,ratingcomments,order_id,orderId): Observable<any> {
     this.token=localStorage.getItem("token");
     this.headers = new HttpHeaders();
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers= this.headers.append("Authorization", "Bearer " + this.token);
-    const body= {"product_id":id,"user_id":user_id,"rating":rating,"ratingcomments":ratingcomments,'order_id':order_id};
+    const body= {"product_id":id,"user_id":user_id,"rating":rating,"ratingcomments":ratingcomments,'order_id':order_id,'orderId':orderId};
     return this.http.post(this.apiUrl + 'productreview',body,{ headers:this.headers });
   }
   changepassword(password): Observable<any> {
@@ -254,6 +256,15 @@ export class ProductsService {
     
     const body= {"id":user_id,"firstname":profileForm.firstname,"lastname":profileForm.lastname,"email":profileForm.email,"mobile":profileForm.mobile,"base64Image":base64_image};
     return this.http.post(this.apiUrl + 'editprofile',body,{ headers:this.headers });
+  }
+  getproductreviews(id): Observable<any> { 
+    this.token=localStorage.getItem("token");
+    this.headers = new HttpHeaders();
+    this.headers = this.headers.append('Content-Type', 'application/json');
+    this.headers= this.headers.append("Authorization", "Bearer " + this.token);
+    
+    const body= {"order_id":id};
+    return this.http.post(this.apiUrl + 'getsingleproductreview',body,{ headers:this.headers });
   }
   getsingleorderdetailsservice(id,status,user_id): Observable<any> { 
     this.token=localStorage.getItem("token");
