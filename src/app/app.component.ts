@@ -78,12 +78,13 @@ export class AppComponent {
         this.cartcount = this.cartDetails.length;
       }
     })
-   
+    platform.ready().then(()=>{
     this.firebase.getToken().then(token =>{
       console.log(token);
-      this.productservice.presentAlert(token);
+      // this.productservice.presentAlert(token);
       this.productservice.setDeviceID(token);
     })
+  })
     this.firebase.onMessageReceived().subscribe(data => console.log(`FCM message: ${data}`));
     platform.ready().then(() => {
       this.firebase.onMessageReceived().subscribe(
@@ -145,7 +146,7 @@ export class AppComponent {
           // Here you can do any higher level native things you might need.
     
           if (window.cordova && window.cordova.plugins.Keyboard) {
-            console.log("dfsdfgf")
+            // console.log("dfsdfgf")
             // This requires installation of https://github.com/driftyco/ionic-plugin-keyboard
             // and can only affect native compiled Ionic2 apps (not webserved).
             cordova.plugins.Keyboard.disableScroll(false);
@@ -469,5 +470,17 @@ shopbycategory(){
   this.router.navigate(['tabs/category']);
   this.menu.close();
 }
-
+viewfaq(){
+  this.router.navigate(['help']);
+  this.menu.close();
+}
+viewterms(){
+  console.log("terms")
+  this.router.navigate(['terms']);
+  this.menu.close();
+}
+viewabout(){
+  this.router.navigate(['aboutus']);
+  this.menu.close();
+}
 }

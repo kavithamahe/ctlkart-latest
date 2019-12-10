@@ -59,10 +59,16 @@ const routes: Routes = [
   loadChildren: () => import('./checkoutsuccess/checkoutsuccess.module').then(m => m.CheckoutsuccessPageModule)
   },
   { path: 'childcategory', loadChildren: './childcategory/childcategory.module#ChildcategoryPageModule' },
+  { path: 'aboutus',
+  loadChildren: () => import('./aboutus/aboutus.module').then(m => m.AboutusPageModule) },
+ { path: 'help', loadChildren: './help/help.module#HelpPageModule' },
+ { path: 'terms', loadChildren: './terms/terms.module#TermsPageModule' },
   {
     path: '**',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
+ 
+
 
 ];
 @NgModule({

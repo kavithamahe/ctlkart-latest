@@ -101,7 +101,7 @@ export class ProductsService {
   }
   login(formvalue): Observable<any>{
     this.countrycode = localStorage.getItem('countrycode');
-  this.presentAlert(this.device_id);
+  // this.presentAlert(this.device_id);
     let mobileapp = {"device_token":this.device_id};
     let obj = Object.assign(formvalue,mobileapp);
     return this.http.post(this.apiUrl + 'login',obj,this.headers);
@@ -299,6 +299,10 @@ export class ProductsService {
   getstocksetting(): Observable<any> {
     let body={'name':'stocksetting'};
     return this.http.post(this.apiUrl + 'getSettings',body,{ headers:this.headers });
+  }
+  getpagesDetails(slug): Observable<any> {
+    let body={'slug':slug};
+    return this.http.post(this.apiUrl + 'getpages',body,{ headers:this.headers });
   }
   async presentToast(datamessage) {
     const toast = await this.toastController.create({

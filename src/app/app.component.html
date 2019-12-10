@@ -10,9 +10,9 @@
                 <!-- <ion-item (click)="home()">Home</ion-item>
                 <ion-item (click)="shopbycategory()">Shop By Category</ion-item> -->
                 <ion-item (click)="getmyorders()" *ngIf="showButton || token">My Orders</ion-item>
-                <ion-item (click)="getmyorders()">About US</ion-item>
-                <ion-item (click)="viewaccount()">Terms & conditions</ion-item>
-                <ion-item (click)="viewaccount()">Help</ion-item>
+                <ion-item (click)="viewabout()">About US</ion-item>
+                <ion-item (click)="viewterms()">Terms & conditions</ion-item>
+                <ion-item (click)="viewfaq()">FAQ</ion-item>
                 <!-- <ion-item (click)="logout()" *ngIf="showButton || token">Logout</ion-item> -->
                 <ion-item (click)="login()" *ngIf="!token">Login</ion-item>
             </ion-list>

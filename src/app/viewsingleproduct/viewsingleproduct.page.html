@@ -28,10 +28,10 @@
                 <ion-item *ngIf = "costperunits != ''">
                         <ion-label style = "font-weight: 800;">Units</ion-label>
                      
-                        <ion-select [(ngModel)]="unitscost" (ionChange)="onChange(unitscost)" style= "padding: inherit;">
+                        <ion-select [(ngModel)]="unitscost" (ionChange)="onChange(unitscost)" style= "padding: inherit;" class="glyphicon">
                             <ng-container *ngFor = "let units of costperunits">
                                     <ion-icon name="remove"></ion-icon>
-                            <ion-select-option value = {{units.id}} *ngIf = "units.status != 1">{{units.quantityperunit}} {{units.unittype}} {{units.unitnotes}} - <i class="{{currency_icon}}"></i> {{units.costperquantity | number : '1.2-2'}}</ion-select-option>
+                            <ion-select-option value = {{units.id}} *ngIf = "units.status != 1">{{units.quantityperunit}} {{units.unittype}} {{units.unitnotes}} - {{htmlStr}} {{units.costperquantity | number : '1.2-2'}}</ion-select-option>
                         </ng-container>
                         </ion-select>
                    

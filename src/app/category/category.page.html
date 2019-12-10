@@ -16,6 +16,7 @@
 </ion-header>
 
 <ion-content padding class="categoryList bgWhite">
+   
         <ng-container *ngFor="let category of getallcategories">
     <ion-list *ngIf = "category.status != 2">
         <div (click)="getsubcategory(category.category_id,category.category_name)">

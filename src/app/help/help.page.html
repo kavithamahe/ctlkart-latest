@@ -1,0 +1,21 @@
+<ion-header no-border-bottom>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-icon name="arrow-back" (click)="back()"></ion-icon>
+        </ion-buttons>
+        <ion-title><h2>CTL<span>Kart</span>.</h2></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+    <ion-list>
+        <ion-item>
+        <div class="successContent">
+            <h2>FAQ</h2>
+            <p [innerHTML]="gethomedetails.content"></p>
+        </div>
+        </ion-item>
+    </ion-list>
+
+</ion-content>
