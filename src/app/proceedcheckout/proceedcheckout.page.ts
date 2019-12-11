@@ -288,34 +288,37 @@ export class ProceedcheckoutPage implements OnInit {
             //   color: '#F37254'
             // }
           }
-              
+              let nav = this.productservice;
+              let rdirect = this.router;
            
           var successCallback = function(success) {
+            localStorage.removeItem('cart_items');
+            rdirect.navigate(['checkoutsuccess']);
             // alert(success.razorpay_payment_id)
             // var orderId = success.razorpay_order_id;
             // var signature = success.razorpay_signature;
-            var url  = localStorage.getItem("rootUrl")+"razorPaymentResponse";
-            var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
-         xmlhttp.open("POST", url,true);
+        //     var url  = localStorage.getItem("rootUrl")+"razorPaymentResponse";
+        //     var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+        //  xmlhttp.open("POST", url,true);
          
-         xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-         xmlhttp.setRequestHeader("Authorization", "Bearer "+ localStorage.getItem("token"));
-         xmlhttp.send(JSON.stringify({ "razorpay_payment_id": success.razorpay_payment_id,"product_cost": localStorage.getItem('totalcostsingleproductcart'),"user_id": localStorage.getItem("user_id"),"productListsfromcart": JSON.parse(localStorage.getItem('cart_items'))}));
+        //  xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        //  xmlhttp.setRequestHeader("Authorization", "Bearer "+ localStorage.getItem("token"));
+        //  xmlhttp.send(JSON.stringify({ "razorpay_payment_id": success.razorpay_payment_id,"product_cost": localStorage.getItem('totalcostsingleproductcart'),"user_id": localStorage.getItem("user_id"),"productListsfromcart": JSON.parse(localStorage.getItem('cart_items'))}));
          
-         xmlhttp.onload = function () {
-           var users = JSON.parse(xmlhttp.responseText);
-           var error = users.error;
-          var result=users.result;
-          localStorage.removeItem('cart_items');
-          // localStorage.removeItem('cart_items');
+        //  xmlhttp.onload = function () {
+        //    var users = JSON.parse(xmlhttp.responseText);
+        //    var error = users.error;
+        //   var result=users.result;
+         
         
-           // if(result){
-           //    nav.presentConfirm(result);
-           // }
-           //  if(error){
-           //    nav.presentConfirm(error);
-           // }
-           }
+          //  if(result){
+          //     nav.presentAlert(result);
+          //     localStorage.removeItem('cart_items');
+          //  }
+          //   if(error){
+          //     nav.presentAlert(error);
+          //  }
+          //  }
           }
            
           var cancelCallback = function(error) {
