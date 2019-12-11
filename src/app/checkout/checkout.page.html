@@ -11,12 +11,12 @@
         <form [formGroup]="loginForm">
             <ion-list lines="full" class="ion-no-margin loginDesign ion-no-padding">
                 <div class="formList">
-                    <ion-label position="stacked">Email
+                    <ion-label position="stacked">Email/Mobile
                         <ion-text color="danger">*</ion-text>
                     </ion-label>
-                    <ion-input formControlName="email" required type="email"></ion-input>
+                    <ion-input formControlName="email" required type="text"></ion-input>
                 </div>
-                <p *ngIf="!loginForm.controls.email.valid && (loginForm.controls.email.dirty || submitAttempt)" class="err-reds shake">Please enter email.</p>
+                <p *ngIf="!loginForm.controls.email.valid && (loginForm.controls.email.dirty || submitAttempt)" class="err-reds shake">wrong format, It should be email or 10 digit mobile number.</p>
                 <div class="formList">
                     <ion-label position="stacked">Password
                         <ion-text color="danger">*</ion-text>

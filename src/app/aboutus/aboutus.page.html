@@ -1,0 +1,26 @@
+<ion-header no-border-bottom>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-icon name="arrow-back" (click)="back()"></ion-icon>
+        </ion-buttons>
+        <ion-title><h2>CTL<span>Kart</span>.</h2></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-item>
+          <div class="successContent">
+              <h2>About Us</h2>
+              <p [innerHTML]="getaboutdetails.content"></p>
+          </div>
+          
+        </ion-item>
+        <ion-item>
+                <div class="successContent">
+                        <h2>Available Pincodes</h2>
+                        <p *ngFor = "let pincode of getzipcodelists">{{pincode.zipcode}}</p>
+                 </div>
+        </ion-item>
+    </ion-list>
+</ion-content>

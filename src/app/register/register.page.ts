@@ -65,20 +65,19 @@ export class RegisterPage implements OnInit {
   }
   public getJSON(): Observable<any> {
     return this.http.get("./assets/country_code.json");
-
-}
+  }
 portChange(event: {
   component: IonicSelectableComponent,
   value: any
 }) {
-  console.log('port:', event.value);
+  // console.log('port:', event.value);
   // this.country = event.value.dial_code;
   this.countrycode = event.value.dial_code;
+  localStorage.setItem('countrycode',this.countrycode);
  
 }
 countryChange(event){
   this.country = event.detail.value;
-  console.log(this.country);
 }
   initForm(){
     this.registerForm = this.formBuilder.group({
@@ -101,9 +100,10 @@ countryChange(event){
    })
   }
   submit(){
+    this.phoneNumberString = this.registerForm.value.country_code + this.registerForm.value.mobile;
     this.registerForm.value.country_code = this.countrycode;
-    console.log(this.registerForm.value.country_code);
-    this.checkavailusersmobile = this.getallusers.find(p => this.registerForm.value.mobile == p.mobile);
+    // console.log(this.registerForm.value.mobile);
+    this.checkavailusersmobile = this.getallusers.find(p => this.phoneNumberString == p.mobile);
     this.checkavailusersemail = this.getallusers.find(p => this.registerForm.value.email == p.email);
     if(this.checkavailusersmobile){
       this.productservice.presentAlert("Your mobile number was already registered,Please log in with your associated email.");
@@ -130,7 +130,7 @@ countryChange(event){
       // else{
       //   this.phoneNumberString = "+" +this.registerForm.value.country_code + this.registerForm.value.mobile;
       // }
-      console.log(this.phoneNumberString)
+      // console.log(this.phoneNumberString)
   this.firebaseAuthentication.verifyPhoneNumber(this.phoneNumberString, 30000)
   .then( confirmationResult => {
     // console.log("this.verificationId")
@@ -166,8 +166,6 @@ countryChange(event){
     }
   }
     }
-  
-  
   }
   back(){
     if(this.onboard == "1"){

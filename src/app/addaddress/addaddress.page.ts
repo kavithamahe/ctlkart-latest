@@ -82,7 +82,7 @@ export class AddaddressPage implements OnInit {
       this.submitAttempt = false;
       this.checkzipcode = this.gelallcheckcodedetails.find(p => this.checkoutForm.value.zipcode == p.zipcode);
       if(this.checkzipcode == undefined){
-        this.productservice.presentAlert("your zipcode is not available");
+        this.productservice.presentAlert("We are not delivering to this location,Please refer the list of pincodes available for shipping");
       }
     this.productservice.presentLoading();
       this.productservice.addaddress(obj)

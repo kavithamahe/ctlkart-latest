@@ -13,13 +13,22 @@
         <h3 class="deliveryLabel">Shipping Address</h3>
         <ion-list>
             <ion-item class="addressbox bgWhite">
-                <div class="shippingAddressGroup">
+                    <div class="manageAd">
+                           
+                            <p text-capitalize><b>{{getaddress.name}}</b>  <ion-text class="edit-btn" (click)="changeaddress()">Change</ion-text></p>
+                            <p>{{getaddress.mobile}},</p>
+                            <p text-capitalize>{{getaddress.address}},</p>
+                            <p text-capitalize>{{getaddress.landmark}}, {{getaddress.city}},</p>
+                            <!-- <p text-capitalize>{{getaddress.city}},</p> -->
+                            <p text-capitalize>{{getaddress.state}} - {{getaddress.zipcode}}</p>
+                    </div>
+                <!-- <div class="shippingAddressGroup">
                     <ion-label text-capitalize style="white-space: normal !important;">
-                        <span class="wdt100"><b>{{getaddress.name}},</b></span><span class="wdt100">{{getaddress.mobile}}</span>
+                        <span class="wdt100"><b>{{getaddress.name}},</b></span><span class="wdt100">{{getaddress.mobile}}</span>,
                         <span>{{getaddress.address}},</span><span>{{getaddress.city}},</span><span>{{getaddress.state}}
                                             -{{getaddress.zipcode}}</span></ion-label>
                     <ion-text class="edit-btn" (click)="changeaddress()">Change</ion-text>
-                </div>
+                </div> -->
             </ion-item>
         </ion-list>
         <!-- <ion-list>
@@ -50,7 +59,7 @@
                 <ion-row>
                     <ion-col size="7">
                         <ion-label>
-                            <h3>Subtotal </h3>
+                            <h3>Sub Total </h3>
                         </ion-label>
                     </ion-col>
                     <ion-col size="5">
@@ -142,7 +151,7 @@
                 <ion-row>
                     <ion-col size="7">
                         <ion-label>
-                            <h3>Subtotal </h3>
+                            <h3>Sub Total </h3>
                         </ion-label>
                     </ion-col>
                     <ion-col size="5">

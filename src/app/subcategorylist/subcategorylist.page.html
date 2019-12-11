@@ -14,7 +14,8 @@
 
 <ion-content class="categoryList">
     <div class="subCat">
-        <ion-list *ngFor="let subcategory of getallsubcategory">
+            <ng-container *ngFor="let subcategory of getallsubcategory">
+        <ion-list *ngIf = "subcategory.status != 2">
             <div class="item item-icon-left" (click)="getsubcategory(subcategory.id,subcategory.subcategory_name)">
 
                 <ion-label>{{subcategory.subcategory_name}} <span class="item-note">
@@ -23,5 +24,6 @@
 
             </div>
         </ion-list>
+        </ng-container>
     </div>
 </ion-content>

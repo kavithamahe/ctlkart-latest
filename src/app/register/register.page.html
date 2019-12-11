@@ -36,17 +36,16 @@
                     <ion-label position="floating">Country
                             <ion-text color="danger">*</ion-text>
                     </ion-label>
-                <!-- <ion-item> -->
-                    <ion-label></ion-label>
+                    <ion-row>
                     <ionic-selectable style = "border-bottom: 1px solid #ccc;"
-                      [(ngModel)]="country"
+                      [(ngModel)]="country" 
                       [items]="country_code"
                       itemValueField="dial_code"
                       itemTextField="name" 
                       [canSearch]="true"
                       (onChange)="portChange($event)" formControlName="country_code">
                     </ionic-selectable>
-                  <!-- </ion-item>  -->
+                    </ion-row>
                </div>
                <p *ngIf="!registerForm.controls.country_code.valid && (registerForm.controls.country_code.dirty || submitAttempt)" class="err-reds shake">Please enter country code.</p>
                 <div class="formList">

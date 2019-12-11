@@ -5,12 +5,14 @@ import { environment } from '../../environments/environment';
 import { ToastController, Events } from '@ionic/angular';
 import { Location } from '@angular/common';
 
+
 @Component({
   selector: 'app-viewsingleproduct',
   templateUrl: './viewsingleproduct.page.html',
   styleUrls: ['./viewsingleproduct.page.scss'],
 })
 export class ViewsingleproductPage implements OnInit {
+  htmlStr: string;
   stock_status: any;
   currency_icon: any;
   availablequantityperunits: any;
@@ -48,7 +50,7 @@ export class ViewsingleproductPage implements OnInit {
   totalsingleproductamount:any;
   unitcostid:any;
 
-  constructor(public events: Events,private _location: Location, public productservice:ProductsService,private route: ActivatedRoute,public router:Router,public toastController: ToastController) { 
+  constructor(public events: Events,private _location: Location,public productservice:ProductsService,private route: ActivatedRoute,public router:Router,public toastController: ToastController) { 
     this.singleid = route.snapshot.paramMap.get('id');
     this.fromorder = route.snapshot.paramMap.get('fromorder');
     this.orderid = route.snapshot.paramMap.get('singleid');
@@ -85,7 +87,17 @@ export class ViewsingleproductPage implements OnInit {
     this.getproductList();
   }
   ngOnInit() {
+   
     this.currency_icon = localStorage.getItem('currency_icon');
+    if(this.currency_icon == 'fas fa-rupee-sign' || this.currency_icon =='fa fa-inr'){
+      this.htmlStr = 'Rs.';
+    }
+    else if(this.currency_icon == 'fa fa-usd' || this.currency_icon == 'fas fa-dollar-sign'){
+      this.htmlStr = '$';
+    }
+    else if(this.currency_icon == 'fas fa-euro-sign'){
+      this.htmlStr = '';
+    }
     this.stock_status = localStorage.getItem('stock_status');
     this.cartDetails = (JSON.parse(localStorage.getItem('cart_items')));
     if(this.cartDetails){
@@ -268,7 +280,9 @@ else{
     this.presentToast("Your selected product(s) are not available");
   }
     }
-
+    shopmore(){
+      this.router.navigate(['tabs/category']);
+    }
 
     back(){
       var orderidlocal= localStorage.getItem("singleid");

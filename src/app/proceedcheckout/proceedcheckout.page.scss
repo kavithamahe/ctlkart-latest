@@ -22,29 +22,38 @@ ion-buttons {
         margin: 10px 0 0;
         border-radius: 5px;
         box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.04);
-        .shippingAddressGroup {
-            display: flex;
-            background: #fff;
-            ion-label {
-                width: 90%;
-                span {
-                    color: #444;
-                    padding-bottom: 5px;
-                    line-height: 22px;
-                    text-align: left;
-                    text-transform: capitalize;
-                    b {
-                        color: #000000;
-                        font-weight: 500;
-                    }
-                    &.wdt100 {
-                        width: 100%;
-                        display: block;
-                    }
-                }
-            }
+        // .shippingAddressGroup {
+        //     display: flex;
+        //     background: #fff;
+        //     ion-label {
+        //         width: 90%;
+        //         span {
+        //             color: #444;
+        //             padding-bottom: 5px;
+        //             line-height: 22px;
+        //             text-align: left;
+        //             text-transform: capitalize;
+        //             b {
+        //                 color: #000000;
+        //                 font-weight: 500;
+        //             }
+        //             &.wdt100 {
+        //                 width: 100%;
+        //                 display: block;
+        //             }
+        //         }
+        //     }
+        //     ion-text {
+        //         color: #fca411;
+        //     }
+        // }
+        .manageAd {
+            // padding: 15px 15px 15px;
+            // position: relative;
             ion-text {
                 color: #fca411;
+                float:right;
+                padding-left: 150px;
             }
         }
     }

@@ -16,7 +16,9 @@
 </ion-header>
 
 <ion-content padding class="categoryList bgWhite">
-    <ion-list *ngFor="let category of getallcategories">
+   
+        <ng-container *ngFor="let category of getallcategories">
+    <ion-list *ngIf = "category.status != 2">
         <div (click)="getsubcategory(category.category_id,category.category_name)">
             <ion-avatar slot="start">
                 <img [src]="imgURl + category.category_image" />
@@ -24,4 +26,5 @@
             <ion-label>{{category.category_name}}</ion-label>
         </div>
     </ion-list>
+</ng-container>
 </ion-content>

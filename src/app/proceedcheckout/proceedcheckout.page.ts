@@ -16,6 +16,8 @@ declare var RazorpayCheckout: any;
   
 })
 export class ProceedcheckoutPage implements OnInit {
+  orderstatus: any;
+  order_id: any;
   totalsingleproductamount: any;
   totalamount: number;
   selectedlength: any;
@@ -265,6 +267,8 @@ export class ProceedcheckoutPage implements OnInit {
         this.productservice.presentLoading();
         this.productservice.checkoutcart(this.user_id,this.customer_id,this.cartDetails,this.totalpricecart)
         .subscribe(product =>{ 
+          this.order_id = product.data.ordersavedRecord.order_id;
+          this.orderstatus = product.data.ordersavedRecord.status;
           this.productservice.loadingdismiss();
           var options = {
             description: 'CTLKART',
@@ -374,6 +378,7 @@ export class ProceedcheckoutPage implements OnInit {
           localStorage.removeItem('totalsingleproductamount');
           localStorage.removeItem('costperquantity');
           this.productservice.loadingdismiss();
+         
         //   var options = {
         //     description: 'CTLKART',
         //     currency: 'INR',

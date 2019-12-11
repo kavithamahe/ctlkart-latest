@@ -2,10 +2,11 @@
     <ion-toolbar color="grey">
         <ion-title *ngIf="!toggled">
             <h2>CTL<span>Kart</span>.</h2>
-        </ion-title>
-        <ion-title *ngIf="!toggled">
             <h6>Your Online Store</h6>
         </ion-title>
+        <!-- <ion-title *ngIf="!toggled">
+            
+        </ion-title> -->
         <ion-buttons slot="end">
             <ion-icon class="searchIcOn" *ngIf="!toggled" (click)="toggle()" name="search"></ion-icon>
         </ion-buttons>
@@ -45,7 +46,8 @@
             </ion-row>
         </ion-grid>
         <ion-slides [options]="sliderConfig">
-            <ion-slide *ngFor="let cat of getallcategories" (click)="filterbyCategory(cat.category_id)">
+                <ng-container *ngFor="let cat of getallcategories">
+            <ion-slide *ngIf="cat.status != 2" (click)="filterbyCategory(cat.category_id)">
                 <div class="categorydash">
                     <div class="categoryImage">
                         <img (click)="filterbyCategory(cat.category_id)" [src]="imgURl + cat.category_image" />
@@ -53,6 +55,7 @@
                     <ion-label (click)="filterbyCategory(cat.category_id)">{{cat.category_name}}</ion-label>
                 </div>
             </ion-slide>
+            </ng-container>
         </ion-slides>
     </div>
     <div class="innerSlider bgWhite">

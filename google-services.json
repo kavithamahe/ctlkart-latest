@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "313104804796",
+    "firebase_url": "https://ctlkart.firebaseio.com",
+    "project_id": "ctlkart",
+    "storage_bucket": "ctlkart.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:313104804796:android:71776b2c7d94b3ac",
+        "android_client_info": {
+          "package_name": "com.ctlkart.claritaz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "313104804796-2n9i4k22k3d0voqnrljsurf9paqlgmnc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVF3cXrQr7t7Ab9eTJ0QTtOOUecZVIZvw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "313104804796-2n9i4k22k3d0voqnrljsurf9paqlgmnc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

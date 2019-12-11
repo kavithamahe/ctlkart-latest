@@ -26,10 +26,15 @@
                 </ion-item>
 
                 <ion-item *ngIf = "costperunits != ''">
-                        <ion-label>Units</ion-label>
-                        <ion-select [(ngModel)]="unitscost" (ionChange)="onChange(unitscost)" style= "padding: inherit;">
-                          <ion-select-option value = {{units.id}} *ngFor = "let units of costperunits">{{units.quantityperunit}} {{units.unittype}} {{units.unitnotes}} - <i class="{{currency_icon}}"></i> {{units.costperquantity | number : '1.2-2'}}</ion-select-option>
+                        <ion-label style = "font-weight: 800;">Units</ion-label>
+                     
+                        <ion-select [(ngModel)]="unitscost" (ionChange)="onChange(unitscost)" style= "padding: inherit;" class="glyphicon">
+                            <ng-container *ngFor = "let units of costperunits">
+                                    <ion-icon name="remove"></ion-icon>
+                            <ion-select-option value = {{units.id}} *ngIf = "units.status != 1">{{units.quantityperunit}} {{units.unittype}} {{units.unitnotes}} - {{htmlStr}} {{units.costperquantity | number : '1.2-2'}}</ion-select-option>
+                        </ng-container>
                         </ion-select>
+                   
                 </ion-item>
         <ion-card-content>
             {{single.product_description}}
@@ -38,14 +43,14 @@
 </ion-content>
 <ion-toolbar>
     <ion-segment *ngFor="let single of getsingleProductList">
+        <ion-segment-button value="favorites" checked (click)="shopmore()">
+            Shop More
+        </ion-segment-button>
         <ion-segment-button *ngIf="!gotocart" value="all" (click)="addproductTocart(single.id,item_qty,single.price)">
             Add To Cart
         </ion-segment-button>
         <ion-segment-button value="favorites" *ngIf="gotocart" value="all" (click)="gotocartpage()">
             Go To Cart
         </ion-segment-button>
-        <!-- <ion-segment-button value="favorites" checked (click)="buyNow(single.id,item_qty)">
-            Buy Now
-        </ion-segment-button> -->
     </ion-segment>
 </ion-toolbar>

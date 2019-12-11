@@ -74,7 +74,9 @@ export class OtpverificationPage implements OnInit {
     .then( confirmationResult => {
       console.log(confirmationResult)
       this.verificationId = confirmationResult;
-      
+      if(this.verificationId){
+        this.productservice.presentAlert("The sms verification code is sent to your mobile number");
+      }
       
     })
   .catch((error) => {
@@ -113,7 +115,7 @@ export class OtpverificationPage implements OnInit {
       localStorage.setItem("token", this.refreshToken);
       localStorage.setItem("user_id", this.userid);
       this.events.publish('loggedin');
-      this.productservice.presentToast("Mobile Verified Successfully");
+      this.productservice.presentToast("Mobile Number Verified Successfully,Please login.");
       this.productservice.loadingdismiss();
       if(this.fromlogin == "1"){
         if(this.fromcart == null || this.fromcart == "null"){
