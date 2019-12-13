@@ -304,6 +304,10 @@ export class ProductsService {
     let body={'slug':slug};
     return this.http.post(this.apiUrl + 'getpages',body,{ headers:this.headers });
   }
+  getPaymentApi(): Observable<any>{
+    let body = {};
+    return this.http.post(this.apiUrl + 'getpaymentkey', body, {headers:this.headers});
+  }
   async presentToast(datamessage) {
     const toast = await this.toastController.create({
       message: datamessage,
