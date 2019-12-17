@@ -138,12 +138,12 @@ export class ProductsService {
   "amount":amount,"quantity":quantity};
     return this.http.post(this.apiUrl + 'productcheckout',body,this.headers);
   }
-  checkoutcart(user_id,customer_id,productListsfromcart,totalpricecart): Observable<any> {
+  checkoutcart(user_id,customer_id,productListsfromcart,totalpricecart,payment_mode): Observable<any> {
     this.token=localStorage.getItem("token");
     this.headers = new HttpHeaders();
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers= this.headers.append("Authorization", "Bearer " + this.token);
-    const body= {"user_id":user_id,"customer_id":customer_id,"productListsfromcart":productListsfromcart,"payment_type":"offline",
+    const body= {"user_id":user_id,"customer_id":customer_id,"productListsfromcart":productListsfromcart,"payment_type":payment_mode,
   "totalpricecart":totalpricecart};
     return this.http.post(this.apiUrl + 'productcheckoutformcart',body,{ headers:this.headers });
   }
@@ -203,12 +203,12 @@ export class ProductsService {
     const body= {"user_id":user_id};
     return this.http.post(this.apiUrl + 'getcancelledorder',body,{ headers:this.headers });
   }
-  cancelorderbyuser(id): Observable<any> {
+  cancelorderbyuser(id,payment_id): Observable<any> {
     this.token=localStorage.getItem("token");
     this.headers = new HttpHeaders();
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers= this.headers.append("Authorization", "Bearer " + this.token);
-    const body= {"order_id":id};
+    const body= {"order_id":id,"razorpayment_id":payment_id};
     return this.http.post(this.apiUrl + 'ordercancelbyuser',body,{ headers:this.headers });
   }
   reviewsentuser(id,user_id,rating,ratingcomments,order_id,orderId): Observable<any> {
@@ -299,6 +299,10 @@ export class ProductsService {
   getstocksetting(): Observable<any> {
     let body={'name':'stocksetting'};
     return this.http.post(this.apiUrl + 'getSettings',body,{ headers:this.headers });
+  }
+  getpaymentsetting(): Observable<any> {
+    let body={};
+    return this.http.post(this.apiUrl + 'getpaymentsetting',body,{ headers:this.headers });
   }
   getpagesDetails(slug): Observable<any> {
     let body={'slug':slug};

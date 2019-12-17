@@ -136,7 +136,7 @@
                     </ion-col>
                 </ion-row>
             </ion-grid>
-            <div (click)="presentAlertConfirm(order.order_id,order.status)" class="titleLabelsec" *ngIf="order.status == 0 || order.status == 1 || order.status == 2">
+            <div class="titleLabelsec" *ngIf="order.status == 0 || order.status == 1 || order.status == 2">
                 <ion-row>
                     <ion-col size="12">
                         <ion-text (click)="presentAlertConfirm(order.order_id,order.status)" class="delBtn">Cancel this order</ion-text>

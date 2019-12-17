@@ -46,10 +46,16 @@
     <div class="Payment">
         <h3 class="deliveryLabel">Payment</h3>
         <ion-list>
+           <ion-radio-group (ionChange)="getpaymentmode($event)">
             <ion-item>
                 <ion-label style="white-space: normal !important;">Cash on delivery</ion-label>
-                <ion-radio slot="start" value="biff" color="dark" checked></ion-radio>
+                <ion-radio slot="start" value="offline" color="dark" checked></ion-radio>
             </ion-item>
+            <ion-item *ngIf = "payment_status == 1">
+                <ion-label style="white-space: normal !important;">Online Payment</ion-label>
+                <ion-radio slot="start" value="online" color="dark"></ion-radio>
+            </ion-item>
+            </ion-radio-group>
         </ion-list>
     </div>
     <div class="proceedToPay" *ngIf="fromcart != '1'">

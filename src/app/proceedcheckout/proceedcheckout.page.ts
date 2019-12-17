@@ -16,6 +16,8 @@ declare var RazorpayCheckout: any;
   
 })
 export class ProceedcheckoutPage implements OnInit {
+  payment_status: any;
+  payment_mode: any;
   orderstatus: any;
   order_id: any;
   totalsingleproductamount: any;
@@ -81,9 +83,12 @@ export class ProceedcheckoutPage implements OnInit {
     }
     this.user_id = localStorage.getItem("user_id");
     this.getPaymentkey();
+    this.getpaymentsettings();
   }
-  editaddress(){
-
+  getpaymentsettings(){
+    this.productservice.getpaymentsetting().subscribe(payment =>{
+      this.payment_status = payment.data[0].onlinepayment_status;
+    });
   }
 
 
@@ -147,6 +152,10 @@ export class ProceedcheckoutPage implements OnInit {
       this.router.navigate(['address',{"id":this.singleid,"quantity":this.quantity,'fromorder':this.fromorder}]);
     }
   
+  }
+  getpaymentmode(ev){
+  this.payment_mode = ev.detail.value;
+  console.log(this.payment_mode);
   }
   allgetAddress(user_id){
     this.productservice.presentLoading();
@@ -266,10 +275,33 @@ export class ProceedcheckoutPage implements OnInit {
     }
     }
     proceedtobuycartconfirm(){
+      if(this.payment_mode == ""){
+        this.payment_mode = "offline";
+      }
+      else{
+        this.payment_mode = this.payment_mode;
+      }
+      if(this.payment_mode == "offline"){
+        this.productservice.presentLoading();
+        this.productservice.checkoutcart(this.user_id,this.customer_id,this.cartDetails,this.totalpricecart,this.payment_mode)
+        .subscribe(product =>{ 
+          this.orderstatus = product.data.ordersavedRecord.status;
+            localStorage.removeItem('cart_items');
+            this.router.navigate(['checkoutsuccess']);
+           this.events.publish('cart');
+          this.productservice.presentToast(product.message);
+          this.productservice.loadingdismiss();
+        },
+        err =>{
+          this.productservice.loadingdismiss();
+          this.productservice.presentToast(err.error.message);
+       })
+      }
+      else{
      console.log(JSON.parse(localStorage.getItem('cart_items')));
      localStorage.setItem('total_cost',this.totalpricecart);
         this.productservice.presentLoading();
-        this.productservice.checkoutcart(this.user_id,this.customer_id,this.cartDetails,this.totalpricecart)
+        this.productservice.checkoutcart(this.user_id,this.customer_id,this.cartDetails,this.totalpricecart,this.payment_mode)
         .subscribe(product =>{ 
           this.order_id = product.data.ordersavedRecord.order_id;
           localStorage.setItem('order_id',this.order_id);
@@ -299,7 +331,6 @@ export class ProceedcheckoutPage implements OnInit {
            
           var successCallback = function(success) {
           
-            alert(success.razorpay_payment_id)
             var orderId = success.razorpay_order_id;
             var signature = success.razorpay_signature;
             var url  = localStorage.getItem("rootUrl")+"razorpaymentresponse";
@@ -314,10 +345,10 @@ export class ProceedcheckoutPage implements OnInit {
            var users = JSON.parse(xmlhttp.responseText);
            var error = users.error;
           var result=users.result;
-          // nav.presentAlert(result);
           localStorage.removeItem('cart_items');
           rdirect.navigate(['checkoutsuccess']);
           event.publish('cart');
+          nav.presentAlert("Your payment of order is successfull.");
         
            if(result){
               nav.presentAlert(result);
@@ -350,7 +381,7 @@ export class ProceedcheckoutPage implements OnInit {
           this.productservice.loadingdismiss();
           this.productservice.presentToast(err.error.message);
        })
-      
+      }
       
     }
     // async proceedtobuy(product_id) {

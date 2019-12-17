@@ -11,6 +11,7 @@ import { AlertController, ActionSheetController, BooleanValueAccessor, Events } 
   styleUrls: ['./vieworderhistory.page.scss'],
 })
 export class VieworderhistoryPage implements OnInit {
+  payment_id: any;
   status: any;
   totalamount: any;
   singleid: string;
@@ -75,19 +76,10 @@ export class VieworderhistoryPage implements OnInit {
     .subscribe(product =>{ 
       this.getsingleorder = product.data;
       this.orderstatus = this.getsingleorder[0].status;
-      
-    //   if(this.orderstatus == "0"){
-    //     this.saturation = "1";
-    //     this.color = 'dark';
-    // }
-    // if(this.orderstatus == "1"){
-    //   this.saturation = "2";
-    //   this.color = 'primary';
-    // }
-    // if(this.orderstatus == "2"){
-    //   this.saturation = "3";
-    //   this.color = 'secondary';
-    // }
+      // if(this.getsingleorder[0].payment_type == "online"){
+        this.payment_id =product.data[0].items[0].payment_id;
+        console.log(this.payment_id);
+      // }
       if(product.data){
       this.getsingleorderprice = product.data[0].items;
       if(this.getsingleorderprice){
@@ -130,6 +122,7 @@ export class VieworderhistoryPage implements OnInit {
          {
             text: 'ok',
             handler: () => {
+              alert.dismiss();
             }
           }
         ]
@@ -153,6 +146,7 @@ else{
         text: 'Yes',
         handler: () => {
           this.cancelorders(id);
+          this.dismiss();
         }
       }
     ]
@@ -161,14 +155,20 @@ else{
   await alert.present();
 }
   }
+  dismiss() {
+    this.alertCtrl.dismiss();
+  }
   cancelorders(id){
     this.productservice.presentLoading();
-    this.productservice.cancelorderbyuser(id)
+    this.productservice.cancelorderbyuser(id,this.payment_id)
     .subscribe(product =>{ 
       this.productservice.presentToast(product.message);
       this.getsingleorderdetails(this.singleid,this.status,this.user_id);
       this.events.publish('cancelitems');
       this.router.navigate(['tabs/myorders']);
+      // if(this.payment_id){
+      //   this.productservice.presentAlert('Your order is cancelled ')
+      // }
       this.productservice.loadingdismiss();
     },
     err =>{

@@ -189,7 +189,6 @@ export class ViewsingleproductPage implements OnInit {
       if(product['data'][0]['existing_quantity'] <= 10){
         this.existingtotalQty = true;
       }
-      
       this.productservice.loadingdismiss();
     },
     err =>{
